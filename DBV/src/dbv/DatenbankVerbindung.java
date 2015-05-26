@@ -34,7 +34,7 @@ public class DatenbankVerbindung {
 		// achtung: Port eigentlich 5432!!
 		// 5433 ist testport
 		// dbTable eigentlich = "kunden"
-		dbPort = "5433";
+		dbPort = "5432";
 		dbName = "postgres";
 		dbTable = "test";
 		dbUser = "postgres";

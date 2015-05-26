@@ -15,7 +15,7 @@ public class SocketClientHandler implements Runnable {
 
 	public SocketClientHandler(Socket client) {
 		this.client = client;
-		dbv = new DBV("localhost", "5433", "postgres", "test", "postgres",
+		dbv = new DBV("localhost", "5432", "postgres", "test", "postgres",
 				"1234");
 	}
 
@@ -66,27 +66,23 @@ public class SocketClientHandler implements Runnable {
 			 * Thread.currentThread().interrupt(); }
 			 */
 			else if (userInput.startsWith("SEARCH?")) {
-				String statementInput;
-				while ((statementInput = stdIn.readLine()) != null) {
-					dbv.doSearch(statementInput);
-				}
+				String statementInput = stdIn.readLine();
+				dbv.doSearch(statementInput);
+
 			} else if (userInput.startsWith("INSERT?")) {
-				String statementInput;
-				while ((statementInput = stdIn.readLine()) != null) {
-					dbv.doInsert(statementInput.split(";"));
-				}
+				String statementInput = stdIn.readLine();
+				dbv.doInsert(statementInput.split(";"));
+
 			} else if (userInput.startsWith("UPDATE?")) {
-				String statementInput;
-				while ((statementInput = stdIn.readLine()) != null) {
-					dbv.doChange(statementInput.split(";"));
-				}
+				String statementInput = stdIn.readLine();
+				dbv.doChange(statementInput.split(";"));
+
 			} else if (userInput.startsWith("ADDTOJOURNEY?")) {
-				String statementInput;
-				while ((statementInput = stdIn.readLine()) != null) {
-					dbv.doInsertInNewJourney(statementInput.split(";"));
-				}
+				String statementInput = stdIn.readLine();
+				dbv.doInsertInNewJourney(statementInput.split(";"));
+
 			} else if (userInput.startsWith("STOPSESSION?")) {
-				Thread.currentThread().interrupt();
+				break;
 			}
 			System.out.println(userInput);
 		}

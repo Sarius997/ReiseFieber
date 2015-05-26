@@ -108,6 +108,7 @@ public class SocketClientSQL {
 						writer.write(statement.getText());
 						writer.newLine();
 						writer.flush();
+						System.out.println(statement.getText());
 					} catch (IOException e) {
 						// TODO: handle exception
 					}
