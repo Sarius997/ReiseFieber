@@ -144,7 +144,7 @@ public class KundenDatenÄndern implements IKundenÄndern {
 		// TODO Auto-generated method stub
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
-			String[] idSearch = dbv.doSearchByID(getID());
+			String[] idSearch = dbv.doSearchByKundenID(getID());
 			
 			tfKdName.setText(idSearch[1]);
 			tfKdVorname.setText(idSearch[2]);

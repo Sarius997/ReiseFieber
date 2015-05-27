@@ -3,6 +3,8 @@ package gui;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.concurrent.LinkedTransferQueue;
 
 import javax.swing.JButton;
@@ -12,28 +14,31 @@ import javax.swing.JTextField;
 
 import dbv.DatenbankVerbindung;
 import dbv.IKundenDaten;
-import dbv.IReiseteilnehmer;
+import dbv.IKundenReise;
 import kundenkartei.Kunde;
 import kundenkartei.KundenListe;
 
-public class Reiseteilnehmer implements IReiseteilnehmer {
+public class Reiseteilnehmer implements IKundenReise {
 
 	private JFrame frame;
 	private JLabel labKdNr;
 	private JTextField tfKdNr;
 
 	private JLabel labKdName;
-	private JTextField tfKdName;
-	
+	private JLabel labShowKdName;
+
 	private JLabel labKdVorname;
-	private JTextField tfKdVorname;
-	
+	private JLabel labShowKdVorname;
+
 	private JLabel labReiseID;
 	private JTextField tfReiseID;
-	
+
+	private JLabel labReiseName;
+	private JLabel labShowReiseName;
+
 	private JLabel labReiseZiel;
-	private JTextField tfReiseZiel;
-	
+	private JLabel labShowReiseZiel;
+
 	private JButton bnHinzufuegen;
 	private JButton bnFertig;
 
@@ -45,11 +50,18 @@ public class Reiseteilnehmer implements IReiseteilnehmer {
 		labKdNr = new JLabel("Kundennummer:");
 		tfKdNr = new JTextField();
 		labKdName = new JLabel("Name:");
-		tfKdName = new JTextField();
+		labShowKdName = new JLabel();
 		labKdVorname = new JLabel("Vorname:");
-		tfKdVorname = new JTextField();
-		
-		
+		labShowKdVorname = new JLabel();
+
+		labReiseID = new JLabel("Reisenummer:");
+		tfReiseID = new JTextField();
+
+		labReiseName = new JLabel("Reisename:");
+		labShowReiseName = new JLabel();
+
+		labReiseZiel = new JLabel("Reiseziel:");
+		labShowReiseZiel = new JLabel();
 
 		bnHinzufuegen = new JButton("Hinzufügen");
 		bnFertig = new JButton("Fertig");
@@ -58,9 +70,17 @@ public class Reiseteilnehmer implements IReiseteilnehmer {
 		frame.add(labKdNr);
 		frame.add(tfKdNr);
 		frame.add(labKdName);
-		frame.add(tfKdName);
+		frame.add(labShowKdName);
 		frame.add(labKdVorname);
-		frame.add(tfKdVorname);
+		frame.add(labShowKdVorname);
+
+		frame.add(labReiseID);
+		frame.add(tfReiseID);
+		frame.add(labReiseName);
+		frame.add(labShowReiseName);
+		frame.add(labReiseZiel);
+		frame.add(labShowReiseZiel);
+
 		frame.add(bnHinzufuegen);
 		frame.add(bnFertig);
 
@@ -68,36 +88,81 @@ public class Reiseteilnehmer implements IReiseteilnehmer {
 	}
 
 	public void show() {
-		//TODO rework
 		frame.pack();
 		frame.show();
 	}
 
 	private void addActionListeners() {
-		bnFertig.addActionListener(new ActionListener() {
 
+		tfKdNr.addFocusListener(new FocusListener() {
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
+				sucheKunde();
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+		tfReiseID.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				sucheReise();
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		bnFertig.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				Reiseteilnehmer.this.fertig();
 			}
 		});
 		bnHinzufuegen.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				Reiseteilnehmer.this.hinzufuegen();
 			}
 		});
 	}
 
-	protected void hinzufuegen() { // baut Verbindung zur Datenbank auf und
-									// erstellt neuen Eintrag
-		// TODO Auto-generated method stub
+	protected void sucheKunde(){
+		DatenbankVerbindung dbv = new DatenbankVerbindung();
+		try {
+			String[] idSearch = dbv.doSearchByKundenID(getKundeID());			
+			labShowKdName.setText(idSearch[1]);
+			labShowKdVorname.setText(idSearch[2]);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+
+	protected void sucheReise(){
+		DatenbankVerbindung dbv = new DatenbankVerbindung();
+		try {
+			String[] idSearch = dbv.doSearchByReiseID(getReiseID());			
+			labShowReiseName.setText(idSearch[1]);
+			labShowReiseZiel.setText(idSearch[2]);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	protected void hinzufuegen() {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
 			dbv.doInsertInNewJourney(this);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -107,17 +172,14 @@ public class Reiseteilnehmer implements IReiseteilnehmer {
 	}
 
 	@Override
-	public String getKdNr() {
+	public String getKundeID() {
+		// TODO Auto-generated method stub
 		return tfKdNr.getText();
 	}
 
 	@Override
-	public String getVorname() {
-		return tfKdVorname.getText();
-	}
-
-	@Override
-	public String getNachname() {
-		return tfKdName.getText();
+	public String getReiseID() {
+		// TODO Auto-generated method stub
+		return tfReiseID.getText();
 	}
 }
