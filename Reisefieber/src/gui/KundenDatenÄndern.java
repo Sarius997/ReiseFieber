@@ -20,19 +20,28 @@ public class KundenDatenÄndern implements IKundenÄndern {
 	private JFrame frame;
 	private JLabel labID;
 	private JTextField tfID;
-	private JLabel labText;
+	
 	private JLabel labKdName;
 	private JTextField tfKdName;
+	
 	private JLabel labKdVorname;
 	private JTextField tfKdVorname;
-	private JLabel labGeburtsdatum;
-	private JTextField tfGeburtsdatum;
-	private JLabel labTelefon;
-	private JTextField tfTelefon;
-	private JLabel labGeschlecht;
-	private JTextField tfGeschlecht;
+	
 	private JLabel labWohnort;
 	private JTextField tfWohnort;
+	
+	private JLabel labGeburtsdatum;
+	private JTextField tfGeburtsdatum;	
+
+	private JLabel labVolljaehrig;
+	private JTextField tfVolljaehrig;
+	
+	private JLabel labTelefon;
+	private JTextField tfTelefon;
+	
+	private JLabel labGeschlecht;
+	private JTextField tfGeschlecht;
+	
 	private JButton bnÄndern;
 	private JButton bnFertig;
 
@@ -41,21 +50,30 @@ public class KundenDatenÄndern implements IKundenÄndern {
 	public KundenDatenÄndern(Kunde kunde) {
 		this.kunde = kunde;
 		frame = new JFrame("Kundendaten ändern");
+		
 		labID = new JLabel("ID des zu ändernden Kunden:");
 		tfID = new JTextField();
+		
 		labKdName = new JLabel("Nachname:");
 		tfKdName = new JTextField();
-		labText = new JLabel("Alle aktuellen Daten:");
+		
 		labKdVorname = new JLabel("Vorname:");
 		tfKdVorname = new JTextField();
-		labGeburtsdatum = new JLabel("Geburtsdatum:");
-		tfGeburtsdatum = new JTextField();
-		labGeschlecht = new JLabel("Geschlecht:");
-		tfGeschlecht = new JTextField();
-		labTelefon = new JLabel("Telefonnummer:");
-		tfTelefon = new JTextField();
+
 		labWohnort = new JLabel("Wohnort:");
 		tfWohnort = new JTextField();
+		
+		labGeburtsdatum = new JLabel("Geburtsdatum:");
+		tfGeburtsdatum = new JTextField();
+		
+		labVolljaehrig = new JLabel("Volljährig:");
+		tfVolljaehrig = new JTextField();
+		
+		labTelefon = new JLabel("Telefonnummer:");
+		tfTelefon = new JTextField();
+		
+		labGeschlecht = new JLabel("Geschlecht:");
+		tfGeschlecht = new JTextField();
 
 		bnÄndern = new JButton("Ändern");
 		bnFertig = new JButton("Fertig");
@@ -68,14 +86,16 @@ public class KundenDatenÄndern implements IKundenÄndern {
 		frame.add(tfKdName);
 		frame.add(labKdVorname);
 		frame.add(tfKdVorname);
-		frame.add(labGeburtsdatum);
-		frame.add(tfGeburtsdatum);
-		frame.add(labGeschlecht);
-		frame.add(tfGeschlecht);
-		frame.add(labTelefon);
-		frame.add(tfTelefon);
 		frame.add(labWohnort);
 		frame.add(tfWohnort);
+		frame.add(labGeburtsdatum);
+		frame.add(tfGeburtsdatum);
+		frame.add(labVolljaehrig);
+		frame.add(tfVolljaehrig);
+		frame.add(labTelefon);
+		frame.add(tfTelefon);
+		frame.add(labGeschlecht);
+		frame.add(tfGeschlecht);
 		frame.add(bnÄndern);
 		frame.add(bnFertig);
 		addActionListeners();
@@ -128,10 +148,11 @@ public class KundenDatenÄndern implements IKundenÄndern {
 			
 			tfKdName.setText(idSearch[1]);
 			tfKdVorname.setText(idSearch[2]);
-			tfGeschlecht.setText(idSearch[3]);
+			tfWohnort.setText(idSearch[3]);	
 			tfGeburtsdatum.setText(idSearch[4]);
-			tfTelefon.setText(idSearch[5]);
-			tfWohnort.setText(idSearch[6]);			
+			tfVolljaehrig.setText(idSearch[5]);
+			tfTelefon.setText(idSearch[6]);	
+			tfGeschlecht.setText(idSearch[7]);	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

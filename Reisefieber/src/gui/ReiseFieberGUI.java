@@ -10,68 +10,73 @@ import javax.swing.JFrame;
 public class ReiseFieberGUI {
 
 	private JFrame frame;
-	private JButton eingabe;
-	private JButton suche;
-	private JButton aendern;
-	private JButton reise;
+	private JButton neuerKunde;
+	private JButton sucheKunde;
+	private JButton kundenAendern;
+	private JButton addToReise;
+	private JButton neueReise;
 	private JButton beenden;
 
 	public ReiseFieberGUI() {
 		frame = new JFrame("ReiseFieber");
-		eingabe = new JButton("Kunde erstellen");
-		suche = new JButton("Kunden suchen");
-		aendern = new JButton("Kundendaten ändern");
-		reise = new JButton("Kunden zu Reise hinzufügen");
+		neuerKunde = new JButton("Kunde erstellen");
+		sucheKunde = new JButton("Kunden suchen");
+		kundenAendern = new JButton("Kundendaten ändern");
+		addToReise = new JButton("Kunden zu Reise hinzufügen");
+		neueReise = new JButton("Neue Reise anlegen");
 		beenden = new JButton("EXIT");
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new GridLayout(1, 5));
-		frame.add(eingabe);
-		frame.add(suche);
-		frame.add(aendern);
-		frame.add(reise);
+		frame.add(neuerKunde);
+		frame.add(sucheKunde);
+		frame.add(kundenAendern);
+		frame.add(addToReise);
+		frame.add(neueReise);
 		frame.add(beenden);
 		addActionListeners();
 
 	}
 
 	public void show() {
-		//TODO rework
 		frame.pack();
 		frame.show();
 	}
 
 	private void addActionListeners() {
-		eingabe.addActionListener(new ActionListener() {
+		neuerKunde.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				testEingabe();
 			}
 		});
-		suche.addActionListener(new ActionListener() {
+		sucheKunde.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				testSuche();
 			}
 		});
-		aendern.addActionListener(new ActionListener() {
+		kundenAendern.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				testÄndern();
 			}
 		});
-		reise.addActionListener(new ActionListener() {
+		addToReise.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				testReise();
+			}
+		});
+		neueReise.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				testReiseAnlegen();
 			}
 		});
 		beenden.addActionListener(new ActionListener() {
@@ -80,29 +85,35 @@ public class ReiseFieberGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				frame.dispose();
+				System.exit(0);
 			}
 		});
 	}
 
 	private void testSuche() { // Hier werden die Fenster geöffnet
-		SucheKundeDialog suchDialog = new SucheKundeDialog(null); // "
-		suchDialog.show(); // "
-	} // "
-		// "
+		SucheKundeDialog suchDialog = new SucheKundeDialog(null); 
+		suchDialog.show(); 
+	} 
+		
 
-	private void testÄndern() { // "
-		KundenDatenÄndern ändernDialog = new KundenDatenÄndern(null); // "
-		ändernDialog.show(); // "
-	} // "
-		// "
+	private void testÄndern() { 
+		KundenDatenÄndern ändernDialog = new KundenDatenÄndern(null); 
+		ändernDialog.show(); 
+	}
+		
 
-	private void testEingabe() { // "
-		KundenEingabeFeld ef = new KundenEingabeFeld(null); // "
-		ef.show(); // "
-	} // "
+	private void testEingabe() {
+		KundenEingabeFeld ef = new KundenEingabeFeld(null); 
+		ef.show(); 
+	} 
 
 	private void testReise() {
 		Reiseteilnehmer teilnehmenDialog = new Reiseteilnehmer(null);
 		teilnehmenDialog.show();
+	}
+	
+	private void testReiseAnlegen(){
+		ReiseAnlegenDialog neueReiseDialog = new ReiseAnlegenDialog(null);
+		neueReiseDialog.show();
 	}
 }

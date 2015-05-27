@@ -24,8 +24,16 @@ public class Reiseteilnehmer implements IReiseteilnehmer {
 
 	private JLabel labKdName;
 	private JTextField tfKdName;
+	
 	private JLabel labKdVorname;
 	private JTextField tfKdVorname;
+	
+	private JLabel labReiseID;
+	private JTextField tfReiseID;
+	
+	private JLabel labReiseZiel;
+	private JTextField tfReiseZiel;
+	
 	private JButton bnHinzufuegen;
 	private JButton bnFertig;
 
@@ -33,13 +41,15 @@ public class Reiseteilnehmer implements IReiseteilnehmer {
 
 	public Reiseteilnehmer(Kunde kunde) {
 		this.kunde = kunde;
-		frame = new JFrame("Kunde hinzufügen zu Reise");
+		frame = new JFrame("Kunde zu Reise hinzufügen");
 		labKdNr = new JLabel("Kundennummer:");
 		tfKdNr = new JTextField();
 		labKdName = new JLabel("Name:");
 		tfKdName = new JTextField();
 		labKdVorname = new JLabel("Vorname:");
 		tfKdVorname = new JTextField();
+		
+		
 
 		bnHinzufuegen = new JButton("Hinzufügen");
 		bnFertig = new JButton("Fertig");

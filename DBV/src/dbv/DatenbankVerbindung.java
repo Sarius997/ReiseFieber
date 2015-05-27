@@ -36,7 +36,7 @@ public class DatenbankVerbindung {
 		// dbTable eigentlich = "kunden"
 		dbPort = "5432";
 		dbName = "postgres";
-		dbTable = "test";
+		dbTable = "kunden";
 		dbUser = "postgres";
 		dbPassword = "1234";
 	}
@@ -363,7 +363,7 @@ public class DatenbankVerbindung {
 
 	public String[] doSearchByID(String id) throws Exception {
 
-		String[] result = new String[7];
+		String[] result = new String[8];
 		String querybkp = "(empty)";
 		try {
 			Connection conn = connect();
@@ -415,5 +415,55 @@ public class DatenbankVerbindung {
 					+ dbUser + ", P:" + dbPassword;
 		}
 		return result;
+	}
+
+	public void doCreateJourney(IReiseAnlegen reiseDaten) throws Exception {
+		String querybkp = "(empty)";
+		try {
+			Connection conn = connect();
+			if (conn == null)
+				return;
+
+			final Statement stmt = conn.createStatement();
+			ResultSet resSet = null;
+
+			/*
+			 * final java.util.List<String> captionLi = new
+			 * LinkedList<String>(); final java.util.List<String> valueLi = new
+			 * LinkedList<String>(); final String captions = ""; // ... final
+			 * String values = ""; // ...
+			 * 
+			 * StringBuilder qb = new StringBuilder();
+			 * qb.append("INSERT INTO "); qb.append(dbTable);
+			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
+			 * qb.append(";");
+			 */
+			String dbEingabe = quoted(reiseDaten.getReiseName()) + ", "
+					+ quoted(reiseDaten.getReiseZiel()) + ", "
+					+ quoted(reiseDaten.getTeilnehmerZahl()) + ", "
+					+ quoted(reiseDaten.getBeginn()) + ", "
+					+ quoted(reiseDaten.getEnde()) + ", "
+					+ quoted(reiseDaten.getPreisProPerson()) + ", "
+					+ quoted(reiseDaten.getKosten());
+			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
+			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
+			// final String query =
+			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
+			// // qb.toString();
+			final String query = "INSERT INTO reise"
+					+ " (name, ziel, teilnehmerzahl, beginn, ende, preisproperson, kosten) "
+					+ "VALUES (" + dbEingabe + ");";
+			querybkp = query;
+
+			System.out.println("SQL Statement is:\n" + query);
+
+			stmt.executeUpdate(query);// für Insert- und Update-Befehle
+			deallocateResources(resSet, stmt);
+		} catch (SQLException ex) {
+			final String s = "executed Insert Query\n" + querybkp + "\non S:"
+					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
+					+ dbUser + ", P:" + dbPassword;
+		}
+		
 	}
 }
