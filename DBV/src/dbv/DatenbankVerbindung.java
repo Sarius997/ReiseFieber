@@ -315,8 +315,7 @@ public class DatenbankVerbindung {
 		}
 	}
 
-	public void doInsertInNewJourney(IReiseteilnehmer kundenDaten)
-			throws Exception {
+	public void doInsertInNewJourney(IKundenReise kundenReise) throws Exception {
 
 		String querybkp = "(empty)";
 		try {
@@ -338,15 +337,14 @@ public class DatenbankVerbindung {
 			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
 			 * qb.append(";");
 			 */
-			String dbEingabe = quoted(kundenDaten.getNachname()) + ", "
-					+ quoted(kundenDaten.getVorname()) + ", "
-					+ quoted(kundenDaten.getKdNr());
+			String dbEingabe = quoted(kundenReise.getKundeID()) + ", "
+					+ quoted(kundenReise.getReiseID()) + ", 0";
 			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
 			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
 			// final String query =
 			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
 			// // qb.toString();
-			final String query = "INSERT INTO reiseteilnehmer (nachname, vorname, id) "
+			final String query = "INSERT INTO kundenreise (k_id, r_id, storno) "
 					+ "VALUES (" + dbEingabe + ");";
 			querybkp = query;
 
@@ -361,7 +359,7 @@ public class DatenbankVerbindung {
 		}
 	}
 
-	public String[] doSearchByID(String id) throws Exception {
+	public String[] doSearchByKundenID(String kundenID) throws Exception {
 
 		String[] result = new String[8];
 		String querybkp = "(empty)";
@@ -384,7 +382,7 @@ public class DatenbankVerbindung {
 			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
 			 * qb.append(";");
 			 */
-			String dbSuche = quoted(id);
+			String dbSuche = quoted(kundenID);
 			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
 			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
 			// final String query =
@@ -464,6 +462,61 @@ public class DatenbankVerbindung {
 					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
 					+ dbUser + ", P:" + dbPassword;
 		}
-		
+
+	}
+
+	public String[] doSearchByReiseID(String reiseID) throws Exception {
+		String[] result = new String[8];
+		String querybkp = "(empty)";
+		try {
+			Connection conn = connect();
+			if (conn == null)
+				return null;
+
+			final Statement statement = conn.createStatement();
+			ResultSet resultSet = null;
+
+			/*
+			 * final java.util.List<String> captionLi = new
+			 * LinkedList<String>(); final java.util.List<String> valueLi = new
+			 * LinkedList<String>(); final String captions = ""; // ... final
+			 * String values = ""; // ...
+			 * 
+			 * StringBuilder qb = new StringBuilder();
+			 * qb.append("INSERT INTO "); qb.append(dbTable);
+			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
+			 * qb.append(";");
+			 */
+			String dbSuche = quoted(reiseID);
+			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
+			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
+			// final String query =
+			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
+			// // qb.toString();
+			final String query = "SELECT * FROM public.reise" + " WHERE id="
+					+ dbSuche + ";";
+			querybkp = query;
+
+			System.out.println("SQL Statement is:\n" + query);
+
+			// ResultSet r = stmt.executeQuery(query); // nur für
+			// Select-Befehle!
+
+			resultSet = statement.executeQuery(querybkp);
+			// resultSet = executeQuery(querybkp);
+
+			while (resultSet.next()) {
+				for (int k = 1; k <= resultSet.getMetaData().getColumnCount(); k++) {
+					result[k - 1] = resultSet.getString(k);
+				}
+			}
+
+			deallocateResources(resultSet, statement);
+		} catch (SQLException ex) {
+			final String s = "executed Select Query\n" + querybkp + "\non S:"
+					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
+					+ dbUser + ", P:" + dbPassword;
+		}
+		return result;
 	}
 }
