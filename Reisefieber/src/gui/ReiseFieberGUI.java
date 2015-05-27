@@ -458,6 +458,7 @@ public class ReiseFieberGUI {
 	}
 	
 	private void testReiseStornieren(){
-		
+		ReiseStornierenDialog stornierenDialog = new ReiseStornierenDialog();
+		stornierenDialog.show();
 	}
 }

@@ -713,4 +713,88 @@ public class DatenbankVerbindung {
 		}
 		return result;
 	}
+	
+	public void doStorno(IStorno buchung) throws Exception{
+		String querybkp = "(empty)";
+		try {
+			Connection conn = connect();
+
+			final Statement statement = conn.createStatement();
+			ResultSet resultSet = null;
+			final String query = "UPDATE kundenreise "
+					+ "SET storno=true WHERE id=" + buchung.getBuchungsID();
+			querybkp = query;
+
+			System.out.println("SQL Statement is:\n" + query);
+
+			// ResultSet r = stmt.executeQuery(query); // nur für
+			// Select-Befehle!
+
+			resultSet = statement.executeQuery(querybkp);
+			// resultSet = executeQuery(querybkp);
+			
+
+			deallocateResources(resultSet, statement);
+		} catch (SQLException ex) {
+			final String s = "executed Select Query\n" + querybkp + "\non S:"
+					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
+					+ dbUser + ", P:" + dbPassword;
+		}		
+	}
+	
+	public String[] getBuchungByID(String buchungsID) throws Exception{
+		String[] result = new String[7];
+		String querybkp = "(empty)";
+		try {
+			Connection conn = connect();
+			if (conn == null)
+				return null;
+
+			final Statement statement = conn.createStatement();
+			ResultSet resultSet = null;
+
+			/*
+			 * final java.util.List<String> captionLi = new
+			 * LinkedList<String>(); final java.util.List<String> valueLi = new
+			 * LinkedList<String>(); final String captions = ""; // ... final
+			 * String values = ""; // ...
+			 * 
+			 * StringBuilder qb = new StringBuilder();
+			 * qb.append("INSERT INTO "); qb.append(dbTable);
+			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
+			 * qb.append(";");
+			 */
+			String dbSuche = quoted(buchungsID);
+			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
+			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
+			// final String query =
+			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
+			// // qb.toString();
+			final String query = "SELECT reise.id, reise.name, reise.ziel, kunden.id, kunden.nachname, kunden.vorname, kundenreise.storno "
+					+ "FROM kundenreise JOIN kunden ON kunden.id=kundenreise.k_id "
+					+ "JOIN reise ON reise.id=kundenreise.r_id WHERE kundenreise.id=" + buchungsID;
+			querybkp = query;
+
+			System.out.println("SQL Statement is:\n" + query);
+
+			// ResultSet r = stmt.executeQuery(query); // nur für
+			// Select-Befehle!
+
+			resultSet = statement.executeQuery(querybkp);
+			// resultSet = executeQuery(querybkp);
+
+			while (resultSet.next()) {
+				for (int k = 1; k <= resultSet.getMetaData().getColumnCount(); k++) {
+					result[k - 1] = resultSet.getString(k);
+				}
+			}
+
+			deallocateResources(resultSet, statement);
+		} catch (SQLException ex) {
+			final String s = "executed Select Query\n" + querybkp + "\non S:"
+					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
+					+ dbUser + ", P:" + dbPassword;
+		}
+		return result;
+	}
 }
