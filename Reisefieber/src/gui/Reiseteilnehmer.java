@@ -5,18 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.concurrent.LinkedTransferQueue;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import dbv.DatenbankVerbindung;
-import dbv.IKundenDaten;
-import dbv.IKundenReise;
 import kundenkartei.Kunde;
-import kundenkartei.KundenListe;
+import dbv.DatenbankVerbindung;
+import dbv.IKundenReise;
 
 public class Reiseteilnehmer implements IKundenReise {
 
@@ -95,31 +92,31 @@ public class Reiseteilnehmer implements IKundenReise {
 	private void addActionListeners() {
 
 		tfKdNr.addFocusListener(new FocusListener() {
-			
+
 			@Override
 			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
 				sucheKunde();
 			}
-			
+
 			@Override
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 
 		tfReiseID.addFocusListener(new FocusListener() {
-			
+
 			@Override
 			public void focusLost(FocusEvent e) {
 				sucheReise();
 			}
-			
+
 			@Override
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		bnFertig.addActionListener(new ActionListener() {
@@ -134,30 +131,28 @@ public class Reiseteilnehmer implements IKundenReise {
 		});
 	}
 
-	protected void sucheKunde(){
+	protected void sucheKunde() {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
-			String[] idSearch = dbv.doSearchByKundenID(getKundeID());			
+			String[] idSearch = dbv.doSearchByKundenID(getKundeID());
 			labShowKdName.setText(idSearch[1]);
 			labShowKdVorname.setText(idSearch[2]);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
 
-	protected void sucheReise(){
+	protected void sucheReise() {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
-			String[] idSearch = dbv.doSearchByReiseID(getReiseID());			
+			String[] idSearch = dbv.doSearchByReiseID(getReiseID());
 			labShowReiseName.setText(idSearch[1]);
 			labShowReiseZiel.setText(idSearch[2]);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	protected void hinzufuegen() {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {

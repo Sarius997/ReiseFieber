@@ -1,19 +1,15 @@
 package reiseFieber;
 
 import gui.ReiseFieberGUI;
-
-import java.util.Date;
-
-import kundenkartei.Kunde;
 import kundenkartei.KundenListe;
 
 public class ReiseFieber {
 	KundenListe kundenListe;
+	private static ReiseFieberGUI gui = new ReiseFieberGUI();
 
 	public static void main(String args[]) {
 		willkommensNachricht();
 		ReiseFieber r = new ReiseFieber();
-		ReiseFieberGUI gui = new ReiseFieberGUI();
 		gui.show();
 	}
 

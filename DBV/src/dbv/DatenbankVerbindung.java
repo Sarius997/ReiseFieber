@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class DatenbankVerbindung {
 
@@ -338,7 +339,7 @@ public class DatenbankVerbindung {
 			 * qb.append(";");
 			 */
 			String dbEingabe = quoted(kundenReise.getKundeID()) + ", "
-					+ quoted(kundenReise.getReiseID()) + ", 0";
+					+ quoted(kundenReise.getReiseID()) + ", false";
 			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
 			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
 			// final String query =
@@ -361,7 +362,7 @@ public class DatenbankVerbindung {
 
 	public String[] doSearchByKundenID(String kundenID) throws Exception {
 
-		String[] result = new String[8];
+		String[] result = new String[9];
 		String querybkp = "(empty)";
 		try {
 			Connection conn = connect();
@@ -462,7 +463,6 @@ public class DatenbankVerbindung {
 					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
 					+ dbUser + ", P:" + dbPassword;
 		}
-
 	}
 
 	public String[] doSearchByReiseID(String reiseID) throws Exception {
@@ -509,6 +509,200 @@ public class DatenbankVerbindung {
 				for (int k = 1; k <= resultSet.getMetaData().getColumnCount(); k++) {
 					result[k - 1] = resultSet.getString(k);
 				}
+			}
+
+			deallocateResources(resultSet, statement);
+		} catch (SQLException ex) {
+			final String s = "executed Select Query\n" + querybkp + "\non S:"
+					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
+					+ dbUser + ", P:" + dbPassword;
+		}
+		return result;
+	}
+
+	public String[][] kundenUebersicht() throws Exception {
+		String[][] result = null;
+		String querybkp = "(empty)";
+		try {
+			Connection conn = connect();
+			if (conn == null)
+				return null;
+
+			final Statement statement = conn.createStatement();
+			ResultSet resultSet = null;
+
+			/*
+			 * final java.util.List<String> captionLi = new
+			 * LinkedList<String>(); final java.util.List<String> valueLi = new
+			 * LinkedList<String>(); final String captions = ""; // ... final
+			 * String values = ""; // ...
+			 * 
+			 * StringBuilder qb = new StringBuilder();
+			 * qb.append("INSERT INTO "); qb.append(dbTable);
+			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
+			 * qb.append(";");
+			 */
+			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
+			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
+			// final String query =
+			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
+			// // qb.toString();
+			final String query = "SELECT * FROM public.kunden";
+			querybkp = query;
+
+			System.out.println("SQL Statement is:\n" + query);
+
+			// ResultSet r = stmt.executeQuery(query); // nur für
+			// Select-Befehle!
+
+			resultSet = statement.executeQuery(querybkp);
+			// resultSet = executeQuery(querybkp);
+
+			ArrayList<String[]> resultArrays = new ArrayList<String[]>(5);
+			while (resultSet.next()) {
+				String[] tmp = new String[8];
+				for (int k = 1; k <= resultSet.getMetaData().getColumnCount(); k++) {
+					tmp[k - 1] = resultSet.getString(k);
+				}
+				resultArrays.add(tmp);
+			}
+
+			result = new String[resultArrays.size()][8];
+			int i = 0;
+			for (Iterator iterator = resultArrays.iterator(); iterator
+					.hasNext(); i++) {
+				String[] strings = (String[]) iterator.next();
+				result[i] = strings;
+			}
+
+			deallocateResources(resultSet, statement);
+		} catch (SQLException ex) {
+			final String s = "executed Select Query\n" + querybkp + "\non S:"
+					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
+					+ dbUser + ", P:" + dbPassword;
+		}
+		return result;
+	}
+
+	public String[][] reiseUebersicht() throws Exception {
+		String[][] result = null;
+		String querybkp = "(empty)";
+		try {
+			Connection conn = connect();
+			if (conn == null)
+				return null;
+
+			final Statement statement = conn.createStatement();
+			ResultSet resultSet = null;
+
+			/*
+			 * final java.util.List<String> captionLi = new
+			 * LinkedList<String>(); final java.util.List<String> valueLi = new
+			 * LinkedList<String>(); final String captions = ""; // ... final
+			 * String values = ""; // ...
+			 * 
+			 * StringBuilder qb = new StringBuilder();
+			 * qb.append("INSERT INTO "); qb.append(dbTable);
+			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
+			 * qb.append(";");
+			 */
+			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
+			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
+			// final String query =
+			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
+			// // qb.toString();
+			final String query = "SELECT * FROM public.reise";
+			querybkp = query;
+
+			System.out.println("SQL Statement is:\n" + query);
+
+			// ResultSet r = stmt.executeQuery(query); // nur für
+			// Select-Befehle!
+
+			resultSet = statement.executeQuery(querybkp);
+			// resultSet = executeQuery(querybkp);
+
+			ArrayList<String[]> resultArrays = new ArrayList<String[]>(5);
+			while (resultSet.next()) {
+				String[] tmp = new String[8];
+				for (int k = 1; k <= resultSet.getMetaData().getColumnCount(); k++) {
+					tmp[k - 1] = resultSet.getString(k);
+				}
+				resultArrays.add(tmp);
+			}
+
+			result = new String[resultArrays.size()][8];
+			int i = 0;
+			for (Iterator iterator = resultArrays.iterator(); iterator
+					.hasNext(); i++) {
+				String[] strings = (String[]) iterator.next();
+				result[i] = strings;
+			}
+
+			deallocateResources(resultSet, statement);
+		} catch (SQLException ex) {
+			final String s = "executed Select Query\n" + querybkp + "\non S:"
+					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
+					+ dbUser + ", P:" + dbPassword;
+		}
+		return result;
+	}
+
+	public String[][] reiseTeilnehmerUebersicht() throws Exception {
+		String[][] result = null;
+		String querybkp = "(empty)";
+		try {
+			Connection conn = connect();
+			if (conn == null)
+				return null;
+
+			final Statement statement = conn.createStatement();
+			ResultSet resultSet = null;
+
+			/*
+			 * final java.util.List<String> captionLi = new
+			 * LinkedList<String>(); final java.util.List<String> valueLi = new
+			 * LinkedList<String>(); final String captions = ""; // ... final
+			 * String values = ""; // ...
+			 * 
+			 * StringBuilder qb = new StringBuilder();
+			 * qb.append("INSERT INTO "); qb.append(dbTable);
+			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
+			 * qb.append(";");
+			 */
+			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
+			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
+			// final String query =
+			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
+			// // qb.toString();
+			final String query = "SELECT reise.id, reise.name, reise.ziel, kunden.id, kunden.nachname, kunden.vorname, kundenreise.storno "
+					+ "FROM kundenreise JOIN kunden ON kunden.id=kundenreise.k_id "
+					+ "JOIN reise ON reise.id=kundenreise.r_id";
+			querybkp = query;
+
+			System.out.println("SQL Statement is:\n" + query);
+
+			// ResultSet r = stmt.executeQuery(query); // nur für
+			// Select-Befehle!
+
+			resultSet = statement.executeQuery(querybkp);
+			// resultSet = executeQuery(querybkp);
+
+			ArrayList<String[]> resultArrays = new ArrayList<String[]>(5);
+			while (resultSet.next()) {
+				String[] tmp = new String[7];
+				for (int k = 1; k <= resultSet.getMetaData().getColumnCount(); k++) {
+					tmp[k - 1] = resultSet.getString(k);
+				}
+				resultArrays.add(tmp);
+			}
+
+			result = new String[resultArrays.size()][8];
+			int i = 0;
+			for (Iterator iterator = resultArrays.iterator(); iterator
+					.hasNext(); i++) {
+				String[] strings = (String[]) iterator.next();
+				result[i] = strings;
 			}
 
 			deallocateResources(resultSet, statement);

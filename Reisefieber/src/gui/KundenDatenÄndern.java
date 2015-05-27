@@ -7,41 +7,40 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import kundenkartei.Kunde;
 import dbv.DatenbankVerbindung;
 import dbv.IKundenÄndern;
-import kundenkartei.Kunde;
 
 public class KundenDatenÄndern implements IKundenÄndern {
 	private JFrame frame;
 	private JLabel labID;
 	private JTextField tfID;
-	
+
 	private JLabel labKdName;
 	private JTextField tfKdName;
-	
+
 	private JLabel labKdVorname;
 	private JTextField tfKdVorname;
-	
+
 	private JLabel labWohnort;
 	private JTextField tfWohnort;
-	
+
 	private JLabel labGeburtsdatum;
-	private JTextField tfGeburtsdatum;	
+	private JTextField tfGeburtsdatum;
 
 	private JLabel labVolljaehrig;
 	private JTextField tfVolljaehrig;
-	
+
 	private JLabel labTelefon;
 	private JTextField tfTelefon;
-	
+
 	private JLabel labGeschlecht;
 	private JTextField tfGeschlecht;
-	
+
 	private JButton bnÄndern;
 	private JButton bnFertig;
 
@@ -50,28 +49,28 @@ public class KundenDatenÄndern implements IKundenÄndern {
 	public KundenDatenÄndern(Kunde kunde) {
 		this.kunde = kunde;
 		frame = new JFrame("Kundendaten ändern");
-		
+
 		labID = new JLabel("ID des zu ändernden Kunden:");
 		tfID = new JTextField();
-		
+
 		labKdName = new JLabel("Nachname:");
 		tfKdName = new JTextField();
-		
+
 		labKdVorname = new JLabel("Vorname:");
 		tfKdVorname = new JTextField();
 
 		labWohnort = new JLabel("Wohnort:");
 		tfWohnort = new JTextField();
-		
+
 		labGeburtsdatum = new JLabel("Geburtsdatum:");
 		tfGeburtsdatum = new JTextField();
-		
+
 		labVolljaehrig = new JLabel("Volljährig:");
 		tfVolljaehrig = new JTextField();
-		
+
 		labTelefon = new JLabel("Telefonnummer:");
 		tfTelefon = new JTextField();
-		
+
 		labGeschlecht = new JLabel("Geschlecht:");
 		tfGeschlecht = new JTextField();
 
@@ -103,20 +102,20 @@ public class KundenDatenÄndern implements IKundenÄndern {
 
 	private void addActionListeners() {
 		tfID.addFocusListener(new FocusListener() {
-			
+
 			@Override
 			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
 				suchen();
 			}
-			
+
 			@Override
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		bnFertig.addActionListener(new ActionListener() {
 
 			@Override
@@ -135,24 +134,24 @@ public class KundenDatenÄndern implements IKundenÄndern {
 	}
 
 	public void show() {
-		//TODO rework
+		// TODO rework
 		frame.pack();
 		frame.show();
 	}
-	
-	protected void suchen(){
+
+	protected void suchen() {
 		// TODO Auto-generated method stub
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
 			String[] idSearch = dbv.doSearchByKundenID(getID());
-			
+
 			tfKdName.setText(idSearch[1]);
 			tfKdVorname.setText(idSearch[2]);
-			tfWohnort.setText(idSearch[3]);	
+			tfWohnort.setText(idSearch[3]);
 			tfGeburtsdatum.setText(idSearch[4]);
 			tfVolljaehrig.setText(idSearch[5]);
-			tfTelefon.setText(idSearch[6]);	
-			tfGeschlecht.setText(idSearch[7]);	
+			tfTelefon.setText(idSearch[6]);
+			tfGeschlecht.setText(idSearch[7]);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
