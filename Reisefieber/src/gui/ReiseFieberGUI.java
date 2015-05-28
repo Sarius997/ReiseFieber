@@ -1,13 +1,9 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -76,8 +72,14 @@ public class ReiseFieberGUI {
 	private JMenuItem kundeSuchen;
 	private JMenuItem reiseStornieren;
 
+	private String[][] dataKunden;
+	private String[][] dataReisen;
+	private String[][] dataKundenReise;
+
 	// TODO rework
 	private int selectedRow = 0;
+	private String contentSelectedRowID;
+	private String addToJourney = "";
 
 	public ReiseFieberGUI() {
 		frame = new JFrame("ReiseFieber");
@@ -157,10 +159,6 @@ public class ReiseFieberGUI {
 		String[] columnKundenReise = { "Buchungsnummer", "Reisenummer",
 				"Reisename", "Reiseziel", "Kundennummer", "Nachname",
 				"Vorname", "Storno" };
-
-		String[][] dataKunden = null;
-		String[][] dataReisen = null;
-		String[][] dataKundenReise = null;
 		try {
 			dataKunden = new DatenbankVerbindung().kundenUebersicht();
 
@@ -207,8 +205,6 @@ public class ReiseFieberGUI {
 			});
 			tableKundenReise = new JTable(dataKundenReise, columnKundenReise);
 			tableKundenReise.repaint();
-			
-
 
 			scrollPaneKunden = new JScrollPane(tableKunden);
 			scrollPaneReisen = new JScrollPane(tableReisen);
@@ -218,7 +214,7 @@ public class ReiseFieberGUI {
 			tabPane.addTab("Kunden", scrollPaneKunden);
 			tabPane.addTab("Reisen", scrollPaneReisen);
 			tabPane.addTab("Anmeldungen", scrollPaneKundenReise);
-			
+
 			tabPane.repaint();
 
 		} catch (Exception e) {
@@ -233,42 +229,38 @@ public class ReiseFieberGUI {
 	private void addMouseListenersTables() {
 		acBearbeiten = new AbstractAction("Kunde bearbeiten") {
 			public void actionPerformed(ActionEvent e) {
-				// TODO take data from current selected customer/ journey
 				int selectedTable = tabPane.getSelectedIndex();
 				if (selectedTable == 0) {
 					selectedRow = tableKunden.getSelectedRow();
+					contentSelectedRowID = dataKunden[selectedRow][0];
 				} else if (selectedTable == 1) {
-					selectedRow = tableReisen.getSelectedRow();
+					contentSelectedRowID = null;
 				} else if (selectedTable == 2) {
-					selectedRow = tableKundenReise.getSelectedRow();
+					contentSelectedRowID = null;
 				}
 				testÄndern();
 			}
 		};
 		acKundeErstellen = new AbstractAction("Neuen Kunden anlegen") {
 			public void actionPerformed(ActionEvent e) {
-				// TODO take data from current selected customer/ journey
-				int selectedTable = tabPane.getSelectedIndex();
-				if (selectedTable == 0) {
-					selectedRow = tableKunden.getSelectedRow();
-				} else if (selectedTable == 1) {
-					selectedRow = tableReisen.getSelectedRow();
-				} else if (selectedTable == 2) {
-					selectedRow = tableKundenReise.getSelectedRow();
-				}
+				contentSelectedRowID = null;
 				testKundeAnlegen();
 			}
 		};
 		acZuReiseHinzufügen = new AbstractAction("Kunde zu Reise hinzufügen") {
 			public void actionPerformed(ActionEvent e) {
-				// TODO take data from current selected customer/ journey
 				int selectedTable = tabPane.getSelectedIndex();
 				if (selectedTable == 0) {
 					selectedRow = tableKunden.getSelectedRow();
+					contentSelectedRowID = dataKunden[selectedRow][0];
+					addToJourney = "Kunde";
 				} else if (selectedTable == 1) {
 					selectedRow = tableReisen.getSelectedRow();
+					contentSelectedRowID = dataReisen[selectedRow][0];
+					addToJourney = "Reise";
 				} else if (selectedTable == 2) {
-					selectedRow = tableKundenReise.getSelectedRow();
+					contentSelectedRowID = null;
+					addToJourney = "";
 				}
 				testReise();
 			}
@@ -276,29 +268,13 @@ public class ReiseFieberGUI {
 
 		acReiseErstellen = new AbstractAction("Neue Reise anlegen") {
 			public void actionPerformed(ActionEvent e) {
-				// TODO take data from current selected customer/ journey
-				int selectedTable = tabPane.getSelectedIndex();
-				if (selectedTable == 0) {
-					selectedRow = tableKunden.getSelectedRow();
-				} else if (selectedTable == 1) {
-					selectedRow = tableReisen.getSelectedRow();
-				} else if (selectedTable == 2) {
-					selectedRow = tableKundenReise.getSelectedRow();
-				}
+				contentSelectedRowID = null;
 				testReiseAnlegen();
 			}
 		};
 		acKundeSuchen = new AbstractAction("Kunde suchen") {
 			public void actionPerformed(ActionEvent e) {
-				// TODO take data from current selected customer/ journey
-				int selectedTable = tabPane.getSelectedIndex();
-				if (selectedTable == 0) {
-					selectedRow = tableKunden.getSelectedRow();
-				} else if (selectedTable == 1) {
-					selectedRow = tableReisen.getSelectedRow();
-				} else if (selectedTable == 2) {
-					selectedRow = tableKundenReise.getSelectedRow();
-				}
+				contentSelectedRowID = null;
 				testSuche();
 			}
 		};
@@ -307,11 +283,12 @@ public class ReiseFieberGUI {
 				// TODO take data from current selected customer/ journey
 				int selectedTable = tabPane.getSelectedIndex();
 				if (selectedTable == 0) {
-					selectedRow = tableKunden.getSelectedRow();
+					contentSelectedRowID = null;
 				} else if (selectedTable == 1) {
-					selectedRow = tableReisen.getSelectedRow();
+					contentSelectedRowID = null;
 				} else if (selectedTable == 2) {
 					selectedRow = tableKundenReise.getSelectedRow();
+					contentSelectedRowID = dataKundenReise[selectedRow][0];
 				}
 				testReiseStornieren();
 			}
@@ -518,33 +495,34 @@ public class ReiseFieberGUI {
 		});
 	}
 
-	private void testSuche() { // Hier werden die Fenster geöffnet
-		SucheKundeDialog suchDialog = new SucheKundeDialog(null);
+	private void testSuche() {
+		SucheKundeDialog suchDialog = new SucheKundeDialog();
 		suchDialog.show();
 	}
 
 	private void testÄndern() {
-		KundenDatenÄndern ändernDialog = new KundenDatenÄndern(null);
+		KundenDatenÄndern ändernDialog = new KundenDatenÄndern(
+				contentSelectedRowID);
 		ändernDialog.show();
 	}
 
 	private void testKundeAnlegen() {
-		KundenEingabeFeld ef = new KundenEingabeFeld(null);
-		ef.show();
+		KundenEingabeFeld eingabeFeld = new KundenEingabeFeld();
+		eingabeFeld.show();
 	}
 
 	private void testReise() {
-		Reiseteilnehmer teilnehmenDialog = new Reiseteilnehmer(null);
+		Reiseteilnehmer teilnehmenDialog = new Reiseteilnehmer(contentSelectedRowID, addToJourney);
 		teilnehmenDialog.show();
 	}
 
 	private void testReiseAnlegen() {
-		ReiseAnlegenDialog neueReiseDialog = new ReiseAnlegenDialog(null);
+		ReiseAnlegenDialog neueReiseDialog = new ReiseAnlegenDialog();
 		neueReiseDialog.show();
 	}
 
 	private void testReiseStornieren() {
-		ReiseStornierenDialog stornierenDialog = new ReiseStornierenDialog();
+		ReiseStornierenDialog stornierenDialog = new ReiseStornierenDialog(contentSelectedRowID);
 		stornierenDialog.show();
 	}
 }

@@ -45,7 +45,7 @@ public class ReiseStornierenDialog implements IStorno {
 	private JButton bnBestaetigen;
 	private JButton bnAbbrechen;
 
-	public ReiseStornierenDialog() {
+	public ReiseStornierenDialog(String selectedID) {
 		labID = new JLabel("Buchungsnummer:");
 		tfID = new JTextField();
 
@@ -71,7 +71,13 @@ public class ReiseStornierenDialog implements IStorno {
 		tfStorno = new JLabel();		
 
 		bnBestaetigen = new JButton("Buchung stornieren");
-		bnAbbrechen = new JButton("Abbrechen");
+		bnAbbrechen = new JButton("Abbrechen");		
+		
+		
+		if(selectedID!= null){
+			sucheBuchung(selectedID);
+		}		
+		
 
 		frame = new JFrame("Buchung stornieren");
 		frame.setLayout(new GridLayout(0, 2, 10, 10));
@@ -105,7 +111,7 @@ public class ReiseStornierenDialog implements IStorno {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				sucheBuchung();
+				sucheBuchung(getBuchungsID());
 			}
 
 			@Override
@@ -133,10 +139,11 @@ public class ReiseStornierenDialog implements IStorno {
 		frame.show();
 	}
 
-	protected void sucheBuchung() {
+	protected void sucheBuchung(String searchId) {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
-			String[] buchungSearch = dbv.getBuchungByID(getBuchungsID());
+			String[] buchungSearch = dbv.getBuchungByID(searchId);
+			tfID.setText(searchId);
 			tfK_ID.setText(buchungSearch[0]);
 			tfKdName.setText(buchungSearch[1]);
 			tfKdVorname.setText(buchungSearch[2]);

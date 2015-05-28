@@ -39,10 +39,7 @@ public class Reiseteilnehmer implements IKundenReise {
 	private JButton bnHinzufuegen;
 	private JButton bnFertig;
 
-	private Kunde kunde;
-
-	public Reiseteilnehmer(Kunde kunde) {
-		this.kunde = kunde;
+	public Reiseteilnehmer(String selectedID, String selectedTable) {
 		frame = new JFrame("Kunde zu Reise hinzufügen");
 		labKdNr = new JLabel("Kundennummer:");
 		tfKdNr = new JTextField();
@@ -62,6 +59,15 @@ public class Reiseteilnehmer implements IKundenReise {
 
 		bnHinzufuegen = new JButton("Hinzufügen");
 		bnFertig = new JButton("Fertig");
+		
+		
+		if(selectedID != null && selectedTable != null){
+			if(selectedTable.equals("Kunde")){
+				sucheKunde(selectedID);
+			} else if (selectedTable.equals("Reise")){
+				sucheReise(selectedID);
+			}
+		}
 
 		frame.setLayout(new GridLayout(0, 2, 10, 10));
 		frame.add(labKdNr);
@@ -96,7 +102,7 @@ public class Reiseteilnehmer implements IKundenReise {
 			@Override
 			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
-				sucheKunde();
+				sucheKunde(getKundeID());
 			}
 
 			@Override
@@ -110,7 +116,7 @@ public class Reiseteilnehmer implements IKundenReise {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				sucheReise();
+				sucheReise(getReiseID());
 			}
 
 			@Override
@@ -131,10 +137,11 @@ public class Reiseteilnehmer implements IKundenReise {
 		});
 	}
 
-	protected void sucheKunde() {
+	protected void sucheKunde(String searchId) {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
-			String[] idSearch = dbv.doSearchByKundenID(getKundeID());
+			String[] idSearch = dbv.doSearchByKundenID(searchId);
+			tfKdNr.setText(searchId);
 			labShowKdName.setText(idSearch[1]);
 			labShowKdVorname.setText(idSearch[2]);
 		} catch (Exception e) {
@@ -142,10 +149,11 @@ public class Reiseteilnehmer implements IKundenReise {
 		}
 	}
 
-	protected void sucheReise() {
+	protected void sucheReise(String searchId) {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
-			String[] idSearch = dbv.doSearchByReiseID(getReiseID());
+			String[] idSearch = dbv.doSearchByReiseID(searchId);
+			tfReiseID.setText(searchId);
 			labShowReiseName.setText(idSearch[1]);
 			labShowReiseZiel.setText(idSearch[2]);
 		} catch (Exception e) {

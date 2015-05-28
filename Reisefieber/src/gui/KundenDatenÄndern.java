@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import kundenkartei.Kunde;
 import dbv.DatenbankVerbindung;
 import dbv.IKundenÄndern;
 
@@ -47,10 +46,7 @@ public class KundenDatenÄndern implements IKundenÄndern {
 	private JButton bnÄndern;
 	private JButton bnFertig;
 
-	private Kunde kunde;
-
-	public KundenDatenÄndern(Kunde kunde) {
-		this.kunde = kunde;
+	public KundenDatenÄndern(String selectedID) {
 		frame = new JFrame("Kundendaten ändern");
 
 		labID = new JLabel("ID des zu ändernden Kunden:");
@@ -84,6 +80,10 @@ public class KundenDatenÄndern implements IKundenÄndern {
 		bnFertig = new JButton("Fertig");
 
 		frame.setLayout(new GridLayout(0, 2, 10, 10));
+		
+		if(selectedID!= null){
+			suchen(selectedID);
+		}
 
 		frame.add(labID);
 		frame.add(tfID);
@@ -115,7 +115,7 @@ public class KundenDatenÄndern implements IKundenÄndern {
 			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
 				if (tfID != null && !tfID.equals("")) {
-					suchen();
+					suchen(getID());
 				}
 			}
 
@@ -144,17 +144,16 @@ public class KundenDatenÄndern implements IKundenÄndern {
 	}
 
 	public void show() {
-		// TODO rework
 		frame.pack();
 		frame.show();
 	}
 
-	protected void suchen() {
+	protected void suchen(String searchId) {
 		// TODO Auto-generated method stub
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
-			String[] idSearch = dbv.doSearchByKundenID(getID());
-
+			String[] idSearch = dbv.doSearchByKundenID(searchId);
+			tfID.setText(searchId);
 			tfKdName.setText(idSearch[1]);
 			tfKdVorname.setText(idSearch[2]);
 			tfGeschlecht.setText(idSearch[3]);

@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import kundenkartei.Kunde;
 import dbv.DatenbankVerbindung;
 import dbv.IReiseAnlegen;
 
@@ -18,7 +17,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 
 	private JLabel labName;
 	private JTextField tfName;
-	
+
 	private JLabel labZiel;
 	private JTextField tfZiel;
 	private JLabel labTeilnehmerzahl;
@@ -31,18 +30,15 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 	private JTextField tfPreisProPerson;
 	private JLabel labKosten;
 	private JTextField tfKosten;
-	
+
 	private JButton bnHinzufuegen;
 	private JButton bnFertig;
 
-	private Kunde kunde;
-
-	public ReiseAnlegenDialog(Kunde kunde) {
-		this.kunde = kunde;
+	public ReiseAnlegenDialog() {
 		frame = new JFrame("Reise anlegen");
 		labName = new JLabel("Reisename:");
 		tfName = new JTextField();
-		
+
 		labZiel = new JLabel("Reiseziel:");
 		tfZiel = new JTextField();
 		labTeilnehmerzahl = new JLabel("Teilnehmerzahl:");
@@ -62,7 +58,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 		frame.setLayout(new GridLayout(0, 2, 10, 10));
 		frame.add(labName);
 		frame.add(tfName);
-		
+
 		frame.add(labZiel);
 		frame.add(tfZiel);
 		frame.add(labTeilnehmerzahl);

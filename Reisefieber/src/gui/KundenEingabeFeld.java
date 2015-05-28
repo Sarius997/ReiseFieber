@@ -91,10 +91,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 		this.tfWohnort = tfWohnort;
 	}
 
-	private Kunde kunde;
-
-	public KundenEingabeFeld(Kunde kunde) {
-		this.kunde = kunde;
+	public KundenEingabeFeld() {
 		frame = new JFrame("Kunde hinzufügen");
 		// labKdNr=new JLabel("Kundennummer:");
 		// tfKdNr=new JTextField();

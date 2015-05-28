@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import kundenkartei.KundenListe;
 import dbv.DatenbankVerbindung;
 import dbv.IKundenSuchen;
 
@@ -26,9 +25,8 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 	private JTextField tfKdName;
 	private JButton bnSuchen;
 	private JButton bnAbbrechen;
-	KundenListe kunden;
 
-	public SucheKundeDialog(KundenListe kunden) {
+	public SucheKundeDialog() {
 		frame = new JFrame();
 		frame.setTitle("Suche");
 		labEingebeaufforderung = new JLabel(
@@ -39,7 +37,6 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 		tfKdName = new JTextField();
 		bnSuchen = new JButton("Suchen");
 		bnAbbrechen = new JButton("Abbrechen");
-		this.kunden = kunden;
 
 		frame.setLayout(new BorderLayout());
 		JPanel buttonPanel = new JPanel();
