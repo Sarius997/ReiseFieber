@@ -24,8 +24,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import reiseFieber.ReiseFieber;
 import dbv.DatenbankVerbindung;
 
 public class ReiseFieberGUI {
@@ -54,6 +56,10 @@ public class ReiseFieberGUI {
 	private JLabel statusLabel;
 	private JPanel statusPanel;
 
+	private DefaultTableModel modelKunden;
+	private DefaultTableModel modelReisen;
+	private DefaultTableModel modelKundenReise;
+
 	private JPopupMenu popupKunden;
 	private JPopupMenu popupReisen;
 	private JPopupMenu popupKundenReise;
@@ -81,7 +87,12 @@ public class ReiseFieberGUI {
 	private String contentSelectedRowID;
 	private String addToJourney = "";
 
-	public ReiseFieberGUI() {
+	private ReiseFieber reiseFieber;
+	
+	// TODO test and rework
+	public ReiseFieberGUI(ReiseFieber reiseFieber) {
+		this.reiseFieber = reiseFieber;
+		
 		frame = new JFrame("ReiseFieber");
 		neuerKunde = new JButton("Kunde erstellen");
 		sucheKunde = new JButton("Kunden suchen");
@@ -149,8 +160,17 @@ public class ReiseFieberGUI {
 
 		addMouseListenersTables();
 	}
+	
+	public void stop(){
+		frame.dispose();
+	}
 
 	private void loadTableData() {
+
+		tableKunden = new JTable();
+		tableReisen = new JTable();
+		tableKundenReise = new JTable();
+
 		String[] columnKunden = { "ID", "Nachname", "Vorname", "Geschlecht",
 				"Geburtstag", "Volljährig", "Telefonnummer", "Adresse",
 				"Postleitzahl", "Wohnort" };
@@ -169,8 +189,13 @@ public class ReiseFieberGUI {
 					return tmp1 - tmp2;
 				}
 			});
-			tableKunden = new JTable(dataKunden, columnKunden);
-			tableKunden.repaint();
+			/*
+			 * tableKunden = new JTable(dataKunden, columnKunden);
+			 * tableKunden.repaint();
+			 */
+			modelKunden = new DefaultTableModel(dataKunden, columnKunden);
+			modelKunden.fireTableStructureChanged();
+			tableKunden.setModel(modelKunden);
 
 			dataReisen = new DatenbankVerbindung().reiseUebersicht();
 
@@ -181,8 +206,13 @@ public class ReiseFieberGUI {
 					return tmp1 - tmp2;
 				}
 			});
-			tableReisen = new JTable(dataReisen, columnReisen);
-			tableReisen.repaint();
+			/*
+			 * tableReisen = new JTable(dataReisen, columnReisen);
+			 * tableReisen.repaint();
+			 */
+			modelReisen = new DefaultTableModel(dataReisen, columnReisen);
+			modelReisen.fireTableStructureChanged();
+			tableReisen.setModel(modelReisen);
 
 			dataKundenReise = new DatenbankVerbindung()
 					.reiseTeilnehmerUebersicht();
@@ -203,8 +233,17 @@ public class ReiseFieberGUI {
 					return tmp1 - tmp2;
 				}
 			});
-			tableKundenReise = new JTable(dataKundenReise, columnKundenReise);
-			tableKundenReise.repaint();
+			/*
+			 * tableKundenReise = new JTable(dataKundenReise,
+			 * columnKundenReise); tableKundenReise.repaint();
+			 */
+
+			modelKundenReise = new DefaultTableModel(dataKundenReise,
+					columnKundenReise);
+			modelKundenReise.fireTableStructureChanged();
+			tableKundenReise.setModel(modelKundenReise);
+			
+			
 
 			scrollPaneKunden = new JScrollPane(tableKunden);
 			scrollPaneReisen = new JScrollPane(tableReisen);
@@ -214,7 +253,12 @@ public class ReiseFieberGUI {
 			tabPane.addTab("Kunden", scrollPaneKunden);
 			tabPane.addTab("Reisen", scrollPaneReisen);
 			tabPane.addTab("Anmeldungen", scrollPaneKundenReise);
-
+			
+			
+			tableKunden.repaint();
+			tableReisen.repaint();
+			tableKundenReise.repaint();
+			
 			tabPane.repaint();
 
 		} catch (Exception e) {
@@ -482,7 +526,9 @@ public class ReiseFieberGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				loadTableData();
+				
+				// TODO only temporary --> rework
+				reiseFieber.reloadGui();
 			}
 		});
 		beenden.addActionListener(new ActionListener() {
@@ -512,7 +558,8 @@ public class ReiseFieberGUI {
 	}
 
 	private void testReise() {
-		Reiseteilnehmer teilnehmenDialog = new Reiseteilnehmer(contentSelectedRowID, addToJourney);
+		Reiseteilnehmer teilnehmenDialog = new Reiseteilnehmer(
+				contentSelectedRowID, addToJourney);
 		teilnehmenDialog.show();
 	}
 
@@ -522,7 +569,8 @@ public class ReiseFieberGUI {
 	}
 
 	private void testReiseStornieren() {
-		ReiseStornierenDialog stornierenDialog = new ReiseStornierenDialog(contentSelectedRowID);
+		ReiseStornierenDialog stornierenDialog = new ReiseStornierenDialog(
+				contentSelectedRowID);
 		stornierenDialog.show();
 	}
 }
