@@ -7,4 +7,6 @@ public interface IKundenDaten {
 	public String getGeburtstag();
 	public String getTelefonnummer();
 	public String getGeschlecht();
+	public String getAdresse();
+	public String getPostleitzahl();
 }

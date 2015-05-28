@@ -41,9 +41,9 @@ public class ReiseFieberGUI {
 	private JButton addToReise;
 	private JButton neueReise;
 	private JButton bnReiseStornieren;
-	
+
 	private JButton bnRefresh;
-	
+
 	private JButton beenden;
 
 	private JMenuBar menuBar;
@@ -75,12 +75,9 @@ public class ReiseFieberGUI {
 	private JMenuItem reiseErstellen;
 	private JMenuItem kundeSuchen;
 	private JMenuItem reiseStornieren;
-	
+
 	// TODO rework
 	private int selectedRow = 0;
-	
-	
-	
 
 	public ReiseFieberGUI() {
 		frame = new JFrame("ReiseFieber");
@@ -90,9 +87,9 @@ public class ReiseFieberGUI {
 		addToReise = new JButton("Kunden zu Reise hinzufügen");
 		neueReise = new JButton("Neue Reise anlegen");
 		bnReiseStornieren = new JButton("Reise stornieren");
-		
+
 		bnRefresh = new JButton("Tabellen neu laden");
-		
+
 		beenden = new JButton("Beenden");
 
 		menuBar = new JMenuBar();
@@ -102,9 +99,9 @@ public class ReiseFieberGUI {
 		menuBar.add(addToReise);
 		menuBar.add(neueReise);
 		menuBar.add(bnReiseStornieren);
-		
+
 		menuBar.add(bnRefresh);
-		
+
 		menuBar.add(beenden);
 		frame.setJMenuBar(menuBar);
 		/*
@@ -152,12 +149,14 @@ public class ReiseFieberGUI {
 	}
 
 	private void loadTableData() {
-		String[] columnKunden = { "ID", "Nachname", "Vorname", "Wohnort",
-				"Geburtstag", "Volljährig", "Telefonnummer", "Geschlecht" };
+		String[] columnKunden = { "ID", "Nachname", "Vorname", "Geschlecht",
+				"Geburtstag", "Volljährig", "Telefonnummer", "Adresse",
+				"Postleitzahl", "Wohnort" };
 		String[] columnReisen = { "ID", "Name", "Ziel", "Teilnehmerzahl",
 				"Beginn", "Ende", "Preis pro Person", "Kosten" };
-		String[] columnKundenReise = { "Buchungsnummer", "Reisenummer", "Reisename", "Reiseziel",
-				"Kundennummer", "Nachname", "Vorname", "Storno" };
+		String[] columnKundenReise = { "Buchungsnummer", "Reisenummer",
+				"Reisename", "Reiseziel", "Kundennummer", "Nachname",
+				"Vorname", "Storno" };
 
 		String[][] dataKunden = null;
 		String[][] dataReisen = null;
@@ -185,7 +184,7 @@ public class ReiseFieberGUI {
 				}
 			});
 			tableReisen = new JTable(dataReisen, columnReisen);
-			tableReisen.repaint();			
+			tableReisen.repaint();
 
 			dataKundenReise = new DatenbankVerbindung()
 					.reiseTeilnehmerUebersicht();
@@ -208,19 +207,23 @@ public class ReiseFieberGUI {
 			});
 			tableKundenReise = new JTable(dataKundenReise, columnKundenReise);
 			tableKundenReise.repaint();
+			
+
+
+			scrollPaneKunden = new JScrollPane(tableKunden);
+			scrollPaneReisen = new JScrollPane(tableReisen);
+			scrollPaneKundenReise = new JScrollPane(tableKundenReise);
+
+			tabPane = new JTabbedPane();
+			tabPane.addTab("Kunden", scrollPaneKunden);
+			tabPane.addTab("Reisen", scrollPaneReisen);
+			tabPane.addTab("Anmeldungen", scrollPaneKundenReise);
+			
+			tabPane.repaint();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		scrollPaneKunden = new JScrollPane(tableKunden);
-		scrollPaneReisen = new JScrollPane(tableReisen);
-		scrollPaneKundenReise = new JScrollPane(tableKundenReise);
-
-		tabPane = new JTabbedPane();
-		tabPane.addTab("Kunden", scrollPaneKunden);
-		tabPane.addTab("Reisen", scrollPaneReisen);
-		tabPane.addTab("Anmeldungen", scrollPaneKundenReise);
 	}
 
 	/**
@@ -231,9 +234,9 @@ public class ReiseFieberGUI {
 		acBearbeiten = new AbstractAction("Kunde bearbeiten") {
 			public void actionPerformed(ActionEvent e) {
 				// TODO take data from current selected customer/ journey
-				int selectedTable= tabPane.getSelectedIndex();
+				int selectedTable = tabPane.getSelectedIndex();
 				if (selectedTable == 0) {
-					selectedRow = tableKunden.getSelectedRow();					
+					selectedRow = tableKunden.getSelectedRow();
 				} else if (selectedTable == 1) {
 					selectedRow = tableReisen.getSelectedRow();
 				} else if (selectedTable == 2) {
@@ -245,9 +248,9 @@ public class ReiseFieberGUI {
 		acKundeErstellen = new AbstractAction("Neuen Kunden anlegen") {
 			public void actionPerformed(ActionEvent e) {
 				// TODO take data from current selected customer/ journey
-				int selectedTable= tabPane.getSelectedIndex();
+				int selectedTable = tabPane.getSelectedIndex();
 				if (selectedTable == 0) {
-					selectedRow = tableKunden.getSelectedRow();					
+					selectedRow = tableKunden.getSelectedRow();
 				} else if (selectedTable == 1) {
 					selectedRow = tableReisen.getSelectedRow();
 				} else if (selectedTable == 2) {
@@ -259,9 +262,9 @@ public class ReiseFieberGUI {
 		acZuReiseHinzufügen = new AbstractAction("Kunde zu Reise hinzufügen") {
 			public void actionPerformed(ActionEvent e) {
 				// TODO take data from current selected customer/ journey
-				int selectedTable= tabPane.getSelectedIndex();
+				int selectedTable = tabPane.getSelectedIndex();
 				if (selectedTable == 0) {
-					selectedRow = tableKunden.getSelectedRow();					
+					selectedRow = tableKunden.getSelectedRow();
 				} else if (selectedTable == 1) {
 					selectedRow = tableReisen.getSelectedRow();
 				} else if (selectedTable == 2) {
@@ -274,9 +277,9 @@ public class ReiseFieberGUI {
 		acReiseErstellen = new AbstractAction("Neue Reise anlegen") {
 			public void actionPerformed(ActionEvent e) {
 				// TODO take data from current selected customer/ journey
-				int selectedTable= tabPane.getSelectedIndex();
+				int selectedTable = tabPane.getSelectedIndex();
 				if (selectedTable == 0) {
-					selectedRow = tableKunden.getSelectedRow();					
+					selectedRow = tableKunden.getSelectedRow();
 				} else if (selectedTable == 1) {
 					selectedRow = tableReisen.getSelectedRow();
 				} else if (selectedTable == 2) {
@@ -288,9 +291,9 @@ public class ReiseFieberGUI {
 		acKundeSuchen = new AbstractAction("Kunde suchen") {
 			public void actionPerformed(ActionEvent e) {
 				// TODO take data from current selected customer/ journey
-				int selectedTable= tabPane.getSelectedIndex();
+				int selectedTable = tabPane.getSelectedIndex();
 				if (selectedTable == 0) {
-					selectedRow = tableKunden.getSelectedRow();					
+					selectedRow = tableKunden.getSelectedRow();
 				} else if (selectedTable == 1) {
 					selectedRow = tableReisen.getSelectedRow();
 				} else if (selectedTable == 2) {
@@ -302,9 +305,9 @@ public class ReiseFieberGUI {
 		acReiseStornieren = new AbstractAction("Reise stornieren") {
 			public void actionPerformed(ActionEvent e) {
 				// TODO take data from current selected customer/ journey
-				int selectedTable= tabPane.getSelectedIndex();
+				int selectedTable = tabPane.getSelectedIndex();
 				if (selectedTable == 0) {
-					selectedRow = tableKunden.getSelectedRow();					
+					selectedRow = tableKunden.getSelectedRow();
 				} else if (selectedTable == 1) {
 					selectedRow = tableReisen.getSelectedRow();
 				} else if (selectedTable == 2) {
@@ -312,14 +315,14 @@ public class ReiseFieberGUI {
 				}
 				testReiseStornieren();
 			}
-		};		
+		};
 
 		bearbeiten = new JMenuItem(acBearbeiten);
 		kundeErstellen = new JMenuItem(acKundeErstellen);
 		zuReiseHinzufügen = new JMenuItem(acZuReiseHinzufügen);
 		reiseErstellen = new JMenuItem(acReiseErstellen);
 		kundeSuchen = new JMenuItem(acKundeSuchen);
-		
+
 		reiseStornieren = new JMenuItem(acReiseStornieren);
 
 		// Add listener to components that can bring up popup menus.
@@ -380,7 +383,8 @@ public class ReiseFieberGUI {
 					} else if (index == 1) {
 						popupReisen.show(e.getComponent(), e.getX(), e.getY());
 					} else if (index == 2) {
-						popupKundenReise.show(e.getComponent(), e.getX(), e.getY());
+						popupKundenReise.show(e.getComponent(), e.getX(),
+								e.getY());
 					}
 				}
 			}
@@ -538,8 +542,8 @@ public class ReiseFieberGUI {
 		ReiseAnlegenDialog neueReiseDialog = new ReiseAnlegenDialog(null);
 		neueReiseDialog.show();
 	}
-	
-	private void testReiseStornieren(){
+
+	private void testReiseStornieren() {
 		ReiseStornierenDialog stornierenDialog = new ReiseStornierenDialog();
 		stornierenDialog.show();
 	}

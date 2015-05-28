@@ -14,4 +14,8 @@ public interface IKundenÄndern {
 	public String getGeschlecht();
 
 	public String getID();
+	
+	public String getAdresse();
+	
+	public String getPostleitzahl();
 }

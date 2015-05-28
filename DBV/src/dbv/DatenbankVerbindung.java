@@ -186,7 +186,9 @@ public class DatenbankVerbindung {
 					+ quoted(kundenDaten.getWohnort()) + ", "
 					+ quoted(kundenDaten.getGeburtstag()) + ", "
 					+ quoted(kundenDaten.getTelefonnummer()) + ", "
-					+ quoted(kundenDaten.getGeschlecht());
+					+ quoted(kundenDaten.getGeschlecht()) + ", "
+					+ quoted(kundenDaten.getAdresse()) + ", "
+					+ quoted(kundenDaten.getPostleitzahl());
 			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
 			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
 			// final String query =
@@ -194,7 +196,7 @@ public class DatenbankVerbindung {
 			// // qb.toString();
 			final String query = "INSERT INTO "
 					+ dbTable
-					+ " (nachname, vorname, wohnort, geburtstag, telefonnummer, geschlecht) "
+					+ " (nachname, vorname, wohnort, geburtstag, telefonnummer, geschlecht, adresse, postleitzahl) "
 					+ "VALUES (" + dbEingabe + ");";
 			querybkp = query;
 
@@ -301,7 +303,9 @@ public class DatenbankVerbindung {
 					+ quoted(kundenDaten.getWohnort()) + ", geburtstag="
 					+ quoted(kundenDaten.getGeburtstag()) + ", telefonnummer="
 					+ quoted(kundenDaten.getTelefonnummer()) + ", geschlecht="
-					+ quoted(kundenDaten.getGeschlecht()) + " WHERE id="
+					+ quoted(kundenDaten.getGeschlecht()) + ", adresse="
+					+ quoted(kundenDaten.getAdresse()) + ", postleitzahl"
+					+ quoted(kundenDaten.getPostleitzahl()) + " WHERE id="
 					+ quoted(kundenDaten.getID()) + ";";
 			querybkp = query;
 
@@ -389,7 +393,9 @@ public class DatenbankVerbindung {
 			// final String query =
 			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
 			// // qb.toString();
-			final String query = "SELECT * FROM public." + dbTable
+			final String query = "SELECT id, nachname, vorname, "
+					+ "geschlecht, geburtstag, telefonnummer, "
+					+ "adresse, postleitzahl, wohnort FROM " + dbTable
 					+ " WHERE id=" + dbSuche + ";";
 			querybkp = query;
 
@@ -547,7 +553,9 @@ public class DatenbankVerbindung {
 			// final String query =
 			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
 			// // qb.toString();
-			final String query = "SELECT * FROM public.kunden";
+			final String query = "SELECT id, nachname, vorname, "
+					+ "geschlecht, geburtstag, volljaehrig, telefonnummer, "
+					+ "adresse, postleitzahl, wohnort FROM public.kunden";
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -560,7 +568,7 @@ public class DatenbankVerbindung {
 
 			ArrayList<String[]> resultArrays = new ArrayList<String[]>(5);
 			while (resultSet.next()) {
-				String[] tmp = new String[8];
+				String[] tmp = new String[10];
 				for (int k = 1; k <= resultSet.getMetaData().getColumnCount(); k++) {
 					tmp[k - 1] = resultSet.getString(k);
 				}
@@ -713,8 +721,8 @@ public class DatenbankVerbindung {
 		}
 		return result;
 	}
-	
-	public void doStorno(IStorno buchung) throws Exception{
+
+	public void doStorno(IStorno buchung) throws Exception {
 		String querybkp = "(empty)";
 		try {
 			Connection conn = connect();
@@ -732,17 +740,16 @@ public class DatenbankVerbindung {
 
 			resultSet = statement.executeQuery(querybkp);
 			// resultSet = executeQuery(querybkp);
-			
 
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
 					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
 					+ dbUser + ", P:" + dbPassword;
-		}		
+		}
 	}
-	
-	public String[] getBuchungByID(String buchungsID) throws Exception{
+
+	public String[] getBuchungByID(String buchungsID) throws Exception {
 		String[] result = new String[7];
 		String querybkp = "(empty)";
 		try {
@@ -772,7 +779,8 @@ public class DatenbankVerbindung {
 			// // qb.toString();
 			final String query = "SELECT reise.id, reise.name, reise.ziel, kunden.id, kunden.nachname, kunden.vorname, kundenreise.storno "
 					+ "FROM kundenreise JOIN kunden ON kunden.id=kundenreise.k_id "
-					+ "JOIN reise ON reise.id=kundenreise.r_id WHERE kundenreise.id=" + buchungsID;
+					+ "JOIN reise ON reise.id=kundenreise.r_id WHERE kundenreise.id="
+					+ buchungsID;
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);

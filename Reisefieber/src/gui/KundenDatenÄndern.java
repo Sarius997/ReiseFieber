@@ -32,14 +32,17 @@ public class KundenDatenÄndern implements IKundenÄndern {
 	private JLabel labGeburtsdatum;
 	private JTextField tfGeburtsdatum;
 
-	private JLabel labVolljaehrig;
-	private JTextField tfVolljaehrig;
-
 	private JLabel labTelefon;
 	private JTextField tfTelefon;
 
 	private JLabel labGeschlecht;
 	private JTextField tfGeschlecht;
+
+	private JLabel labAdresse;
+	private JTextField tfAdresse;
+
+	private JLabel labPostleitzahl;
+	private JTextField tfPostleitzahl;
 
 	private JButton bnÄndern;
 	private JButton bnFertig;
@@ -65,14 +68,17 @@ public class KundenDatenÄndern implements IKundenÄndern {
 		labGeburtsdatum = new JLabel("Geburtsdatum:");
 		tfGeburtsdatum = new JTextField();
 
-		labVolljaehrig = new JLabel("Volljährig:");
-		tfVolljaehrig = new JTextField();
-
 		labTelefon = new JLabel("Telefonnummer:");
 		tfTelefon = new JTextField();
 
 		labGeschlecht = new JLabel("Geschlecht:");
 		tfGeschlecht = new JTextField();
+
+		labAdresse = new JLabel("Adresse:");
+		tfAdresse = new JTextField();
+
+		labPostleitzahl = new JLabel("Postleitzahl:");
+		tfPostleitzahl = new JTextField();
 
 		bnÄndern = new JButton("Ändern");
 		bnFertig = new JButton("Fertig");
@@ -85,16 +91,18 @@ public class KundenDatenÄndern implements IKundenÄndern {
 		frame.add(tfKdName);
 		frame.add(labKdVorname);
 		frame.add(tfKdVorname);
-		frame.add(labWohnort);
-		frame.add(tfWohnort);
-		frame.add(labGeburtsdatum);
-		frame.add(tfGeburtsdatum);
-		frame.add(labVolljaehrig);
-		frame.add(tfVolljaehrig);
-		frame.add(labTelefon);
-		frame.add(tfTelefon);
 		frame.add(labGeschlecht);
 		frame.add(tfGeschlecht);
+		frame.add(labGeburtsdatum);
+		frame.add(tfGeburtsdatum);
+		frame.add(labTelefon);
+		frame.add(tfTelefon);
+		frame.add(labAdresse);
+		frame.add(tfAdresse);
+		frame.add(labPostleitzahl);
+		frame.add(tfPostleitzahl);
+		frame.add(labWohnort);
+		frame.add(tfWohnort);
 		frame.add(bnÄndern);
 		frame.add(bnFertig);
 		addActionListeners();
@@ -106,7 +114,9 @@ public class KundenDatenÄndern implements IKundenÄndern {
 			@Override
 			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
-				suchen();
+				if (tfID != null && !tfID.equals("")) {
+					suchen();
+				}
 			}
 
 			@Override
@@ -147,11 +157,12 @@ public class KundenDatenÄndern implements IKundenÄndern {
 
 			tfKdName.setText(idSearch[1]);
 			tfKdVorname.setText(idSearch[2]);
-			tfWohnort.setText(idSearch[3]);
+			tfGeschlecht.setText(idSearch[3]);
 			tfGeburtsdatum.setText(idSearch[4]);
-			tfVolljaehrig.setText(idSearch[5]);
-			tfTelefon.setText(idSearch[6]);
-			tfGeschlecht.setText(idSearch[7]);
+			tfTelefon.setText(idSearch[5]);
+			tfAdresse.setText(idSearch[6]);
+			tfPostleitzahl.setText(idSearch[7]);
+			tfWohnort.setText(idSearch[8]);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -227,5 +238,15 @@ public class KundenDatenÄndern implements IKundenÄndern {
 			return tfID.getText();
 		}
 		return "";
+	}
+
+	@Override
+	public String getAdresse() {
+		return tfAdresse.getText();
+	}
+
+	@Override
+	public String getPostleitzahl() {
+		return tfPostleitzahl.getText();
 	}
 }
