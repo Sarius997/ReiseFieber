@@ -162,6 +162,8 @@ public class ReiseFieberGUI {
 		frame.dispose();
 	}
 	
+	
+	// TODO option zum schlieﬂen der tabs!!!
 	public void addResultTable(String[][] data){
 		int numberOfComponents = tabPane.getComponentCount();
 		String[] columnResult = { "ID", "Nachname", "Vorname", "Geschlecht",
