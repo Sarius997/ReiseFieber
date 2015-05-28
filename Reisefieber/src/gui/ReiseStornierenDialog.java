@@ -22,7 +22,7 @@ public class ReiseStornierenDialog implements IStorno {
 	private JTextField tfID;
 
 	private JLabel labK_ID;
-	private JTextField tfK_ID;
+	private JLabel tfK_ID;
 
 	private JLabel labKdName;
 	private JLabel tfKdName;
@@ -31,7 +31,7 @@ public class ReiseStornierenDialog implements IStorno {
 	private JLabel tfKdVorname;
 
 	private JLabel labR_ID;
-	private JTextField tfR_ID;
+	private JLabel tfR_ID;
 
 	private JLabel labReiseName;
 	private JLabel tfReiseName;
@@ -50,7 +50,7 @@ public class ReiseStornierenDialog implements IStorno {
 		tfID = new JTextField();
 
 		labK_ID = new JLabel("Kundennummer:");
-		tfK_ID = new JTextField();
+		tfK_ID = new JLabel();
 
 		labKdName = new JLabel("Nachname:");
 		tfKdName = new JLabel();
@@ -59,7 +59,7 @@ public class ReiseStornierenDialog implements IStorno {
 		tfKdVorname = new JLabel();
 
 		labR_ID = new JLabel("Reisenummer:");
-		tfR_ID = new JTextField();
+		tfR_ID = new JLabel();
 
 		labReiseName = new JLabel("Reisename:");
 		tfReiseName = new JLabel();
@@ -105,26 +105,21 @@ public class ReiseStornierenDialog implements IStorno {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
 				sucheBuchung();
 			}
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
 		bnAbbrechen.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				ReiseStornierenDialog.this.cancel();
 			}
 		});
 		bnBestaetigen.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				ReiseStornierenDialog.this.storno();
 			}
@@ -132,14 +127,13 @@ public class ReiseStornierenDialog implements IStorno {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public void show() {
-		// TODO rework
 		frame.pack();
 		frame.show();
 	}
 
 	protected void sucheBuchung() {
-		// TODO Auto-generated method stub
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
 			String[] buchungSearch = dbv.getBuchungByID(getBuchungsID());
@@ -150,9 +144,20 @@ public class ReiseStornierenDialog implements IStorno {
 			tfR_ID.setText(buchungSearch[3]);
 			tfReiseName.setText(buchungSearch[4]);
 			tfReiseZiel.setText(buchungSearch[5]);
-			tfStorno.setText(buchungSearch[6]);
+			if(buchungSearch[6] != null && buchungSearch[6].equals("f")){
+				tfStorno.setText("hat nicht storniert");
+				bnBestaetigen.setEnabled(true);
+				bnBestaetigen.setToolTipText(null);
+			} else if(buchungSearch[6] != null && buchungSearch[6].equals("t")){
+				tfStorno.setText("hat bereits storniert");
+				bnBestaetigen.setEnabled(false);
+				bnBestaetigen.setToolTipText("Diese Buchung wurde bereits storniert!");
+			} else {
+				tfStorno.setText("");
+				bnBestaetigen.setEnabled(false);
+				bnBestaetigen.setToolTipText("Buchung existiert nicht!");
+			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

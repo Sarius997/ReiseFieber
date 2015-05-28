@@ -675,7 +675,7 @@ public class DatenbankVerbindung {
 			// final String query =
 			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
 			// // qb.toString();
-			final String query = "SELECT reise.id, reise.name, reise.ziel, kunden.id, kunden.nachname, kunden.vorname, kundenreise.storno "
+			final String query = "SELECT kundenreise.id, reise.id, reise.name, reise.ziel, kunden.id, kunden.nachname, kunden.vorname, kundenreise.storno "
 					+ "FROM kundenreise JOIN kunden ON kunden.id=kundenreise.k_id "
 					+ "JOIN reise ON reise.id=kundenreise.r_id";
 			querybkp = query;
@@ -690,7 +690,7 @@ public class DatenbankVerbindung {
 
 			ArrayList<String[]> resultArrays = new ArrayList<String[]>(5);
 			while (resultSet.next()) {
-				String[] tmp = new String[7];
+				String[] tmp = new String[8];
 				for (int k = 1; k <= resultSet.getMetaData().getColumnCount(); k++) {
 					tmp[k - 1] = resultSet.getString(k);
 				}
