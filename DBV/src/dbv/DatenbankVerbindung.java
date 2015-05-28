@@ -88,13 +88,13 @@ public class DatenbankVerbindung {
 		}
 	}
 
-	public void doSearch(IKundenSuchen kundenDaten) throws Exception {
-
+	public String[][] doSearch(IKundenSuchen kundenDaten) throws Exception {
+		String[][] result = null;
 		String querybkp = "(empty)";
 		try {
 			Connection conn = connect();
 			if (conn == null)
-				return;
+				return null;
 
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
@@ -116,7 +116,9 @@ public class DatenbankVerbindung {
 			// final String query =
 			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
 			// // qb.toString();
-			final String query = "SELECT * FROM public." + dbTable
+			final String query = "SELECT id, nachname, vorname, geschlecht, geburtstag, volljaehrig, telefonnummer, "
+					+ "adresse, postleitzahl, wohnort FROM public."
+					+ dbTable
 					+ " WHERE nachname=" + dbSuche + ";";
 			querybkp = query;
 
@@ -127,7 +129,25 @@ public class DatenbankVerbindung {
 
 			resultSet = statement.executeQuery(querybkp);
 			// resultSet = executeQuery(querybkp);
-			resultAusgabeConsole(resultSet);
+			//resultAusgabeConsole(resultSet);
+
+			ArrayList<String[]> resultArrays = new ArrayList<String[]>(5);
+			while (resultSet.next()) {
+				String[] tmp = new String[10];
+				for (int k = 1; k <= resultSet.getMetaData().getColumnCount(); k++) {
+					tmp[k - 1] = resultSet.getString(k);
+				}
+				resultArrays.add(tmp);
+			}
+
+			result = new String[resultArrays.size()][8];
+
+			int i = 0;
+			for (Iterator iterator = resultArrays.iterator(); iterator
+					.hasNext(); i++) {
+				String[] strings = (String[]) iterator.next();
+				result[i] = strings;
+			}
 
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
@@ -135,6 +155,7 @@ public class DatenbankVerbindung {
 					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
 					+ dbUser + ", P:" + dbPassword;
 		}
+		return result;
 	}
 
 	private void resultAusgabeConsole(ResultSet resultSet) throws SQLException {

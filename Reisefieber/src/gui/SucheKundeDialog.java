@@ -25,8 +25,13 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 	private JTextField tfKdName;
 	private JButton bnSuchen;
 	private JButton bnAbbrechen;
+	
+	private ReiseFieberGUI gui;
 
-	public SucheKundeDialog() {
+	public SucheKundeDialog(ReiseFieberGUI gui) {
+		this.gui = gui;
+		
+		
 		frame = new JFrame();
 		frame.setTitle("Suche");
 		labEingebeaufforderung = new JLabel(
@@ -86,7 +91,8 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 		// TODO Auto-generated method stub
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
-			dbv.doSearch(this);
+			String[][] searchResult = dbv.doSearch(this);
+			gui.addResultTable(searchResult);;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
