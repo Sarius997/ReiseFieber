@@ -180,6 +180,7 @@ public class ReiseFieberGUI {
 		 */
 
 		addMouseListenersTables();
+		
 	}
 
 	public void stop() {
