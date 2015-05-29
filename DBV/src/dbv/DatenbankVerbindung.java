@@ -325,7 +325,7 @@ public class DatenbankVerbindung {
 					+ quoted(kundenDaten.getGeburtstag()) + ", telefonnummer="
 					+ quoted(kundenDaten.getTelefonnummer()) + ", geschlecht="
 					+ quoted(kundenDaten.getGeschlecht()) + ", adresse="
-					+ quoted(kundenDaten.getAdresse()) + ", postleitzahl"
+					+ quoted(kundenDaten.getAdresse()) + ", postleitzahl="
 					+ quoted(kundenDaten.getPostleitzahl()) + " WHERE id="
 					+ quoted(kundenDaten.getID()) + ";";
 			querybkp = query;

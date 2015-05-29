@@ -24,8 +24,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 
 import reiseFieber.ReiseFieber;
 import dbv.DatenbankVerbindung;
@@ -56,7 +59,6 @@ public class ReiseFieberGUI {
 	private JLabel statusLabel;
 	private JPanel statusPanel;
 
-
 	private JPopupMenu popupKunden;
 	private JPopupMenu popupReisen;
 	private JPopupMenu popupKundenReise;
@@ -83,6 +85,13 @@ public class ReiseFieberGUI {
 	private int selectedRow = 0;
 	private String contentSelectedRowID;
 	private String addToJourney = "";
+
+	private String[][] searchResult;
+	private int searchSelectedRow = -1;
+	private int kundenSelectedRow = -1;
+	private int reisenSelectedRow = -1;
+	private int kundenReiseSelectedRow = -1;
+	private MouseListener popupListener;
 
 	private ReiseFieber reiseFieber;
 
@@ -123,7 +132,19 @@ public class ReiseFieberGUI {
 		 * tcm.getColumn(selectedColumn).getHeaderValue() +
 		 * tableKunden.getModel().getValueAt(selectedRow, selectedColumn); }
 		 */
+		
+
+
+		tabPane = new JTabbedPane();
+		
 		loadTableData();
+
+		scrollPaneKunden = new JScrollPane(tableKunden);
+		scrollPaneReisen = new JScrollPane(tableReisen);
+		scrollPaneKundenReise = new JScrollPane(tableKundenReise);
+		
+		tabPane.addTab("Reisen", scrollPaneReisen);
+		tabPane.addTab("Anmeldungen", scrollPaneKundenReise);
 
 		frame.setLayout(new BorderLayout());
 
@@ -161,10 +182,13 @@ public class ReiseFieberGUI {
 	public void stop() {
 		frame.dispose();
 	}
-	
-	
+
 	// TODO option zum schließen der tabs!!!
-	public void addResultTable(String[][] data){
+	public void addResultTable(String[][] data) {
+		if (tabPane.getComponentCount() > 3) {
+			tabPane.remove(3);
+		}
+
 		int numberOfComponents = tabPane.getComponentCount();
 		String[] columnResult = { "ID", "Nachname", "Vorname", "Geschlecht",
 				"Geburtstag", "Volljährig", "Telefonnummer", "Adresse",
@@ -177,38 +201,110 @@ public class ReiseFieberGUI {
 				return tmp1 - tmp2;
 			}
 		});
-		JTable result = new JTable(data, columnResult);
+
+		searchResult = data;
+
+		final JTable result = new JTable(data, columnResult);
 		JScrollPane resultPane = new JScrollPane(result);
+
+		result.addMouseListener(popupListener);
+
+		result.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				if (evt.getButton() == MouseEvent.BUTTON1) {
+					searchSelectedRow = result.getSelectedRow();
+					int col = result.getSelectedColumn();
+					int row = result.getSelectedRow();
+					TableColumnModel tcm = result.getColumnModel();
+					String columnHeader = ((String) tcm.getColumn(col)
+							.getHeaderValue());
+					String selectedText = (String) result.getModel()
+							.getValueAt(row, col);
+					if (selectedText == null) {
+						selectedText = "";
+					}
+					statusLabel.setText(columnHeader + ": " + selectedText);
+				}
+			}
+		});
 		tabPane.add("Suchergebnis", resultPane);
 		tabPane.setSelectedIndex(numberOfComponents);
 	}
+	
+	public void RefreshKundenTable() {
+		int selectedTab = tabPane.getSelectedIndex();
+		if (tabPane.getComponentCount() > 1) {
+			tabPane.remove(0);
+		}
+		String[] columnKunden = { "ID", "Nachname", "Vorname", "Geschlecht",
+				"Geburtstag", "Volljährig", "Telefonnummer", "Adresse",
+				"Postleitzahl", "Wohnort" };
+		
+		try{
+		dataKunden = new DatenbankVerbindung().kundenUebersicht();
+
+		Arrays.sort(dataKunden, new Comparator<String[]>() {
+			public int compare(final String[] entry1, final String[] entry2) {
+				final int tmp1 = Integer.parseInt(entry1[0]);
+				final int tmp2 = Integer.parseInt(entry2[0]);
+				return tmp1 - tmp2;
+			}
+		});
+
+		DefaultTableModel modelKunden = new DefaultTableModel(dataKunden,
+				columnKunden);
+		tableKunden.setModel(modelKunden);
+		tableKunden.revalidate();
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+
+		final JTable result = new JTable(dataKunden, columnKunden);
+		JScrollPane resultPane = new JScrollPane(result);
+
+		result.addMouseListener(popupListener);
+
+		result.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				if (evt.getButton() == MouseEvent.BUTTON1) {
+					int col = result.getSelectedColumn();
+					int row = result.getSelectedRow();
+					TableColumnModel tcm = result.getColumnModel();
+					String columnHeader = ((String) tcm.getColumn(col)
+							.getHeaderValue());
+					String selectedText = (String) result.getModel()
+							.getValueAt(row, col);
+					if (selectedText == null) {
+						selectedText = "";
+					}
+					statusLabel.setText(columnHeader + ": " + selectedText);
+				}
+			}
+		});
+		tabPane.insertTab("Kunden", null, resultPane, null, 0);
+		tabPane.setSelectedIndex(selectedTab);
+	}
+	
+	
+	
+	
 
 	private void loadTableData() {
 
 		tableKunden = new JTable();
 		tableReisen = new JTable();
 		tableKundenReise = new JTable();
-
-		String[] columnKunden = { "ID", "Nachname", "Vorname", "Geschlecht",
-				"Geburtstag", "Volljährig", "Telefonnummer", "Adresse",
-				"Postleitzahl", "Wohnort" };
+		
+		RefreshKundenTable();
+		tabPane.setSelectedIndex(0);
+		
 		String[] columnReisen = { "ID", "Name", "Ziel", "Teilnehmerzahl",
 				"Beginn", "Ende", "Preis pro Person", "Kosten" };
 		String[] columnKundenReise = { "Buchungsnummer", "Reisenummer",
 				"Reisename", "Reiseziel", "Kundennummer", "Nachname",
 				"Vorname", "Storno" };
+
 		try {
-			dataKunden = new DatenbankVerbindung().kundenUebersicht();
-
-			Arrays.sort(dataKunden, new Comparator<String[]>() {
-				public int compare(final String[] entry1, final String[] entry2) {
-					final int tmp1 = Integer.parseInt(entry1[0]);
-					final int tmp2 = Integer.parseInt(entry2[0]);
-					return tmp1 - tmp2;
-				}
-			});
-
-			tableKunden = new JTable(dataKunden, columnKunden);
 
 			dataReisen = new DatenbankVerbindung().reiseUebersicht();
 
@@ -220,7 +316,10 @@ public class ReiseFieberGUI {
 				}
 			});
 
-			tableReisen = new JTable(dataReisen, columnReisen);
+			DefaultTableModel modelReisen = new DefaultTableModel(dataReisen,
+					columnReisen);
+			tableReisen.setModel(modelReisen);
+			tableReisen.revalidate();
 
 			dataKundenReise = new DatenbankVerbindung()
 					.reiseTeilnehmerUebersicht();
@@ -242,21 +341,18 @@ public class ReiseFieberGUI {
 				}
 			});
 
-			tableKundenReise = new JTable(dataKundenReise, columnKundenReise);
+			DefaultTableModel modelKundenReise = new DefaultTableModel(
+					dataKundenReise, columnKundenReise);
+			tableKundenReise.setModel(modelKundenReise);
+			tableKundenReise.revalidate();
 
-			scrollPaneKunden = new JScrollPane(tableKunden);
-			scrollPaneReisen = new JScrollPane(tableReisen);
-			scrollPaneKundenReise = new JScrollPane(tableKundenReise);
+			/*
+			 * TODO do it via tableModel.addRow(i); table.revalidate();
+			 */
 
-			
-			// TODO rework
-			tabPane = new JTabbedPane();
-			tabPane.removeAll();
-			tabPane.addTab("Kunden", scrollPaneKunden);
-			tabPane.addTab("Reisen", scrollPaneReisen);
-			tabPane.addTab("Anmeldungen", scrollPaneKundenReise);
-			tabPane.revalidate();
-			tabPane.repaint();
+			tableKunden.revalidate();
+			tableReisen.revalidate();
+			tableKundenReise.revalidate();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -271,13 +367,14 @@ public class ReiseFieberGUI {
 		acBearbeiten = new AbstractAction("Kunde bearbeiten") {
 			public void actionPerformed(ActionEvent e) {
 				int selectedTable = tabPane.getSelectedIndex();
-				if (selectedTable == 0 || selectedTable == 3) {
-					selectedRow = tableKunden.getSelectedRow();
-					contentSelectedRowID = dataKunden[selectedRow][0];
+				if (selectedTable == 0) {
+					contentSelectedRowID = dataKunden[kundenSelectedRow][0];
 				} else if (selectedTable == 1) {
 					contentSelectedRowID = null;
 				} else if (selectedTable == 2) {
 					contentSelectedRowID = null;
+				} else if (selectedTable == 3) {
+					contentSelectedRowID = searchResult[searchSelectedRow][0];
 				}
 				testÄndern();
 			}
@@ -291,17 +388,19 @@ public class ReiseFieberGUI {
 		acZuReiseHinzufügen = new AbstractAction("Kunde zu Reise hinzufügen") {
 			public void actionPerformed(ActionEvent e) {
 				int selectedTable = tabPane.getSelectedIndex();
-				if (selectedTable == 0 || selectedTable == 3) {
-					selectedRow = tableKunden.getSelectedRow();
-					contentSelectedRowID = dataKunden[selectedRow][0];
+				if (selectedTable == 0) {
+					contentSelectedRowID = dataKunden[kundenSelectedRow][0];
 					addToJourney = "Kunde";
 				} else if (selectedTable == 1) {
 					selectedRow = tableReisen.getSelectedRow();
-					contentSelectedRowID = dataReisen[selectedRow][0];
+					contentSelectedRowID = dataReisen[reisenSelectedRow][0];
 					addToJourney = "Reise";
 				} else if (selectedTable == 2) {
 					contentSelectedRowID = null;
 					addToJourney = "";
+				} else if(selectedTable == 3){
+					contentSelectedRowID = searchResult[searchSelectedRow][0];
+					addToJourney = "Kunde";
 				}
 				testReise();
 			}
@@ -323,13 +422,14 @@ public class ReiseFieberGUI {
 			public void actionPerformed(ActionEvent e) {
 				// TODO take data from current selected customer/ journey
 				int selectedTable = tabPane.getSelectedIndex();
-				if (selectedTable == 0 || selectedTable == 3) {
+				if (selectedTable == 0) {
 					contentSelectedRowID = null;
 				} else if (selectedTable == 1) {
 					contentSelectedRowID = null;
 				} else if (selectedTable == 2) {
-					selectedRow = tableKundenReise.getSelectedRow();
-					contentSelectedRowID = dataKundenReise[selectedRow][0];
+					contentSelectedRowID = dataKundenReise[kundenReiseSelectedRow][0];
+				} else if(selectedTable == 3){
+					contentSelectedRowID = null;
 				}
 				testReiseStornieren();
 			}
@@ -344,15 +444,15 @@ public class ReiseFieberGUI {
 		reiseStornieren = new JMenuItem(acReiseStornieren);
 
 		// Add listener to components that can bring up popup menus.
-		MouseListener popupListener = new MouseAdapter() {
+		popupListener = new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				int index = tabPane.getSelectedIndex();
 				System.out.println(index);
 				if (index == 0) {
-					if (tableKunden.getSelectedRow() == -1) {
+					if (kundenSelectedRow == -1) {
 						popupKunden = new JPopupMenu();
 						popupKunden
-								.add("Kein Kunde zur interaktion ausgewählt");
+								.add("Kein Kunde zur Interaktion ausgewählt");
 						popupKunden.addSeparator();
 						popupKunden.add(kundeSuchen);
 						popupKunden.add(kundeErstellen);
@@ -364,10 +464,10 @@ public class ReiseFieberGUI {
 						popupKunden.add(zuReiseHinzufügen);
 					}
 				} else if (index == 1) {
-					if (tableReisen.getSelectedRow() == -1) {
+					if (reisenSelectedRow == -1) {
 						popupReisen = new JPopupMenu();
 						popupReisen
-								.add("Keine Reise zur interaktion ausgewählt");
+								.add("Keine Reise zur Interaktion ausgewählt");
 						popupReisen.addSeparator();
 						popupReisen.add(reiseErstellen);
 					} else {
@@ -379,12 +479,18 @@ public class ReiseFieberGUI {
 					if (tableKundenReise.getSelectedRow() == -1) {
 						popupKundenReise = new JPopupMenu();
 						popupKundenReise
-								.add("Keine Reise zur interaktion ausgewählt");
+								.add("Keine Buchung zur Interaktion ausgewählt");
 					} else {
 						popupKundenReise = new JPopupMenu();
 						popupKundenReise.add(reiseStornieren);
 						popupKundenReise.add(zuReiseHinzufügen);
 					}
+				} else if (index == 3) {
+					popupKunden = new JPopupMenu();
+					popupKunden.add(kundeSuchen);
+					popupKunden.add(bearbeiten);
+					popupKunden.add(kundeErstellen);
+					popupKunden.add(zuReiseHinzufügen);
 				}
 				maybeShowPopup(e);
 			}
@@ -525,9 +631,9 @@ public class ReiseFieberGUI {
 			public void actionPerformed(ActionEvent arg0) {
 
 				// TODO only temporary --> rework
-				reiseFieber.reloadGui();
+				// reiseFieber.reloadGui();
 
-				//tabPane.add(new JTable(), "Suchergebnis");
+				loadTableData();
 			}
 		});
 		beenden.addActionListener(new ActionListener() {
