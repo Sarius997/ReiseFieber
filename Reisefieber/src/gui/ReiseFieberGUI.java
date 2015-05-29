@@ -62,6 +62,7 @@ public class ReiseFieberGUI {
 	private JPopupMenu popupKunden;
 	private JPopupMenu popupReisen;
 	private JPopupMenu popupKundenReise;
+	private JPopupMenu popupSearch;
 
 	private AbstractAction acBearbeiten;
 	private AbstractAction acKundeErstellen;
@@ -88,9 +89,6 @@ public class ReiseFieberGUI {
 
 	private String[][] searchResult;
 	private int searchSelectedRow = -1;
-	private int kundenSelectedRow = -1;
-	private int reisenSelectedRow = -1;
-	private int kundenReiseSelectedRow = -1;
 	private MouseListener popupListener;
 
 	private ReiseFieber reiseFieber;
@@ -132,17 +130,20 @@ public class ReiseFieberGUI {
 		 * tcm.getColumn(selectedColumn).getHeaderValue() +
 		 * tableKunden.getModel().getValueAt(selectedRow, selectedColumn); }
 		 */
-		
-
 
 		tabPane = new JTabbedPane();
+
+		tableKunden = new JTable();
+		tableReisen = new JTable();
+		tableKundenReise = new JTable();
 		
 		loadTableData();
 
 		scrollPaneKunden = new JScrollPane(tableKunden);
 		scrollPaneReisen = new JScrollPane(tableReisen);
 		scrollPaneKundenReise = new JScrollPane(tableKundenReise);
-		
+
+		tabPane.addTab("Kunden", scrollPaneKunden);
 		tabPane.addTab("Reisen", scrollPaneReisen);
 		tabPane.addTab("Anmeldungen", scrollPaneKundenReise);
 
@@ -231,73 +232,12 @@ public class ReiseFieberGUI {
 		tabPane.setSelectedIndex(numberOfComponents);
 	}
 	
-	public void RefreshKundenTable() {
-		int selectedTab = tabPane.getSelectedIndex();
-		if (tabPane.getComponentCount() > 1) {
-			tabPane.remove(0);
-		}
-		String[] columnKunden = { "ID", "Nachname", "Vorname", "Geschlecht",
-				"Geburtstag", "Volljährig", "Telefonnummer", "Adresse",
-				"Postleitzahl", "Wohnort" };
-		
-		try{
-		dataKunden = new DatenbankVerbindung().kundenUebersicht();
-
-		Arrays.sort(dataKunden, new Comparator<String[]>() {
-			public int compare(final String[] entry1, final String[] entry2) {
-				final int tmp1 = Integer.parseInt(entry1[0]);
-				final int tmp2 = Integer.parseInt(entry2[0]);
-				return tmp1 - tmp2;
-			}
-		});
-
-		DefaultTableModel modelKunden = new DefaultTableModel(dataKunden,
-				columnKunden);
-		tableKunden.setModel(modelKunden);
-		tableKunden.revalidate();
-		} catch(Exception e){
-			e.printStackTrace();
-		}
-
-		final JTable result = new JTable(dataKunden, columnKunden);
-		JScrollPane resultPane = new JScrollPane(result);
-
-		result.addMouseListener(popupListener);
-
-		result.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent evt) {
-				if (evt.getButton() == MouseEvent.BUTTON1) {
-					int col = result.getSelectedColumn();
-					int row = result.getSelectedRow();
-					TableColumnModel tcm = result.getColumnModel();
-					String columnHeader = ((String) tcm.getColumn(col)
-							.getHeaderValue());
-					String selectedText = (String) result.getModel()
-							.getValueAt(row, col);
-					if (selectedText == null) {
-						selectedText = "";
-					}
-					statusLabel.setText(columnHeader + ": " + selectedText);
-				}
-			}
-		});
-		tabPane.insertTab("Kunden", null, resultPane, null, 0);
-		tabPane.setSelectedIndex(selectedTab);
-	}
-	
-	
-	
-	
 
 	private void loadTableData() {
 
-		tableKunden = new JTable();
-		tableReisen = new JTable();
-		tableKundenReise = new JTable();
-		
-		RefreshKundenTable();
-		tabPane.setSelectedIndex(0);
-		
+		String[] columnKunden = { "ID", "Nachname", "Vorname", "Geschlecht",
+				"Geburtstag", "Volljährig", "Telefonnummer", "Adresse",
+				"Postleitzahl", "Wohnort" };
 		String[] columnReisen = { "ID", "Name", "Ziel", "Teilnehmerzahl",
 				"Beginn", "Ende", "Preis pro Person", "Kosten" };
 		String[] columnKundenReise = { "Buchungsnummer", "Reisenummer",
@@ -305,6 +245,21 @@ public class ReiseFieberGUI {
 				"Vorname", "Storno" };
 
 		try {
+			
+			dataKunden = new DatenbankVerbindung().kundenUebersicht();
+
+			Arrays.sort(dataKunden, new Comparator<String[]>() {
+				public int compare(final String[] entry1, final String[] entry2) {
+					final int tmp1 = Integer.parseInt(entry1[0]);
+					final int tmp2 = Integer.parseInt(entry2[0]);
+					return tmp1 - tmp2;
+				}
+			});
+
+			DefaultTableModel modelKunden = new DefaultTableModel(
+					dataKunden, columnKunden);
+			tableKunden.setModel(modelKunden);
+			
 
 			dataReisen = new DatenbankVerbindung().reiseUebersicht();
 
@@ -319,7 +274,6 @@ public class ReiseFieberGUI {
 			DefaultTableModel modelReisen = new DefaultTableModel(dataReisen,
 					columnReisen);
 			tableReisen.setModel(modelReisen);
-			tableReisen.revalidate();
 
 			dataKundenReise = new DatenbankVerbindung()
 					.reiseTeilnehmerUebersicht();
@@ -344,31 +298,18 @@ public class ReiseFieberGUI {
 			DefaultTableModel modelKundenReise = new DefaultTableModel(
 					dataKundenReise, columnKundenReise);
 			tableKundenReise.setModel(modelKundenReise);
-			tableKundenReise.revalidate();
-
-			/*
-			 * TODO do it via tableModel.addRow(i); table.revalidate();
-			 */
-
-			tableKunden.revalidate();
-			tableReisen.revalidate();
-			tableKundenReise.revalidate();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * popup menu
-	 */
-	// TODO popup menu
+	
 	private void addMouseListenersTables() {
 		acBearbeiten = new AbstractAction("Kunde bearbeiten") {
 			public void actionPerformed(ActionEvent e) {
 				int selectedTable = tabPane.getSelectedIndex();
 				if (selectedTable == 0) {
-					contentSelectedRowID = dataKunden[kundenSelectedRow][0];
+					contentSelectedRowID = dataKunden[tableKunden.getSelectedRow()][0];
 				} else if (selectedTable == 1) {
 					contentSelectedRowID = null;
 				} else if (selectedTable == 2) {
@@ -389,16 +330,16 @@ public class ReiseFieberGUI {
 			public void actionPerformed(ActionEvent e) {
 				int selectedTable = tabPane.getSelectedIndex();
 				if (selectedTable == 0) {
-					contentSelectedRowID = dataKunden[kundenSelectedRow][0];
+					contentSelectedRowID = dataKunden[tableKunden.getSelectedRow()][0];
 					addToJourney = "Kunde";
 				} else if (selectedTable == 1) {
 					selectedRow = tableReisen.getSelectedRow();
-					contentSelectedRowID = dataReisen[reisenSelectedRow][0];
+					contentSelectedRowID = dataReisen[tableReisen.getSelectedRow()][0];
 					addToJourney = "Reise";
 				} else if (selectedTable == 2) {
 					contentSelectedRowID = null;
 					addToJourney = "";
-				} else if(selectedTable == 3){
+				} else if (selectedTable == 3) {
 					contentSelectedRowID = searchResult[searchSelectedRow][0];
 					addToJourney = "Kunde";
 				}
@@ -427,8 +368,8 @@ public class ReiseFieberGUI {
 				} else if (selectedTable == 1) {
 					contentSelectedRowID = null;
 				} else if (selectedTable == 2) {
-					contentSelectedRowID = dataKundenReise[kundenReiseSelectedRow][0];
-				} else if(selectedTable == 3){
+					contentSelectedRowID = dataKundenReise[tableKundenReise.getSelectedRow()][0];
+				} else if (selectedTable == 3) {
 					contentSelectedRowID = null;
 				}
 				testReiseStornieren();
@@ -449,7 +390,7 @@ public class ReiseFieberGUI {
 				int index = tabPane.getSelectedIndex();
 				System.out.println(index);
 				if (index == 0) {
-					if (kundenSelectedRow == -1) {
+					if (tableKunden.getSelectedRow() == -1) {
 						popupKunden = new JPopupMenu();
 						popupKunden
 								.add("Kein Kunde zur Interaktion ausgewählt");
@@ -464,7 +405,7 @@ public class ReiseFieberGUI {
 						popupKunden.add(zuReiseHinzufügen);
 					}
 				} else if (index == 1) {
-					if (reisenSelectedRow == -1) {
+					if (tableReisen.getSelectedRow() == -1) {
 						popupReisen = new JPopupMenu();
 						popupReisen
 								.add("Keine Reise zur Interaktion ausgewählt");
@@ -486,11 +427,20 @@ public class ReiseFieberGUI {
 						popupKundenReise.add(zuReiseHinzufügen);
 					}
 				} else if (index == 3) {
-					popupKunden = new JPopupMenu();
-					popupKunden.add(kundeSuchen);
-					popupKunden.add(bearbeiten);
-					popupKunden.add(kundeErstellen);
-					popupKunden.add(zuReiseHinzufügen);
+					if (searchSelectedRow == -1) {
+						popupSearch = new JPopupMenu();
+						popupSearch
+								.add("Kein Kunde zur Interaktion ausgewählt");
+						popupSearch.addSeparator();
+						popupSearch.add(kundeSuchen);
+						popupSearch.add(kundeErstellen);
+					} else {
+						popupSearch = new JPopupMenu();
+						popupSearch.add(kundeSuchen);
+						popupSearch.add(bearbeiten);
+						popupSearch.add(kundeErstellen);
+						popupSearch.add(zuReiseHinzufügen);
+					}
 				}
 				maybeShowPopup(e);
 			}
@@ -502,13 +452,15 @@ public class ReiseFieberGUI {
 			private void maybeShowPopup(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					int index = tabPane.getSelectedIndex();
-					if (index == 0 || index == 3) {
+					if (index == 0) {
 						popupKunden.show(e.getComponent(), e.getX(), e.getY());
 					} else if (index == 1) {
 						popupReisen.show(e.getComponent(), e.getX(), e.getY());
 					} else if (index == 2) {
 						popupKundenReise.show(e.getComponent(), e.getX(),
 								e.getY());
+					} else if (index == 3){
+						popupSearch.show(e.getComponent(),  e.getX(), e.getY());
 					}
 				}
 			}
