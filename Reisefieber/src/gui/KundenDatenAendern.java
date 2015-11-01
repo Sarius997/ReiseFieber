@@ -178,7 +178,7 @@ public class KundenDatenAendern implements IKundenAendern {
 
 	public void show() {
 		frame.pack();
-		frame.show();
+		frame.setVisible(true);
 	}
 
 	protected void suchen(String searchId) {

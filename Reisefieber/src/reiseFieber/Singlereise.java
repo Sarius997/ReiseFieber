@@ -1,7 +1,6 @@
 package reiseFieber;
 
 import kundenkartei.Kunde;
-import kundenkartei.KundenListe;
 import kundenkartei.Tools;
 
 public class Singlereise extends Bootsreise{	//erbt von Klasse Bootsreise

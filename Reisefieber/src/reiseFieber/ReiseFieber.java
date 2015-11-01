@@ -7,6 +7,7 @@ public class ReiseFieber {
 	KundenListe kundenListe;
 	private static ReiseFieberGUI gui;
 
+	@SuppressWarnings("unused")
 	public static void main(String args[]) {
 		willkommensNachricht();
 		ReiseFieber r = new ReiseFieber();

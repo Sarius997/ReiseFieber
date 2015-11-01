@@ -65,7 +65,7 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 	public void show() {
 		// TODO rework
 		frame.pack();
-		frame.show();
+		frame.setVisible(true);
 	}
 
 	private void addActionListeners() {

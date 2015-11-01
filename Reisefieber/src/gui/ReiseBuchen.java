@@ -5,15 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import kundenkartei.Kunde;
 import dbv.DatenbankVerbindung;
 import dbv.IKundenReise;
 
@@ -93,7 +90,7 @@ public class ReiseBuchen implements IKundenReise {
 
 	public void show() {
 		frame.pack();
-		frame.show();
+		frame.setVisible(true);
 	}
 
 	private void addActionListeners() {

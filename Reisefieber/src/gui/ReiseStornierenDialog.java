@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import kundenkartei.Kunde;
 import dbv.DatenbankVerbindung;
 import dbv.IStorno;
 

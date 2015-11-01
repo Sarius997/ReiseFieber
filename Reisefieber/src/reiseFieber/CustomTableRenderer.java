@@ -6,6 +6,7 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
+@SuppressWarnings("serial")
 public class CustomTableRenderer extends DefaultTableCellRenderer {
 	private int teilnehmerzahl;
 	private int colls;

@@ -88,7 +88,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 	public void show() {
 		// TODO rework
 		frame.pack();
-		frame.show();
+		frame.setVisible(true);
 	}
 
 	// private void fillText()

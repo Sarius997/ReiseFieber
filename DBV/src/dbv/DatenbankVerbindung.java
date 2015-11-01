@@ -39,6 +39,7 @@ public class DatenbankVerbindung {
 		dbPassword = "1234";
 	}
 
+	@SuppressWarnings("unused")
 	public void doCount() throws Exception {
 
 		String querybkp = "(empty)";
@@ -85,6 +86,7 @@ public class DatenbankVerbindung {
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unused" })
 	public String[][] doSearch(IKundenSuchen kundenDaten) throws Exception {
 		String[][] result = null;
 		String querybkp = "(empty)";
@@ -171,11 +173,13 @@ public class DatenbankVerbindung {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private ResultSet executeQuery(String querybkp) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@SuppressWarnings("unused")
 	public void doInsert(IKundenDaten kundenDaten) throws Exception {
 
 		String querybkp = "(empty)";
@@ -239,6 +243,7 @@ public class DatenbankVerbindung {
 	 * @return handle to a database connection or null on failure
 	 * @throws AfpsException
 	 */
+	@SuppressWarnings("unused")
 	private Connection connect() throws Exception {
 		String url = "(none)";
 		try {
@@ -287,6 +292,7 @@ public class DatenbankVerbindung {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public void doChange(IKundenAendern kundenDaten) throws Exception {
 
 		String querybkp = "(empty)";
@@ -337,6 +343,7 @@ public class DatenbankVerbindung {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public void doInsertInNewJourney(IKundenReise kundenReise) throws Exception {
 
 		String querybkp = "(empty)";
@@ -381,6 +388,7 @@ public class DatenbankVerbindung {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public String[] doSearchByKundenID(String kundenID) throws Exception {
 
 		String[] result = new String[9];
@@ -439,6 +447,7 @@ public class DatenbankVerbindung {
 		return result;
 	}
 
+	@SuppressWarnings("unused")
 	public void doCreateJourney(IReiseAnlegen reiseDaten) throws Exception {
 		String querybkp = "(empty)";
 		try {
@@ -488,6 +497,7 @@ public class DatenbankVerbindung {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public String[] doSearchByReiseID(String reiseID) throws Exception {
 		String[] result = new String[8];
 		String querybkp = "(empty)";
@@ -543,6 +553,7 @@ public class DatenbankVerbindung {
 		return result;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unused" })
 	public String[][] kundenUebersicht() throws Exception {
 		String[][] result = null;
 		String querybkp = "(empty)";
@@ -609,6 +620,7 @@ public class DatenbankVerbindung {
 		return result;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unused" })
 	public String[][] reiseUebersicht() throws Exception {
 		String[][] result = null;
 		String querybkp = "(empty)";
@@ -673,6 +685,7 @@ public class DatenbankVerbindung {
 		return result;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unused" })
 	public String[][] buchungsUebersicht() throws Exception {
 		String[][] result = null;
 		String querybkp = "(empty)";
@@ -739,6 +752,7 @@ public class DatenbankVerbindung {
 		return result;
 	}
 
+	@SuppressWarnings("unused")
 	public void doStorno(IStorno buchung) throws Exception {
 		String querybkp = "(empty)";
 		try {
@@ -766,6 +780,7 @@ public class DatenbankVerbindung {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public String[] getBuchungByID(String buchungsID) throws Exception {
 		String[] result = new String[7];
 		String querybkp = "(empty)";
@@ -823,6 +838,7 @@ public class DatenbankVerbindung {
 		return result;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unused" })
 	public String[][] reiseTeilnehmer(String reiseID, String storno)
 			throws Exception {
 		String[][] result = null;
@@ -870,6 +886,7 @@ public class DatenbankVerbindung {
 		return result;
 	}
 
+	@SuppressWarnings("unused")
 	public String getMaximaleTeilnehmerZahl(String reiseID) throws Exception{
 		String result = null;
 		String querybkp = "(empty)";
@@ -903,6 +920,7 @@ public class DatenbankVerbindung {
 		return result;
 	}
 	
+	@SuppressWarnings("unused")
 	public String getAktuelleTeilnehmerZahl(String reiseID) throws Exception{
 		String result = null;
 		String querybkp = "(empty)";

@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import kundenkartei.Kunde;
 import dbv.DatenbankVerbindung;
 import dbv.IKundenDaten;
 
@@ -154,7 +153,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	public void show() {
 		// TODO rework
 		frame.pack();
-		frame.show();
+		frame.setVisible(true);
 	}
 
 	// private void fillText()

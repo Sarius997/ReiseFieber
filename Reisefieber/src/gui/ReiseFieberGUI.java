@@ -706,7 +706,7 @@ public class ReiseFieberGUI {
 
 	public void show() {
 		frame.pack();
-		frame.show();
+		frame.setVisible(true);
 	}
 
 	private void addActionListeners() {

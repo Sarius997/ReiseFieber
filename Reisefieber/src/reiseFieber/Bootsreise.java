@@ -2,7 +2,6 @@ package reiseFieber;
 
 import kundenkartei.Kunde;
 import kundenkartei.KundenListe;
-import kundenkartei.Tools;
 
 public class Bootsreise extends KundenListe{	//erbt von Klasse KundenListe
 	int bootsgroese;
