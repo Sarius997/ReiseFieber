@@ -112,7 +112,7 @@ public class ReiseFieberGUI {
 		bnKundenAendern = new JButton("Kundendaten \u00e4ndern");
 		bnAddToReise = new JButton("Kunden zu Reise hinzuf\u00fcgen");
 		bnNeueReise = new JButton("Neue Reise anlegen");
-		bnReiseStornieren = new JButton("Reise stornieren");
+		bnReiseStornieren = new JButton("Buchung stornieren");
 		bnReiseTeilnehmerAnzeigen = new JButton("Teilnehmerliste anzeigen");
 
 		bnRefresh = new JButton("Tabellen neu laden");
@@ -164,7 +164,7 @@ public class ReiseFieberGUI {
 
 		tabPane.addTab("Kunden", scrollPaneKunden);
 		tabPane.addTab("Reisen", scrollPaneReisen);
-		tabPane.addTab("Anmeldungen", scrollPaneKundenReise);
+		tabPane.addTab("Buchungen", scrollPaneKundenReise);
 		tabPane.addTab("Suchergebnis", scrollPaneSearchResult);
 		tabPane.addTab("Reiseteilnehmer", scrollPaneReiseTeilnehmer);
 
@@ -224,7 +224,8 @@ public class ReiseFieberGUI {
 		DefaultTableModel modelSearchResult = new DefaultTableModel(
 				dataSearchResult, columnSearchResult);
 		tableSearchResult.setModel(modelSearchResult);
-		tableSearchResult.setDefaultRenderer(Object.class, new CustomTableRenderer(3));
+		tableSearchResult.setDefaultRenderer(Object.class,
+				new CustomTableRenderer(3));
 
 		tabPane.setSelectedIndex(3);
 	}
@@ -319,7 +320,8 @@ public class ReiseFieberGUI {
 			DefaultTableModel modelKunden = new DefaultTableModel(dataKunden,
 					columnKunden);
 			tableKunden.setModel(modelKunden);
-			tableKunden.setDefaultRenderer(Object.class, new CustomTableRenderer(0));
+			tableKunden.setDefaultRenderer(Object.class,
+					new CustomTableRenderer(0));
 
 			dataReisen = new DatenbankVerbindung().reiseUebersicht();
 
@@ -340,7 +342,7 @@ public class ReiseFieberGUI {
 						.getAktuelleTeilnehmerZahl(dataReisen[i][0]);
 				int teilnehmerzahl = Integer.parseInt(teilnehmerzahlStr);
 				int result = (preisProPerson * teilnehmerzahl) - kosten;
-				
+
 				gewinn[i] = "" + result;
 			}
 
@@ -348,7 +350,8 @@ public class ReiseFieberGUI {
 					columnReisen);
 			modelReisen.addColumn("Gewinn/Verlust", gewinn);
 			tableReisen.setModel(modelReisen);
-			tableReisen.setDefaultRenderer(Object.class, new CustomTableRenderer(9, 1, gewinn));
+			tableReisen.setDefaultRenderer(Object.class,
+					new CustomTableRenderer(9, 1, gewinn));
 
 			dataKundenReise = new DatenbankVerbindung().buchungsUebersicht();
 
@@ -372,10 +375,11 @@ public class ReiseFieberGUI {
 			DefaultTableModel modelKundenReise = new DefaultTableModel(
 					dataKundenReise, columnKundenReise);
 			tableKundenReise.setModel(modelKundenReise);
-			tableKundenReise.setDefaultRenderer(Object.class, new CustomTableRenderer(2));
-			
-			
-			// these two blocks are only here to show the searchresult table and the fellow travelers table by default
+			tableKundenReise.setDefaultRenderer(Object.class,
+					new CustomTableRenderer(2));
+
+			// these two blocks are only here to show the searchresult table and
+			// the fellow travelers table by default
 			DefaultTableModel modelSearchResult = new DefaultTableModel(
 					dataSearchResult, columnSearchResult);
 			tableSearchResult.setModel(modelSearchResult);
@@ -455,7 +459,7 @@ public class ReiseFieberGUI {
 				testSuche();
 			}
 		};
-		acReiseStornieren = new AbstractAction("Reise stornieren") {
+		acReiseStornieren = new AbstractAction("Buchung stornieren") {
 			public void actionPerformed(ActionEvent e) {
 				// TODO take data from current selected customer/ journey
 				int selectedTable = tabPane.getSelectedIndex();
@@ -513,65 +517,63 @@ public class ReiseFieberGUI {
 				int index = tabPane.getSelectedIndex();
 				System.out.println(index);
 				if (index == 0) {
+					popupKunden = new JPopupMenu();
+					popupKunden.add(kundeSuchen);
+					popupKunden.add(kundeErstellen);
+					popupKunden.add(bearbeiten);
+					popupKunden.add(zuReiseHinzufuegen);
+
 					if (tableKunden.getSelectedRow() == -1) {
-						popupKunden = new JPopupMenu();
-						popupKunden
-								.add("Kein Kunde zur Interaktion ausgew\u00e4hlt");
-						popupKunden.addSeparator();
-						popupKunden.add(kundeSuchen);
-						popupKunden.add(kundeErstellen);
+						bearbeiten.setEnabled(false);
+						zuReiseHinzufuegen.setEnabled(false);
 					} else {
-						popupKunden = new JPopupMenu();
-						popupKunden.add(kundeSuchen);
-						popupKunden.add(bearbeiten);
-						popupKunden.add(kundeErstellen);
-						popupKunden.add(zuReiseHinzufuegen);
+						bearbeiten.setEnabled(true);
+						zuReiseHinzufuegen.setEnabled(true);
 					}
 				} else if (index == 1) {
+					popupReisen = new JPopupMenu();
+					popupReisen.add(reiseErstellen);
+					popupReisen.add(zuReiseHinzufuegen);
+					popupReisen.add(reiseTeilnehmerAnzeigen);
+
 					if (tableReisen.getSelectedRow() == -1) {
-						popupReisen = new JPopupMenu();
-						popupReisen
-								.add("Keine Reise zur Interaktion ausgew\u00e4hlt");
-						popupReisen.addSeparator();
-						popupReisen.add(reiseErstellen);
+						zuReiseHinzufuegen.setEnabled(false);
+						reiseTeilnehmerAnzeigen.setEnabled(false);
 					} else {
-						popupReisen = new JPopupMenu();
-						popupReisen.add(reiseErstellen);
-						popupReisen.add(zuReiseHinzufuegen);
+						zuReiseHinzufuegen.setEnabled(true);
+						reiseTeilnehmerAnzeigen.setEnabled(true);
 					}
 				} else if (index == 2) {
+					popupKundenReise = new JPopupMenu();
+					popupKundenReise.add(reiseStornieren);
+
 					if (tableKundenReise.getSelectedRow() == -1) {
-						popupKundenReise = new JPopupMenu();
-						popupKundenReise
-								.add("Keine Buchung zur Interaktion ausgew\u00e4hlt");
+						reiseStornieren.setEnabled(false);
 					} else {
-						popupKundenReise = new JPopupMenu();
-						popupKundenReise.add(reiseStornieren);
-						popupKundenReise.add(zuReiseHinzufuegen);
+						reiseStornieren.setEnabled(true);
 					}
 				} else if (index == 3) {
+					popupSearch = new JPopupMenu();
+					popupSearch.add(kundeSuchen);
+					popupSearch.add(kundeErstellen);
+					popupSearch.add(bearbeiten);
+					popupSearch.add(zuReiseHinzufuegen);
+
 					if (tableSearchResult.getSelectedRow() == -1) {
-						popupSearch = new JPopupMenu();
-						popupSearch
-								.add("Kein Kunde zur Interaktion ausgew\u00e4hlt");
-						popupSearch.addSeparator();
-						popupSearch.add(kundeSuchen);
-						popupSearch.add(kundeErstellen);
+						bearbeiten.setEnabled(false);
+						zuReiseHinzufuegen.setEnabled(false);
 					} else {
-						popupSearch = new JPopupMenu();
-						popupSearch.add(kundeSuchen);
-						popupSearch.add(bearbeiten);
-						popupSearch.add(kundeErstellen);
-						popupSearch.add(zuReiseHinzufuegen);
+						bearbeiten.setEnabled(true);
+						zuReiseHinzufuegen.setEnabled(true);
 					}
 				} else if (index == 4) {
+					popupReiseTeilnehmer = new JPopupMenu();
+					popupReiseTeilnehmer.add(reiseStornieren);
+
 					if (tableReiseTeilnehmer.getSelectedRow() == -1) {
-						popupReiseTeilnehmer = new JPopupMenu();
-						popupReiseTeilnehmer.add(acZuReiseHinzufuegen);
+						reiseStornieren.setEnabled(false);
 					} else {
-						popupReiseTeilnehmer = new JPopupMenu();
-						popupReiseTeilnehmer.add(acZuReiseHinzufuegen);
-						popupReiseTeilnehmer.add(acReiseStornieren);
+						reiseStornieren.setEnabled(true);
 					}
 				}
 				maybeShowPopup(e);
