@@ -107,7 +107,7 @@ public class DatenbankVerbindung {
 			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
 			 * qb.append(";");
 			 */
-			String dbSuche = quoted(kundenDaten.getKdName());
+			String dbSuche = quoted(kundenDaten.getKdName() + "%");
 			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
 			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
 			// final String query =
@@ -115,7 +115,7 @@ public class DatenbankVerbindung {
 			// // qb.toString();
 			final String query = "SELECT id, nachname, vorname, geschlecht, geburtstag, volljaehrig, telefonnummer, "
 					+ "adresse, postleitzahl, wohnort FROM public."
-					+ dbTableKunden + " WHERE nachname=" + dbSuche + ";";
+					+ dbTableKunden + " WHERE lower(nachname) similar to " + dbSuche.toLowerCase() + ";";
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
