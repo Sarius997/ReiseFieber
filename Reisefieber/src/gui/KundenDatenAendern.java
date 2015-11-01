@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -44,7 +46,7 @@ public class KundenDatenAendern implements IKundenAendern {
 	private JTextField tfPostleitzahl;
 
 	private JButton bnAendern;
-	private JButton bnFertig;
+	private JButton bnAbbrechen;
 
 	public KundenDatenAendern(String selectedID) {
 		frame = new JFrame("Kundendaten \u00e4ndern");
@@ -77,7 +79,7 @@ public class KundenDatenAendern implements IKundenAendern {
 		tfPostleitzahl = new JTextField();
 
 		bnAendern = new JButton("\u00c4ndern");
-		bnFertig = new JButton("Fertig");
+		bnAbbrechen = new JButton("Abbrechen");
 
 		frame.setLayout(new GridLayout(0, 2, 10, 10));
 		
@@ -104,7 +106,7 @@ public class KundenDatenAendern implements IKundenAendern {
 		frame.add(labWohnort);
 		frame.add(tfWohnort);
 		frame.add(bnAendern);
-		frame.add(bnFertig);
+		frame.add(bnAbbrechen);
 		addActionListeners();
 	}
 
@@ -126,7 +128,7 @@ public class KundenDatenAendern implements IKundenAendern {
 			}
 		});
 
-		bnFertig.addActionListener(new ActionListener() {
+		bnAbbrechen.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -140,6 +142,37 @@ public class KundenDatenAendern implements IKundenAendern {
 				KundenDatenAendern.this.aendern();
 			}
 		});
+		
+		KeyListener enterListener = new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){
+					bnAendern.doClick();
+				}
+			}
+		};
+		
+		tfKdName.addKeyListener(enterListener);
+		tfKdVorname.addKeyListener(enterListener);
+		tfGeschlecht.addKeyListener(enterListener);
+		tfGeburtsdatum.addKeyListener(enterListener);
+		tfTelefon.addKeyListener(enterListener);
+		tfAdresse.addKeyListener(enterListener);
+		tfPostleitzahl.addKeyListener(enterListener);
+		tfWohnort.addKeyListener(enterListener);
 
 	}
 

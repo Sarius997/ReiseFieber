@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,13 +27,12 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 	private JTextField tfKdName;
 	private JButton bnSuchen;
 	private JButton bnAbbrechen;
-	
+
 	private ReiseFieberGUI gui;
 
 	public SucheKundeDialog(ReiseFieberGUI gui) {
 		this.gui = gui;
-		
-		
+
 		frame = new JFrame();
 		frame.setTitle("Suche");
 		labEingebeaufforderung = new JLabel(
@@ -84,6 +85,29 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 				SucheKundeDialog.this.abbrechen();
 			}
 		});
+		KeyListener enterListener = new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					bnSuchen.doClick();
+				}
+			}
+		};
+
+		tfKdName.addKeyListener(enterListener);
 	}
 
 	protected void suchenKunde() { // baut Verbindung zur Datenbank auf und
@@ -92,7 +116,8 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
 			String[][] searchResult = dbv.doSearch(this);
-			gui.showSearchResultData(searchResult);;
+			gui.showSearchResultData(searchResult);
+			;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

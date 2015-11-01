@@ -3,6 +3,8 @@ package gui;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -35,7 +37,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	private JTextField tfPostleitzahl;
 
 	private JButton bnHinzufuegen;
-	private JButton bnFertig;
+	private JButton bnAbbrechen;
 
 	// public String getTfKdNr() {
 	// return tfKdNr.getText();
@@ -114,7 +116,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 		tfPostleitzahl = new JTextField();
 
 		bnHinzufuegen = new JButton("Hinzuf\u00fcgen");
-		bnFertig = new JButton("Fertig");
+		bnAbbrechen = new JButton("Abbrechen");
 
 		frame.setLayout(new GridLayout(0, 2, 10, 10));
 		// frame.add(labKdNr);
@@ -129,16 +131,16 @@ public class KundenEingabeFeld implements IKundenDaten {
 		frame.add(tfGeburtsdatum);
 		frame.add(labTelefon);
 		frame.add(tfTelefon);
-		
+
 		frame.add(labAdresse);
 		frame.add(tfAdresse);
 		frame.add(labPostleitzahl);
 		frame.add(tfPostleitzahl);
 		frame.add(labWohnort);
 		frame.add(tfWohnort);
-		
+
 		frame.add(bnHinzufuegen);
-		frame.add(bnFertig);
+		frame.add(bnAbbrechen);
 
 		// fillText();
 
@@ -164,7 +166,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	// }
 	// }
 	private void addActionListeners() {
-		bnFertig.addActionListener(new ActionListener() {
+		bnAbbrechen.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -178,6 +180,37 @@ public class KundenEingabeFeld implements IKundenDaten {
 				KundenEingabeFeld.this.hinzufuegen();
 			}
 		});
+
+		KeyListener enterListener = new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					bnHinzufuegen.doClick();
+				}
+			}
+		};
+
+		tfKdName.addKeyListener(enterListener);
+		tfKdVorname.addKeyListener(enterListener);
+		tfGeschlecht.addKeyListener(enterListener);
+		tfGeburtsdatum.addKeyListener(enterListener);
+		tfTelefon.addKeyListener(enterListener);
+		tfAdresse.addKeyListener(enterListener);
+		tfPostleitzahl.addKeyListener(enterListener);
+		tfWohnort.addKeyListener(enterListener);
 	}
 
 	protected void hinzufuegen() { // baut Verbindung zur Datenbank auf und

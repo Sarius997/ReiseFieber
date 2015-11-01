@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -37,7 +39,7 @@ public class ReiseBuchen implements IKundenReise {
 	private JLabel labShowReiseZiel;
 
 	private JButton bnHinzufuegen;
-	private JButton bnFertig;
+	private JButton bnAbbrechen;
 
 	public ReiseBuchen(String selectedID, String selectedTable) {
 		frame = new JFrame("Kunde zu Reise hinzuf\u00fcgen");
@@ -58,13 +60,12 @@ public class ReiseBuchen implements IKundenReise {
 		labShowReiseZiel = new JLabel();
 
 		bnHinzufuegen = new JButton("Hinzuf\u00fcgen");
-		bnFertig = new JButton("Fertig");
-		
-		
-		if(selectedID != null && selectedTable != null){
-			if(selectedTable.equals("Kunde")){
+		bnAbbrechen = new JButton("Fertig");
+
+		if (selectedID != null && selectedTable != null) {
+			if (selectedTable.equals("Kunde")) {
 				sucheKunde(selectedID);
-			} else if (selectedTable.equals("Reise")){
+			} else if (selectedTable.equals("Reise")) {
 				sucheReise(selectedID);
 			}
 		}
@@ -85,7 +86,7 @@ public class ReiseBuchen implements IKundenReise {
 		frame.add(labShowReiseZiel);
 
 		frame.add(bnHinzufuegen);
-		frame.add(bnFertig);
+		frame.add(bnAbbrechen);
 
 		addActionListeners();
 	}
@@ -125,7 +126,7 @@ public class ReiseBuchen implements IKundenReise {
 
 			}
 		});
-		bnFertig.addActionListener(new ActionListener() {
+		bnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ReiseBuchen.this.fertig();
 			}

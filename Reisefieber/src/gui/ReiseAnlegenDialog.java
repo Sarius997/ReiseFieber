@@ -3,6 +3,8 @@ package gui;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,7 +34,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 	private JTextField tfKosten;
 
 	private JButton bnHinzufuegen;
-	private JButton bnFertig;
+	private JButton bnAbbrechen;
 
 	public ReiseAnlegenDialog() {
 		frame = new JFrame("Reise anlegen");
@@ -53,7 +55,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 		tfKosten = new JTextField();
 
 		bnHinzufuegen = new JButton("Hinzuf\u00fcgen");
-		bnFertig = new JButton("Fertig");
+		bnAbbrechen = new JButton("Abbrechen");
 
 		frame.setLayout(new GridLayout(0, 2, 10, 10));
 		frame.add(labName);
@@ -72,7 +74,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 		frame.add(labKosten);
 		frame.add(tfKosten);
 		frame.add(bnHinzufuegen);
-		frame.add(bnFertig);
+		frame.add(bnAbbrechen);
 
 		// fillText();
 
@@ -98,7 +100,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 	// }
 	// }
 	private void addActionListeners() {
-		bnFertig.addActionListener(new ActionListener() {
+		bnAbbrechen.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -112,6 +114,35 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 				ReiseAnlegenDialog.this.hinzufuegen();
 			}
 		});
+
+		KeyListener enterListener = new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					bnHinzufuegen.doClick();
+				}
+			}
+		};
+
+		tfZiel.addKeyListener(enterListener);
+		tfTeilnehmerzahl.addKeyListener(enterListener);
+		tfBeginn.addKeyListener(enterListener);
+		tfEnde.addKeyListener(enterListener);
+		tfPreisProPerson.addKeyListener(enterListener);
+		tfKosten.addKeyListener(enterListener);
 	}
 
 	protected void hinzufuegen() {
