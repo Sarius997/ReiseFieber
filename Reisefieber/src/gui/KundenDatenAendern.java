@@ -12,9 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import dbv.DatenbankVerbindung;
-import dbv.IKundenÄndern;
+import dbv.IKundenAendern;
 
-public class KundenDatenÄndern implements IKundenÄndern {
+public class KundenDatenAendern implements IKundenAendern {
 	private JFrame frame;
 	private JLabel labID;
 	private JTextField tfID;
@@ -43,13 +43,13 @@ public class KundenDatenÄndern implements IKundenÄndern {
 	private JLabel labPostleitzahl;
 	private JTextField tfPostleitzahl;
 
-	private JButton bnÄndern;
+	private JButton bnAendern;
 	private JButton bnFertig;
 
-	public KundenDatenÄndern(String selectedID) {
-		frame = new JFrame("Kundendaten ändern");
+	public KundenDatenAendern(String selectedID) {
+		frame = new JFrame("Kundendaten \u00e4ndern");
 
-		labID = new JLabel("ID des zu ändernden Kunden:");
+		labID = new JLabel("ID des zu \u00e4ndernden Kunden:");
 		tfID = new JTextField();
 
 		labKdName = new JLabel("Nachname:");
@@ -76,7 +76,7 @@ public class KundenDatenÄndern implements IKundenÄndern {
 		labPostleitzahl = new JLabel("Postleitzahl:");
 		tfPostleitzahl = new JTextField();
 
-		bnÄndern = new JButton("Ändern");
+		bnAendern = new JButton("\u00c4ndern");
 		bnFertig = new JButton("Fertig");
 
 		frame.setLayout(new GridLayout(0, 2, 10, 10));
@@ -103,7 +103,7 @@ public class KundenDatenÄndern implements IKundenÄndern {
 		frame.add(tfPostleitzahl);
 		frame.add(labWohnort);
 		frame.add(tfWohnort);
-		frame.add(bnÄndern);
+		frame.add(bnAendern);
 		frame.add(bnFertig);
 		addActionListeners();
 	}
@@ -131,13 +131,13 @@ public class KundenDatenÄndern implements IKundenÄndern {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				KundenDatenÄndern.this.fertig();
+				KundenDatenAendern.this.fertig();
 			}
 		});
-		bnÄndern.addActionListener(new ActionListener() {
+		bnAendern.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				KundenDatenÄndern.this.ändern();
+				KundenDatenAendern.this.aendern();
 			}
 		});
 
@@ -168,7 +168,7 @@ public class KundenDatenÄndern implements IKundenÄndern {
 		}
 	}
 
-	protected void ändern() {
+	protected void aendern() {
 		// TODO Auto-generated method stub
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {

@@ -49,10 +49,10 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 		tfEnde = new JTextField();
 		labPreisProPerson = new JLabel("Preis pro Person:");
 		tfPreisProPerson = new JTextField();
-		labKosten = new JLabel("Kosten für die Reise:");
+		labKosten = new JLabel("Kosten f\u00fcr die Reise:");
 		tfKosten = new JTextField();
 
-		bnHinzufuegen = new JButton("Hinzufügen");
+		bnHinzufuegen = new JButton("Hinzuf\u00fcgen");
 		bnFertig = new JButton("Fertig");
 
 		frame.setLayout(new GridLayout(0, 2, 10, 10));

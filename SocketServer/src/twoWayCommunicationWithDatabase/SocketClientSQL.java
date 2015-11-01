@@ -27,7 +27,7 @@ public class SocketClientSQL {
 			"ADDTOJOURNEY", "STOPSESSION" };
 	private static JComboBox<String> command = new JComboBox<String>(list);
 	private static JTextField statement = new JTextField();
-	private static JButton commit = new JButton("SQL Befehl ausführen");
+	private static JButton commit = new JButton("SQL Befehl ausf\u00fchren");
 
 	private String hostname;
 	private int port;

@@ -16,7 +16,7 @@ public class DatenbankVerbindung {
 	String dbServer;
 	String dbPort;
 	String dbName;
-	String dbTable;
+	String dbTableKunden;
 	String dbUser;
 	String dbPassword;
 	Statement statement;
@@ -32,12 +32,9 @@ public class DatenbankVerbindung {
 
 	public DatenbankVerbindung() {
 		dbServer = "localhost";
-		// achtung: Port eigentlich 5432!!
-		// 5433 ist testport
-		// dbTable eigentlich = "kunden"
 		dbPort = "5432";
 		dbName = "postgres";
-		dbTable = "kunden";
+		dbTableKunden = "kunden";
 		dbUser = "postgres";
 		dbPassword = "1234";
 	}
@@ -83,8 +80,8 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
-					+ dbUser + ", P:" + dbPassword;
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 	}
 
@@ -118,8 +115,7 @@ public class DatenbankVerbindung {
 			// // qb.toString();
 			final String query = "SELECT id, nachname, vorname, geschlecht, geburtstag, volljaehrig, telefonnummer, "
 					+ "adresse, postleitzahl, wohnort FROM public."
-					+ dbTable
-					+ " WHERE nachname=" + dbSuche + ";";
+					+ dbTableKunden + " WHERE nachname=" + dbSuche + ";";
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -129,7 +125,7 @@ public class DatenbankVerbindung {
 
 			resultSet = statement.executeQuery(querybkp);
 			// resultSet = executeQuery(querybkp);
-			//resultAusgabeConsole(resultSet);
+			// resultAusgabeConsole(resultSet);
 
 			ArrayList<String[]> resultArrays = new ArrayList<String[]>(5);
 			while (resultSet.next()) {
@@ -152,8 +148,8 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
-					+ dbUser + ", P:" + dbPassword;
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 		return result;
 	}
@@ -216,7 +212,7 @@ public class DatenbankVerbindung {
 			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
 			// // qb.toString();
 			final String query = "INSERT INTO "
-					+ dbTable
+					+ dbTableKunden
 					+ " (nachname, vorname, wohnort, geburtstag, telefonnummer, geschlecht, adresse, postleitzahl) "
 					+ "VALUES (" + dbEingabe + ");";
 			querybkp = query;
@@ -227,8 +223,8 @@ public class DatenbankVerbindung {
 			deallocateResources(resSet, stmt);
 		} catch (SQLException ex) {
 			final String s = "executed Insert Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
-					+ dbUser + ", P:" + dbPassword;
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 	}
 
@@ -291,7 +287,7 @@ public class DatenbankVerbindung {
 		}
 	}
 
-	public void doChange(IKundenÄndern kundenDaten) throws Exception {
+	public void doChange(IKundenAendern kundenDaten) throws Exception {
 
 		String querybkp = "(empty)";
 		try {
@@ -318,7 +314,7 @@ public class DatenbankVerbindung {
 			// final String query =
 			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
 			// // qb.toString();
-			final String query = "UPDATE " + dbTable + " SET nachname="
+			final String query = "UPDATE " + dbTableKunden + " SET nachname="
 					+ quoted(kundenDaten.getNachname()) + ", vorname="
 					+ quoted(kundenDaten.getVorname()) + ", wohnort="
 					+ quoted(kundenDaten.getWohnort()) + ", geburtstag="
@@ -336,8 +332,8 @@ public class DatenbankVerbindung {
 			deallocateResources(resSet, stmt);
 		} catch (SQLException ex) {
 			final String s = "executed Insert Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
-					+ dbUser + ", P:" + dbPassword;
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 	}
 
@@ -380,8 +376,8 @@ public class DatenbankVerbindung {
 			deallocateResources(resSet, stmt);
 		} catch (SQLException ex) {
 			final String s = "executed Insert Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
-					+ dbUser + ", P:" + dbPassword;
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 	}
 
@@ -416,7 +412,7 @@ public class DatenbankVerbindung {
 			// // qb.toString();
 			final String query = "SELECT id, nachname, vorname, "
 					+ "geschlecht, geburtstag, telefonnummer, "
-					+ "adresse, postleitzahl, wohnort FROM " + dbTable
+					+ "adresse, postleitzahl, wohnort FROM " + dbTableKunden
 					+ " WHERE id=" + dbSuche + ";";
 			querybkp = query;
 
@@ -437,8 +433,8 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
-					+ dbUser + ", P:" + dbPassword;
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 		return result;
 	}
@@ -487,8 +483,8 @@ public class DatenbankVerbindung {
 			deallocateResources(resSet, stmt);
 		} catch (SQLException ex) {
 			final String s = "executed Insert Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
-					+ dbUser + ", P:" + dbPassword;
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 	}
 
@@ -541,8 +537,8 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
-					+ dbUser + ", P:" + dbPassword;
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 		return result;
 	}
@@ -607,8 +603,8 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
-					+ dbUser + ", P:" + dbPassword;
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 		return result;
 	}
@@ -671,13 +667,13 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
-					+ dbUser + ", P:" + dbPassword;
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 		return result;
 	}
 
-	public String[][] reiseTeilnehmerUebersicht() throws Exception {
+	public String[][] buchungsUebersicht() throws Exception {
 		String[][] result = null;
 		String querybkp = "(empty)";
 		try {
@@ -737,8 +733,8 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
-					+ dbUser + ", P:" + dbPassword;
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 		return result;
 	}
@@ -765,8 +761,8 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
-					+ dbUser + ", P:" + dbPassword;
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 	}
 
@@ -821,8 +817,120 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTable + ", N:" + dbName + ", U:"
-					+ dbUser + ", P:" + dbPassword;
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
+		}
+		return result;
+	}
+
+	public String[][] reiseTeilnehmer(String reiseID, String storno)
+			throws Exception {
+		String[][] result = null;
+		String querybkp = "(empty)";
+		try {
+			Connection conn = connect();
+			if (conn == null)
+				return null;
+
+			final Statement statement = conn.createStatement();
+			ResultSet resultSet = null;
+			final String query = "SELECT kundenreise.id, reise.id, reise.name, reise.ziel, kunden.id, kunden.nachname, kunden.vorname "
+					+ "FROM kundenreise JOIN kunden ON kunden.id=kundenreise.k_id "
+					+ "JOIN reise ON reise.id=kundenreise.r_id WHERE reise.id="
+					+ reiseID + " AND kundenreise.storno=" + storno;
+			querybkp = query;
+
+			System.out.println("SQL Statement is:\n" + query);
+
+			resultSet = statement.executeQuery(querybkp);
+
+			ArrayList<String[]> resultArrays = new ArrayList<String[]>(5);
+			while (resultSet.next()) {
+				String[] tmp = new String[8];
+				for (int k = 1; k <= resultSet.getMetaData().getColumnCount(); k++) {
+					tmp[k - 1] = resultSet.getString(k);
+				}
+				resultArrays.add(tmp);
+			}
+
+			result = new String[resultArrays.size()][8];
+			int i = 0;
+			for (Iterator iterator = resultArrays.iterator(); iterator
+					.hasNext(); i++) {
+				String[] strings = (String[]) iterator.next();
+				result[i] = strings;
+			}
+
+			deallocateResources(resultSet, statement);
+		} catch (SQLException ex) {
+			final String s = "executed Select Query\n" + querybkp + "\non S:"
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
+		}
+		return result;
+	}
+
+	public String getMaximaleTeilnehmerZahl(String reiseID) throws Exception{
+		String result = null;
+		String querybkp = "(empty)";
+		try {
+			Connection conn = connect();
+			if (conn == null)
+				return null;
+
+			final Statement statement = conn.createStatement();
+			ResultSet resultSet = null;
+			final String query = "SELECT reise.teilnehmerzahl "
+					+ "FROM reise WHERE reise.id=" + reiseID;
+			querybkp = query;
+
+			System.out.println("SQL Statement is:\n" + query);
+
+			resultSet = statement.executeQuery(querybkp);
+
+			while (resultSet.next()) {
+				for (int k = 1; k <= resultSet.getMetaData().getColumnCount(); k++) {
+					result = resultSet.getString(k);
+				}
+			}
+
+			deallocateResources(resultSet, statement);
+		} catch (SQLException ex) {
+			final String s = "executed Select Query\n" + querybkp + "\non S:"
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
+		}
+		return result;
+	}
+	
+	public String getAktuelleTeilnehmerZahl(String reiseID) throws Exception{
+		String result = null;
+		String querybkp = "(empty)";
+		try {
+			Connection conn = connect();
+			if (conn == null)
+				return null;
+
+			final Statement statement = conn.createStatement();
+			ResultSet resultSet = null;
+			final String query = "SELECT COUNT(*) FROM kundenreise WHERE r_id=" + reiseID + " AND storno=false";
+			querybkp = query;
+
+			System.out.println("SQL Statement is:\n" + query);
+
+			resultSet = statement.executeQuery(querybkp);
+
+			while (resultSet.next()) {
+				for (int k = 1; k <= resultSet.getMetaData().getColumnCount(); k++) {
+					result = resultSet.getString(k);
+				}
+			}
+
+			deallocateResources(resultSet, statement);
+		} catch (SQLException ex) {
+			final String s = "executed Select Query\n" + querybkp + "\non S:"
+					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 		return result;
 	}

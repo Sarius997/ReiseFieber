@@ -7,10 +7,10 @@ public class Tools {
 		String nachricht;
 		try {
 			if (kunde.istVolljaehrig()){			
-				nachricht="ist Volljährig.";
+				nachricht="ist Vollj\u00e4hrig.";
 			}
 			else {
-				nachricht="ist nicht Volljährig.";
+				nachricht="ist nicht Vollj\u00e4hrig.";
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

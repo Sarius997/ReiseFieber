@@ -92,7 +92,7 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
 			String[][] searchResult = dbv.doSearch(this);
-			gui.addResultTable(searchResult);;
+			gui.showSearchResultData(searchResult);;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

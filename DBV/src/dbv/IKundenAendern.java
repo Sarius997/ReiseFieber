@@ -1,6 +1,6 @@
 package dbv;
 
-public interface IKundenÄndern {
+public interface IKundenAendern {
 	public String getNachname();
 
 	public String getVorname();

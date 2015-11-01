@@ -15,7 +15,7 @@ import kundenkartei.Kunde;
 import dbv.DatenbankVerbindung;
 import dbv.IKundenReise;
 
-public class Reiseteilnehmer implements IKundenReise {
+public class ReiseBuchen implements IKundenReise {
 
 	private JFrame frame;
 	private JLabel labKdNr;
@@ -39,8 +39,8 @@ public class Reiseteilnehmer implements IKundenReise {
 	private JButton bnHinzufuegen;
 	private JButton bnFertig;
 
-	public Reiseteilnehmer(String selectedID, String selectedTable) {
-		frame = new JFrame("Kunde zu Reise hinzufügen");
+	public ReiseBuchen(String selectedID, String selectedTable) {
+		frame = new JFrame("Kunde zu Reise hinzuf\u00fcgen");
 		labKdNr = new JLabel("Kundennummer:");
 		tfKdNr = new JTextField();
 		labKdName = new JLabel("Name:");
@@ -57,7 +57,7 @@ public class Reiseteilnehmer implements IKundenReise {
 		labReiseZiel = new JLabel("Reiseziel:");
 		labShowReiseZiel = new JLabel();
 
-		bnHinzufuegen = new JButton("Hinzufügen");
+		bnHinzufuegen = new JButton("Hinzuf\u00fcgen");
 		bnFertig = new JButton("Fertig");
 		
 		
@@ -127,12 +127,12 @@ public class Reiseteilnehmer implements IKundenReise {
 		});
 		bnFertig.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Reiseteilnehmer.this.fertig();
+				ReiseBuchen.this.fertig();
 			}
 		});
 		bnHinzufuegen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Reiseteilnehmer.this.hinzufuegen();
+				ReiseBuchen.this.hinzufuegen();
 			}
 		});
 	}

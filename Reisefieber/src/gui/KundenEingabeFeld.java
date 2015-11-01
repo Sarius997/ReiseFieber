@@ -92,7 +92,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	}
 
 	public KundenEingabeFeld() {
-		frame = new JFrame("Kunde hinzufügen");
+		frame = new JFrame("Kunde hinzuf\u00fcgen");
 		// labKdNr=new JLabel("Kundennummer:");
 		// tfKdNr=new JTextField();
 		labKdName = new JLabel("Name:");
@@ -113,7 +113,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 		labPostleitzahl = new JLabel("Postleitzahl:");
 		tfPostleitzahl = new JTextField();
 
-		bnHinzufuegen = new JButton("Hinzufügen");
+		bnHinzufuegen = new JButton("Hinzuf\u00fcgen");
 		bnFertig = new JButton("Fertig");
 
 		frame.setLayout(new GridLayout(0, 2, 10, 10));
