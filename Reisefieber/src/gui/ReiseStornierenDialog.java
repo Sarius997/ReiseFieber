@@ -127,6 +127,7 @@ public class ReiseStornierenDialog implements IStorno {
 		bnBestaetigen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ReiseStornierenDialog.this.storno();
+				frame.dispose();
 			}
 		});
 

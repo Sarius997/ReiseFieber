@@ -62,6 +62,7 @@ public class ReiseTeilnehmer {
 		bnAnzeigen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ReiseTeilnehmer.this.anzeigen();
+				frame.dispose();
 			}
 		});
 

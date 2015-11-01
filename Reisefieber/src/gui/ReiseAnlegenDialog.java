@@ -112,6 +112,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ReiseAnlegenDialog.this.hinzufuegen();
+				frame.dispose();
 			}
 		});
 

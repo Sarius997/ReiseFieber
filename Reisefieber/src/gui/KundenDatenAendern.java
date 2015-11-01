@@ -140,6 +140,7 @@ public class KundenDatenAendern implements IKundenAendern {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				KundenDatenAendern.this.aendern();
+				frame.dispose();
 			}
 		});
 		

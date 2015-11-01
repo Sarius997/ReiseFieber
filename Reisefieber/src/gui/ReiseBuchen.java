@@ -131,6 +131,7 @@ public class ReiseBuchen implements IKundenReise {
 		bnHinzufuegen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ReiseBuchen.this.hinzufuegen();
+				frame.dispose();
 			}
 		});
 	}

@@ -75,6 +75,7 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				SucheKundeDialog.this.suchenKunde();
+				frame.dispose();
 			}
 		});
 		bnAbbrechen.addActionListener(new ActionListener() {

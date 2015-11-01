@@ -177,6 +177,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				KundenEingabeFeld.this.hinzufuegen();
+				frame.dispose();
 			}
 		});
 
