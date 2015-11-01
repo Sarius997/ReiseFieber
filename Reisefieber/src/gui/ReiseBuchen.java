@@ -57,7 +57,7 @@ public class ReiseBuchen implements IKundenReise {
 		labShowReiseZiel = new JLabel();
 
 		bnHinzufuegen = new JButton("Hinzuf\u00fcgen");
-		bnAbbrechen = new JButton("Fertig");
+		bnAbbrechen = new JButton("Abbrechen");
 
 		if (selectedID != null && selectedTable != null) {
 			if (selectedTable.equals("Kunde")) {
