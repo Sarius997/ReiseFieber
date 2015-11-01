@@ -133,7 +133,14 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					bnHinzufuegen.doClick();
+					if (!tfZiel.getText().equals("")
+							&& !tfTeilnehmerzahl.getText().equals("")
+							&& !tfBeginn.getText().equals("")
+							&& !tfEnde.getText().equals("")
+							&& !tfPreisProPerson.getText().equals("")
+							&& !tfKosten.getText().equals("")) {
+						bnHinzufuegen.doClick();
+					}
 				}
 			}
 		};

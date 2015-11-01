@@ -82,8 +82,8 @@ public class KundenDatenAendern implements IKundenAendern {
 		bnAbbrechen = new JButton("Abbrechen");
 
 		frame.setLayout(new GridLayout(0, 2, 10, 10));
-		
-		if(selectedID!= null){
+
+		if (selectedID != null) {
 			suchen(selectedID);
 		}
 
@@ -143,29 +143,38 @@ public class KundenDatenAendern implements IKundenAendern {
 				frame.dispose();
 			}
 		});
-		
+
 		KeyListener enterListener = new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER){
-					bnAendern.doClick();
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (!tfKdName.getText().equals("")
+							&& !tfKdVorname.getText().equals("")
+							&& !tfGeschlecht.getText().equals("")
+							&& !tfGeburtsdatum.getText().equals("")
+							&& !tfTelefon.getText().equals("")
+							&& !tfAdresse.getText().equals("")
+							&& !tfPostleitzahl.getText().equals("")
+							&& !tfWohnort.getText().equals("")) {
+						bnAendern.doClick();
+					}
 				}
 			}
 		};
-		
+
 		tfKdName.addKeyListener(enterListener);
 		tfKdVorname.addKeyListener(enterListener);
 		tfGeschlecht.addKeyListener(enterListener);

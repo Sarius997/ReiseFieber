@@ -83,7 +83,9 @@ public class ReiseTeilnehmer {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					bnAnzeigen.doClick();
+					if (!tfReiseID.getText().equals("")) {
+						bnAnzeigen.doClick();
+					}
 				}
 			}
 		};

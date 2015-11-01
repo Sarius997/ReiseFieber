@@ -198,7 +198,16 @@ public class KundenEingabeFeld implements IKundenDaten {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					bnHinzufuegen.doClick();
+					if (!tfKdName.getText().equals("")
+							&& !tfKdVorname.getText().equals("")
+							&& !tfGeschlecht.getText().equals("")
+							&& !tfGeburtsdatum.getText().equals("")
+							&& !tfTelefon.getText().equals("")
+							&& !tfAdresse.getText().equals("")
+							&& !tfPostleitzahl.getText().equals("")
+							&& !tfWohnort.getText().equals("")) {
+						bnHinzufuegen.doClick();
+					}
 				}
 			}
 		};

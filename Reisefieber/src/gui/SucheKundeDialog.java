@@ -103,7 +103,9 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					bnSuchen.doClick();
+					if (!tfKdName.getText().equals("")) {
+						bnSuchen.doClick();
+					}
 				}
 			}
 		};
