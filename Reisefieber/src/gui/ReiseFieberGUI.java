@@ -91,18 +91,14 @@ public class ReiseFieberGUI {
 	private String[][] dataSearchResult;
 	private String[][] dataReiseTeilnehmer;
 
-	// TODO rework
-	// private int selectedRow = 0;
 	private String contentSelectedRowID;
 	private String addToJourney = "";
 
-	// private int searchSelectedRow = -1;
 	private MouseListener popupListener;
 
 	@SuppressWarnings("unused")
 	private ReiseFieber reiseFieber;
 
-	// TODO test and rework
 	public ReiseFieberGUI(ReiseFieber reiseFieber) {
 		this.reiseFieber = reiseFieber;
 
@@ -132,22 +128,9 @@ public class ReiseFieberGUI {
 
 		menuBar.add(beenden);
 		frame.setJMenuBar(menuBar);
-		/*
-		 * int selectedScrollPane = tabPane.getSelectedIndex(); if
-		 * (selectedScrollPane == 0) { int selectedRow =
-		 * tableKunden.getSelectedRow(); int selectedColumn =
-		 * tableKunden.getSelectedColumn(); TableColumnModel tcm =
-		 * tableKunden.getColumnModel(); String statustext = "" +
-		 * tcm.getColumn(selectedColumn).getHeaderValue() +
-		 * tableKunden.getModel().getValueAt(selectedRow, selectedColumn); }
-		 */
 
 		tabPane = new JTabbedPane();
 
-		// tableKunden = new JTable();
-		// tableReisen = new JTable();
-		// tableKundenReise = new JTable();
-		//
 		tableKunden = new JTableNoEditing();
 		tableReisen = new JTableNoEditing();
 		tableKundenReise = new JTableNoEditing();
@@ -185,19 +168,6 @@ public class ReiseFieberGUI {
 		addActionListeners();
 		addMouseListeners();
 
-		// TODO does't work
-		/*
-		 * Component[] components = frame.getComponents(); for (Component
-		 * component : components) { component.addFocusListener(new
-		 * FocusListener() {
-		 * 
-		 * @Override public void focusLost(FocusEvent e) { // TODO
-		 * Auto-generated method stub }
-		 * 
-		 * @Override public void focusGained(FocusEvent e) { // TODO
-		 * Auto-generated method stub loadTableData(); } }); }
-		 */
-
 		addMouseListenersTables();
 
 	}
@@ -206,7 +176,6 @@ public class ReiseFieberGUI {
 		frame.dispose();
 	}
 
-	// TODO option zum schlieﬂen der tabs!!!
 	public void showSearchResultData(String[][] data) {
 		dataSearchResult = data;
 		String[] columnSearchResult = { "ID", "Nachname", "Vorname",
@@ -230,34 +199,6 @@ public class ReiseFieberGUI {
 		tabPane.setSelectedIndex(3);
 	}
 
-	// private void showReiseTeilnehmer(String[][] personsWithStorno,
-	// String[][] personsWithOutStorno) {
-	// dataReiseTeilnehmer = new String[personsWithStorno.length
-	// + personsWithOutStorno.length][personsWithStorno[0].length];
-	// for (int i = 0; i < personsWithOutStorno.length; i++) {
-	// dataReiseTeilnehmer[i] = personsWithOutStorno[i];
-	// }
-	// for (int j = 0; j < personsWithStorno.length; j++) {
-	// dataReiseTeilnehmer[j + personsWithOutStorno.length] =
-	// personsWithStorno[j];
-	// }
-	//
-	// String[] columnReiseTeilnehmer = { "Buchungsnummer", "Reisenummer",
-	// "Reisename", "Reiseziel", "Kundennummer", "Nachname",
-	// "Vorname", "Storno" };
-	// Arrays.sort(dataReiseTeilnehmer, new Comparator<String[]>() {
-	// public int compare(final String[] entry1, final String[] entry2) {
-	// final int tmp1 = Integer.parseInt(entry1[0]);
-	// final int tmp2 = Integer.parseInt(entry2[0]);
-	// return tmp1 - tmp2;
-	// }
-	// });
-	//
-	// DefaultTableModel modelReiseTeilnehmer = new DefaultTableModel(
-	// dataReiseTeilnehmer, columnReiseTeilnehmer);
-	// tableReiseTeilnehmer.setModel(modelReiseTeilnehmer);
-	// tabPane.setSelectedIndex(4);
-	// }
 	public void showReiseTeilnehmer(String[][] data) {
 		dataReiseTeilnehmer = data;
 		String teilnehmerzahlString;
@@ -268,7 +209,6 @@ public class ReiseFieberGUI {
 			teilnehmerzahl = Integer.parseInt(teilnehmerzahlString);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String[] columnReiseTeilnehmer = { "Buchungsnummer", "Reisenummer",
@@ -461,7 +401,6 @@ public class ReiseFieberGUI {
 		};
 		acReiseStornieren = new AbstractAction("Buchung stornieren") {
 			public void actionPerformed(ActionEvent e) {
-				// TODO take data from current selected customer/ journey
 				int selectedTable = tabPane.getSelectedIndex();
 				if (selectedTable == 0) {
 					contentSelectedRowID = null;
@@ -482,7 +421,6 @@ public class ReiseFieberGUI {
 		acReiseTeilnehmerAnzeigen = new AbstractAction(
 				"Reiseteilnehmer anzeigen") {
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				int selectedTable = tabPane.getSelectedIndex();
 				if (selectedTable == 0) {
 					contentSelectedRowID = null;
@@ -763,10 +701,6 @@ public class ReiseFieberGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
-				// TODO only temporary --> rework
-				// reiseFieber.reloadGui();
-
 				loadTableData();
 			}
 		});
