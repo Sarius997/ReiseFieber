@@ -2,14 +2,31 @@ package reiseFieber;
 
 import javax.swing.JTable;
 
+/**
+ * 
+ * @author Markus Hofmann
+ * @verion 1.0
+ */
 @SuppressWarnings("serial")
-public class JTableNoEditing extends JTable{
+public class JTableNoEditing extends JTable {
+	/**
+	 * Ruft den Konstruktor der Klasse {@link javax.swing.JTable} ohne Parameter
+	 * auf und verhindert um Fehler zu vermeiden das Vertauschen von Spalten in der Benutzeroberfläche 
+	 */
 	public JTableNoEditing() {
 		super();
+		this.getTableHeader().setReorderingAllowed(false);
 	}
 
+	/**
+	 * Überschreibt die {@link javax.swing.JTable#isCellEditable(int, int)}
+	 * Methode und
+	 * 
+	 * @return false und verhindert dadurch das Bearbeiten von einzelen Zellen
+	 *         in der Benutzeroberfläche
+	 */
 	@Override
-	public boolean isCellEditable(int row, int column){
+	public boolean isCellEditable(int row, int column) {
 		return false;
-	}
+	}	
 }

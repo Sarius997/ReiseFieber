@@ -13,11 +13,29 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 	private int tabIndex;
 	private String[] gewinn;
 
+	/**
+	 * 
+	 * @param teilnehmerzahl
+	 * @param tabIndex
+	 */
 	public CustomTableRenderer(int teilnehmerzahl, int tabIndex) {
 		this.teilnehmerzahl = teilnehmerzahl;
 		this.tabIndex = tabIndex;
 	}
 
+	/**
+	 * Erzeugt einen TableRenderer speziell für die Übersicht über alle
+	 * eingetragenen Reisen
+	 * 
+	 * @param colls
+	 *            Die Spaltenzahl der Tabelle um festzulegen in welcher Spalte
+	 *            der Gewinn angezeigt wird
+	 * @param tabIndex
+	 *            Der Index der Tabelle für die der TableRenderer erzeugt wird
+	 * @param gewinn
+	 *            Ein Array mit dem Gewinn der durch die einzelnen Reisen
+	 *            erzeugt wird
+	 */
 	public CustomTableRenderer(int colls, int tabIndex, String[] gewinn) {
 		this.colls = colls;
 		this.tabIndex = tabIndex;
@@ -59,8 +77,7 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 			cellComponent.setForeground(Color.BLACK);
 			cellComponent.setBackground(Color.WHITE);
 		}
-		
-		
+
 		if (isSelected) {
 			// cellComponent.setForeground(table.getSelectionForeground());
 			cellComponent.setBackground(table.getSelectionBackground());
