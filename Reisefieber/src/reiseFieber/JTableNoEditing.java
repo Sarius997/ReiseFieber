@@ -5,7 +5,7 @@ import javax.swing.JTable;
 /**
  * 
  * @author Markus Hofmann
- * @verion 1.0
+ * @version 1.0
  */
 @SuppressWarnings("serial")
 public class JTableNoEditing extends JTable {

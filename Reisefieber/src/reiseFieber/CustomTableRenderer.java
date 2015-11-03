@@ -6,6 +6,12 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
+/**
+ * 
+ * @author Markus Hofmann
+ * @version 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class CustomTableRenderer extends DefaultTableCellRenderer {
 	private int teilnehmerzahl;
@@ -14,9 +20,13 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 	private String[] gewinn;
 
 	/**
+	 * Erzeugt einen TableRenderer speziell für die Übersicht aller aktiven
+	 * Buchungen der die Buchungen auf der Warteliste farblich hervorhebt
 	 * 
 	 * @param teilnehmerzahl
+	 *            Die maximale Teilnehmerzahl für die aktuell angezeigte Reise
 	 * @param tabIndex
+	 *            Der Index der Tabelle für die der TableRenderer erzeugt wird
 	 */
 	public CustomTableRenderer(int teilnehmerzahl, int tabIndex) {
 		this.teilnehmerzahl = teilnehmerzahl;
@@ -25,7 +35,7 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 
 	/**
 	 * Erzeugt einen TableRenderer speziell für die Übersicht über alle
-	 * eingetragenen Reisen
+	 * eingetragenen Reisen um den Gewinn / Verlust hervorzuheben
 	 * 
 	 * @param colls
 	 *            Die Spaltenzahl der Tabelle um festzulegen in welcher Spalte
@@ -42,10 +52,32 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 		this.gewinn = gewinn;
 	}
 
+	/**
+	 * Erzeugt den Standard TableRenderer für alle Tabellen ohne spezielle
+	 * farbliche hervorhebungen
+	 * 
+	 * @param tabIndex
+	 *            Der Index der Tabelle für die der TableRenderer erzeugt wird
+	 */
 	public CustomTableRenderer(int tabIndex) {
 		this.tabIndex = tabIndex;
 	}
 
+	/**
+	 * Ändert jeh nach Tabelle für die der TableRenderer erstellt wurde die
+	 * Text- und die Hintergrundfarbe der Zellen und sorgt für
+	 * Tabellenspezifische Farbhervorhebungen.
+	 * 
+	 * @param table Die Tabelle
+	 * @param value Der Inhalt der Zelle an der Stelle [row, column]
+	 * @param isSelected true wenn die Zelle ausgewählt ist
+	 * @param hasFocus true wenn die Zelle den Focus hat
+	 * @param row die Zeile der zu rendernden Zelle
+	 * @param coll die Spatle der zu rendernden Zelle
+	 * 
+	 * @return den speziellen TableCellRenderer
+	 */ 
+	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int coll) {
 		final Component cellComponent = super.getTableCellRendererComponent(
