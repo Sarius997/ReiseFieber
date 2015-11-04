@@ -20,7 +20,7 @@ public class JTableNoEditing extends JTable {
 
 	/**
 	 * Überschreibt die {@link javax.swing.JTable#isCellEditable(int, int)}
-	 * Methode und
+	 * Methode
 	 * 
 	 * @return false und verhindert dadurch das Bearbeiten von einzelen Zellen
 	 *         in der Benutzeroberfläche
