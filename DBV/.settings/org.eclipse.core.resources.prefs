@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/dbv/DatenbankVerbindung.java=UTF-8
 encoding//src/dbv/IKundenAendern.java=UTF-8
 encoding//src/dbv/IKundenDaten.java=UTF-8
 encoding//src/dbv/IKundenReise.java=UTF-8
