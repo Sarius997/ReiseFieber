@@ -8,6 +8,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Diese Klasse baut eine Verbindung zu einer PostgreSQL Datenbank mit festen
+ * Daten auf und stellt alle Funktionen bereit die benötigt werden um die Daten
+ * aus der Datenbank auszulesen oder Daten in der Datenbank zu speichern
+ * 
+ * @author Markus Hofmann
+ * @version 1.0
+ * 
+ */
 public class DatenbankVerbindung {
 
 	// constants for connection
@@ -17,6 +26,8 @@ public class DatenbankVerbindung {
 	String dbPort;
 	String dbName;
 	String dbTableKunden;
+	String dbTableKundenreise;
+	String dbTableReise;
 	String dbUser;
 	String dbPassword;
 	Statement statement;
@@ -24,22 +35,20 @@ public class DatenbankVerbindung {
 	ArrayList<String[]> result = new ArrayList<String[]>();
 
 	/**
-	 * fetch connection data from hard coded data. TODO: replace by config file
-	 * or remove standalone runability
-	 * 
-	 * @return success
+	 * Initialisiert die Daten für die Datenbankverbindung
 	 */
-
 	public DatenbankVerbindung() {
 		dbServer = "localhost";
 		dbPort = "5432";
 		dbName = "postgres";
 		dbTableKunden = "kunden";
+		dbTableKundenreise = "kundenreise";
+		dbTableReise = "reise";
 		dbUser = "postgres";
 		dbPassword = "1234";
 	}
 
-	@SuppressWarnings("unused")
+//	@SuppressWarnings("unused")
 	public void doCount() throws Exception {
 
 		String querybkp = "(empty)";
@@ -83,10 +92,12 @@ public class DatenbankVerbindung {
 			ResultSet resultSet = null;
 
 			String dbSuche = quoted(kundenDaten.getKdName() + "%");
-			
+
 			final String query = "SELECT id, nachname, vorname, geschlecht, geburtstag, volljaehrig, telefonnummer, "
 					+ "adresse, postleitzahl, wohnort FROM public."
-					+ dbTableKunden + " WHERE lower(nachname) similar to " + dbSuche.toLowerCase() + ";";
+					+ dbTableKunden
+					+ " WHERE lower(nachname) similar to "
+					+ dbSuche.toLowerCase() + ";";
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -156,7 +167,7 @@ public class DatenbankVerbindung {
 
 			final Statement stmt = conn.createStatement();
 			ResultSet resSet = null;
-			
+
 			String dbEingabe = quoted(kundenDaten.getNachname()) + ", "
 					+ quoted(kundenDaten.getVorname()) + ", "
 					+ quoted(kundenDaten.getWohnort()) + ", "
@@ -251,7 +262,7 @@ public class DatenbankVerbindung {
 
 			final Statement stmt = conn.createStatement();
 			ResultSet resSet = null;
-			
+
 			final String query = "UPDATE " + dbTableKunden + " SET nachname="
 					+ quoted(kundenDaten.getNachname()) + ", vorname="
 					+ quoted(kundenDaten.getVorname()) + ", wohnort="
@@ -269,7 +280,7 @@ public class DatenbankVerbindung {
 			stmt.executeUpdate(query);// für Insert- und Update-Befehle
 			deallocateResources(resSet, stmt);
 		} catch (SQLException ex) {
-			final String s = "executed Insert Query\n" + querybkp + "\non S:"
+			final String s = "executed Update Query\n" + querybkp + "\non S:"
 					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
 					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
@@ -290,7 +301,7 @@ public class DatenbankVerbindung {
 			String dbEingabe = quoted(kundenReise.getKundeID()) + ", "
 					+ quoted(kundenReise.getReiseID()) + ", false";
 
-			final String query = "INSERT INTO kundenreise (k_id, r_id, storno) "
+			final String query = "INSERT INTO " + dbTableKundenreise + " (k_id, r_id, storno) "
 					+ "VALUES (" + dbEingabe + ");";
 			querybkp = query;
 
@@ -300,7 +311,7 @@ public class DatenbankVerbindung {
 			deallocateResources(resSet, stmt);
 		} catch (SQLException ex) {
 			final String s = "executed Insert Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ dbServer + ", T:" + dbTableKundenreise + ", N:" + dbName
 					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 	}
@@ -367,7 +378,7 @@ public class DatenbankVerbindung {
 					+ quoted(reiseDaten.getPreisProPerson()) + ", "
 					+ quoted(reiseDaten.getKosten());
 
-			final String query = "INSERT INTO reise"
+			final String query = "INSERT INTO " + dbTableReise
 					+ " (name, ziel, teilnehmerzahl, beginn, ende, preisproperson, kosten) "
 					+ "VALUES (" + dbEingabe + ");";
 			querybkp = query;
@@ -378,7 +389,7 @@ public class DatenbankVerbindung {
 			deallocateResources(resSet, stmt);
 		} catch (SQLException ex) {
 			final String s = "executed Insert Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ dbServer + ", T:" + dbTableReise + ", N:" + dbName
 					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 	}
@@ -396,8 +407,8 @@ public class DatenbankVerbindung {
 			ResultSet resultSet = null;
 
 			String dbSuche = quoted(reiseID);
-			
-			final String query = "SELECT * FROM public.reise" + " WHERE id="
+
+			final String query = "SELECT * FROM " + dbTableReise + " WHERE id="
 					+ dbSuche + ";";
 			querybkp = query;
 
@@ -418,7 +429,7 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ dbServer + ", T:" + dbTableReise + ", N:" + dbName
 					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 		return result;
@@ -438,7 +449,7 @@ public class DatenbankVerbindung {
 
 			final String query = "SELECT id, nachname, vorname, "
 					+ "geschlecht, geburtstag, volljaehrig, telefonnummer, "
-					+ "adresse, postleitzahl, wohnort FROM public.kunden";
+					+ "adresse, postleitzahl, wohnort FROM " + dbTableKunden;
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -487,7 +498,7 @@ public class DatenbankVerbindung {
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
 
-			final String query = "SELECT * FROM public.reise";
+			final String query = "SELECT * FROM " + dbTableReise;
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -518,7 +529,7 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ dbServer + ", T:" + dbTableReise + ", N:" + dbName
 					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 		return result;
@@ -536,9 +547,9 @@ public class DatenbankVerbindung {
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
 
-			final String query = "SELECT kundenreise.id, reise.id, reise.name, reise.ziel, kunden.id, kunden.nachname, kunden.vorname, kundenreise.storno "
-					+ "FROM kundenreise JOIN kunden ON kunden.id=kundenreise.k_id "
-					+ "JOIN reise ON reise.id=kundenreise.r_id";
+			final String query = "SELECT " + dbTableKundenreise + ".id, " + dbTableReise + ".id, " + dbTableReise + ".name, " + dbTableReise + ".ziel, " + dbTableKunden + ".id, " + dbTableKunden + ".nachname, " + dbTableKunden + ".vorname, " + dbTableKundenreise + ".storno "
+					+ "FROM " + dbTableKundenreise + " JOIN " + dbTableKunden + " ON " + dbTableKunden + ".id=" + dbTableKundenreise + ".k_id "
+					+ "JOIN " + dbTableReise + " ON " + dbTableReise + ".id=" + dbTableKundenreise + ".r_id";
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -569,7 +580,7 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ dbServer + ", T:" + dbTableKundenreise + ", N:" + dbName
 					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 		return result;
@@ -583,7 +594,7 @@ public class DatenbankVerbindung {
 
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
-			final String query = "UPDATE kundenreise "
+			final String query = "UPDATE " + dbTableKundenreise + " "
 					+ "SET storno=true WHERE id=" + buchung.getBuchungsID();
 			querybkp = query;
 
@@ -597,8 +608,8 @@ public class DatenbankVerbindung {
 
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
-			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+			final String s = "executed UPDATE Query\n" + querybkp + "\non S:"
+					+ dbServer + ", T:" + dbTableKundenreise + ", N:" + dbName
 					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 	}
@@ -616,9 +627,9 @@ public class DatenbankVerbindung {
 			ResultSet resultSet = null;
 
 			String dbSuche = quoted(buchungsID);
-			final String query = "SELECT reise.id, reise.name, reise.ziel, kunden.id, kunden.nachname, kunden.vorname, kundenreise.storno "
-					+ "FROM kundenreise JOIN kunden ON kunden.id=kundenreise.k_id "
-					+ "JOIN reise ON reise.id=kundenreise.r_id WHERE kundenreise.id="
+			final String query = "SELECT " + dbTableReise + ".id, " + dbTableReise + ".name, " + dbTableReise + ".ziel, " + dbTableKunden + ".id, " + dbTableKunden + ".nachname, " + dbTableKunden + ".vorname, " + dbTableKundenreise + ".storno "
+					+ "FROM " + dbTableKundenreise + " JOIN " + dbTableKunden + " ON " + dbTableKunden + ".id=" + dbTableKundenreise + ".k_id "
+					+ "JOIN " + dbTableReise + " ON " + dbTableReise + ".id=" + dbTableKundenreise + ".r_id WHERE " + dbTableKundenreise + ".id="
 					+ buchungsID;
 			querybkp = query;
 
@@ -639,7 +650,7 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ dbServer + ", T:" + dbTableKundenreise + ", N:" + dbName
 					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 		return result;
@@ -657,10 +668,10 @@ public class DatenbankVerbindung {
 
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
-			final String query = "SELECT kundenreise.id, reise.id, reise.name, reise.ziel, kunden.id, kunden.nachname, kunden.vorname "
-					+ "FROM kundenreise JOIN kunden ON kunden.id=kundenreise.k_id "
-					+ "JOIN reise ON reise.id=kundenreise.r_id WHERE reise.id="
-					+ reiseID + " AND kundenreise.storno=" + storno;
+			final String query = "SELECT " + dbTableKundenreise + ".id, " + dbTableReise + ".id, " + dbTableReise + ".name, " + dbTableReise + ".ziel, " + dbTableKunden + ".id, " + dbTableKunden + ".nachname, " + dbTableKunden + ".vorname "
+					+ "FROM " + dbTableKundenreise + " JOIN " + dbTableKunden + " ON " + dbTableKunden + ".id=" + dbTableKundenreise + ".k_id "
+					+ "JOIN " + dbTableReise + " ON " + dbTableReise + ".id=" + dbTableKundenreise + ".r_id WHERE " + dbTableReise + ".id="
+					+ reiseID + " AND " + dbTableKundenreise + ".storno=" + storno;
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -687,14 +698,14 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ dbServer + ", T:" + dbTableKundenreise + ", N:" + dbName
 					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 		return result;
 	}
 
 	@SuppressWarnings("unused")
-	public String getMaximaleTeilnehmerZahl(String reiseID) throws Exception{
+	public String getMaximaleTeilnehmerZahl(String reiseID) throws Exception {
 		String result = null;
 		String querybkp = "(empty)";
 		try {
@@ -704,8 +715,8 @@ public class DatenbankVerbindung {
 
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
-			final String query = "SELECT reise.teilnehmerzahl "
-					+ "FROM reise WHERE reise.id=" + reiseID;
+			final String query = "SELECT " + dbTableReise + ".teilnehmerzahl "
+					+ "FROM " + dbTableReise + " WHERE " + dbTableReise + ".id=" + reiseID;
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -721,14 +732,14 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ dbServer + ", T:" + dbTableReise + ", N:" + dbName
 					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 		return result;
 	}
-	
+
 	@SuppressWarnings("unused")
-	public String getAktuelleTeilnehmerZahl(String reiseID) throws Exception{
+	public String getAktuelleTeilnehmerZahl(String reiseID) throws Exception {
 		String result = null;
 		String querybkp = "(empty)";
 		try {
@@ -738,7 +749,8 @@ public class DatenbankVerbindung {
 
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
-			final String query = "SELECT COUNT(*) FROM kundenreise WHERE r_id=" + reiseID + " AND storno=false";
+			final String query = "SELECT COUNT(*) FROM " + dbTableKundenreise + " WHERE r_id="
+					+ reiseID + " AND storno=false";
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -754,7 +766,7 @@ public class DatenbankVerbindung {
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
 			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
+					+ dbServer + ", T:" + dbTableKundenreise + ", N:" + dbName
 					+ ", U:" + dbUser + ", P:" + dbPassword;
 		}
 		return result;
