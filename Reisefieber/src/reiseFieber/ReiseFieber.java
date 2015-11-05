@@ -21,7 +21,7 @@ public class ReiseFieber {
 	 */
 	public static void main(String args[]) {
 		willkommensNachricht();
-		ReiseFieber r = new ReiseFieber();
+		new ReiseFieber();
 		gui.show();
 	}
 
