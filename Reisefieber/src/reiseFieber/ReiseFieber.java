@@ -14,7 +14,7 @@ public class ReiseFieber {
 	 * 
 	 * @param args
 	 *            Kommandozeilenparameter, werden im Programm nicht benutzt.<br>Ruft
-	 *            den Konstruktor auf und startet die Benutzeroberfl‰che
+	 *            den Konstruktor auf und startet die Benutzeroberfl√§che
 	 */
 	public static void main(String args[]) {
 		willkommensNachricht();
@@ -24,7 +24,7 @@ public class ReiseFieber {
 
 	/**
 	 * Konstruktor der Hauptklasse Reisefieber.<br>Erstellt eine Instanz der
-	 * Benutzeroberfl‰che {@link gui.ReiseFieberGUI}
+	 * Benutzeroberfl√§che {@link gui.ReiseFieberGUI}
 	 */
 	public ReiseFieber() {
 		gui = new ReiseFieberGUI(this);

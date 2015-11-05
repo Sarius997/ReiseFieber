@@ -1,7 +1,7 @@
 package dbv;
 
 /**
- * Stellt grundlegende Funktionen bereit, die benötigt werden, um eine Buchung vorzunehmen
+ * Stellt grundlegende Funktionen bereit, die benÃ¶tigt werden, um eine Buchung vorzunehmen
  * 
  * @author Markus Hofmann
  * @version 1.0
@@ -10,7 +10,7 @@ package dbv;
 public interface IKundenReise {
 	/**
 	 * 
-	 * @return Kunden-ID des Kunden für den die Reise gebucht wird
+	 * @return Kunden-ID des Kunden fÃ¼r den die Reise gebucht wird
 	 */
 	public String getKundeID();
 	

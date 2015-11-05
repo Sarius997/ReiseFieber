@@ -20,13 +20,13 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 	private String[] gewinn;
 
 	/**
-	 * Erzeugt einen TableRenderer speziell für die Übersicht aller aktiven
+	 * Erzeugt einen TableRenderer speziell fÃ¼r die Ãœbersicht aller aktiven
 	 * Buchungen der die Buchungen auf der Warteliste farblich hervorhebt
 	 * 
 	 * @param teilnehmerzahl
-	 *            Die maximale Teilnehmerzahl für die aktuell angezeigte Reise
+	 *            Die maximale Teilnehmerzahl fÃ¼r die aktuell angezeigte Reise
 	 * @param tabIndex
-	 *            Der Index der Tabelle für die der TableRenderer erzeugt wird
+	 *            Der Index der Tabelle fÃ¼r die der TableRenderer erzeugt wird
 	 */
 	public CustomTableRenderer(int teilnehmerzahl, int tabIndex) {
 		this.teilnehmerzahl = teilnehmerzahl;
@@ -34,14 +34,14 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 	}
 
 	/**
-	 * Erzeugt einen TableRenderer speziell für die Übersicht über alle
+	 * Erzeugt einen TableRenderer speziell fÃ¼r die Ãœbersicht Ã¼ber alle
 	 * eingetragenen Reisen um den Gewinn / Verlust hervorzuheben
 	 * 
 	 * @param colls
 	 *            Die Spaltenzahl der Tabelle um festzulegen in welcher Spalte
 	 *            der Gewinn angezeigt wird
 	 * @param tabIndex
-	 *            Der Index der Tabelle für die der TableRenderer erzeugt wird
+	 *            Der Index der Tabelle fÃ¼r die der TableRenderer erzeugt wird
 	 * @param gewinn
 	 *            Ein Array mit dem Gewinn der durch die einzelnen Reisen
 	 *            erzeugt wird
@@ -53,24 +53,24 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 	}
 
 	/**
-	 * Erzeugt den Standard TableRenderer für alle Tabellen ohne spezielle
+	 * Erzeugt den Standard TableRenderer fÃ¼r alle Tabellen ohne spezielle
 	 * farbliche hervorhebungen
 	 * 
 	 * @param tabIndex
-	 *            Der Index der Tabelle für die der TableRenderer erzeugt wird
+	 *            Der Index der Tabelle fÃ¼r die der TableRenderer erzeugt wird
 	 */
 	public CustomTableRenderer(int tabIndex) {
 		this.tabIndex = tabIndex;
 	}
 
 	/**
-	 * Ändert jeh nach Tabelle für die der TableRenderer erstellt wurde die
-	 * Text- und die Hintergrundfarbe der Zellen und sorgt für
+	 * Ã„ndert jeh nach Tabelle fÃ¼r die der TableRenderer erstellt wurde die
+	 * Text- und die Hintergrundfarbe der Zellen und sorgt fÃ¼r
 	 * Tabellenspezifische Farbhervorhebungen.
 	 * 
 	 * @param table Die Tabelle
 	 * @param value Der Inhalt der Zelle an der Stelle [row, column]
-	 * @param isSelected true wenn die Zelle ausgewählt ist
+	 * @param isSelected true wenn die Zelle ausgewÃ¤hlt ist
 	 * @param hasFocus true wenn die Zelle den Focus hat
 	 * @param row die Zeile der zu rendernden Zelle
 	 * @param coll die Spatle der zu rendernden Zelle

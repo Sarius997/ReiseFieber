@@ -1,7 +1,7 @@
 package dbv;
 
 /**
- * Stellt grundlegende Funktionen bereit, die benötigt werden, um die Daten
+ * Stellt grundlegende Funktionen bereit, die benÃ¶tigt werden, um die Daten
  * einer Reise abzurufen die erstellt werden soll
  * 
  * @author Markus Hofmann
@@ -41,13 +41,13 @@ public interface IReiseAnlegen {
 
 	/**
 	 * 
-	 * @return Preis der pro Person für die Reise verlangt wird
+	 * @return Preis der pro Person fÃ¼r die Reise verlangt wird
 	 */
 	public String getPreisProPerson();
 
 	/**
 	 * 
-	 * @return Kosten die für die Reise entstehen
+	 * @return Kosten die fÃ¼r die Reise entstehen
 	 */
 	public String getKosten();
 }

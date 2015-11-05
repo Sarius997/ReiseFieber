@@ -1,8 +1,8 @@
 package dbv;
 
 /**
- * Stellt grundlegende Funktionen bereit, die benötigt werden, um die Daten
- * eines Kunden zu ändern
+ * Stellt grundlegende Funktionen bereit, die benÃ¶tigt werden, um die Daten
+ * eines Kunden zu Ã¤ndern
  * 
  * @author Markus Hofmann
  * @version 1.0
@@ -11,55 +11,55 @@ package dbv;
 public interface IKundenAendern {
 	/**
 	 * 
-	 * @return Nachname des zu ändernden Kunden
+	 * @return Nachname des zu Ã¤ndernden Kunden
 	 */
 	public String getNachname();
 
 	/**
 	 * 
-	 * @return Vorname des zu ändernden Kunden
+	 * @return Vorname des zu Ã¤ndernden Kunden
 	 */
 	public String getVorname();
 
 	/**
 	 * 
-	 * @return Wohnort des zu ändernden Kunden
+	 * @return Wohnort des zu Ã¤ndernden Kunden
 	 */
 	public String getWohnort();
 
 	/**
 	 * 
-	 * @return Geburtstag des zu ändernden Kunden
+	 * @return Geburtstag des zu Ã¤ndernden Kunden
 	 */
 	public String getGeburtstag();
 
 	/**
 	 * 
-	 * @return Telefonnummer des zu ändernden Kunden
+	 * @return Telefonnummer des zu Ã¤ndernden Kunden
 	 */
 	public String getTelefonnummer();
 
 	/**
 	 * 
-	 * @return Geschlecht des zu ändernden Kunden
+	 * @return Geschlecht des zu Ã¤ndernden Kunden
 	 */
 	public String getGeschlecht();
 
 	/**
 	 * 
-	 * @return ID des zu ändernden Kunden
+	 * @return ID des zu Ã¤ndernden Kunden
 	 */
 	public String getID();
 
 	/**
 	 * 
-	 * @return Adresse des zu ändernden Kunden
+	 * @return Adresse des zu Ã¤ndernden Kunden
 	 */
 	public String getAdresse();
 
 	/**
 	 * 
-	 * @return Postleitzahl des zu ändernden Kunden
+	 * @return Postleitzahl des zu Ã¤ndernden Kunden
 	 */
 	public String getPostleitzahl();
 }

@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+encoding//src/dbv/IKundenAendern.java=UTF-8
+encoding//src/dbv/IKundenDaten.java=UTF-8
+encoding//src/dbv/IKundenReise.java=UTF-8
+encoding//src/dbv/IKundenSuchen.java=UTF-8
+encoding//src/dbv/IReiseAnlegen.java=UTF-8
+encoding//src/dbv/IStorno.java=UTF-8
