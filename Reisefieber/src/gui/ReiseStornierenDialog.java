@@ -144,13 +144,13 @@ public class ReiseStornierenDialog implements IStorno {
 		try {
 			String[] buchungSearch = dbv.getBuchungByID(searchId);
 			tfID.setText(searchId);
-			tfK_ID.setText(buchungSearch[0]);
-			tfKdName.setText(buchungSearch[1]);
-			tfKdVorname.setText(buchungSearch[2]);
+			tfK_ID.setText(buchungSearch[3]);
+			tfKdName.setText(buchungSearch[4]);
+			tfKdVorname.setText(buchungSearch[5]);
 
-			tfR_ID.setText(buchungSearch[3]);
-			tfReiseName.setText(buchungSearch[4]);
-			tfReiseZiel.setText(buchungSearch[5]);
+			tfR_ID.setText(buchungSearch[0]);
+			tfReiseName.setText(buchungSearch[1]);
+			tfReiseZiel.setText(buchungSearch[2]);
 			if(buchungSearch[6] != null && buchungSearch[6].equals("f")){
 				tfStorno.setText("hat nicht storniert");
 				bnBestaetigen.setEnabled(true);
