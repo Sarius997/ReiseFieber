@@ -7,6 +7,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
+ * Diese Klasse passt die Funktionen von
+ * {@link javax.swing.table.DefaultTableCellRenderer} an, um in der
+ * Benutzeroberfläche den Gewinn und Verlust bei einzelnen Reisen und die
+ * Buchungen die auf der Warteliste stehen farbig hervorzuheben
  * 
  * @author Markus Hofmann
  * @version 1.0
@@ -68,15 +72,21 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 	 * Text- und die Hintergrundfarbe der Zellen und sorgt für
 	 * Tabellenspezifische Farbhervorhebungen.
 	 * 
-	 * @param table Die Tabelle
-	 * @param value Der Inhalt der Zelle an der Stelle [row, column]
-	 * @param isSelected true wenn die Zelle ausgewählt ist
-	 * @param hasFocus true wenn die Zelle den Focus hat
-	 * @param row die Zeile der zu rendernden Zelle
-	 * @param coll die Spatle der zu rendernden Zelle
+	 * @param table
+	 *            Die Tabelle
+	 * @param value
+	 *            Der Inhalt der Zelle an der Stelle [row, column]
+	 * @param isSelected
+	 *            true wenn die Zelle ausgewählt ist
+	 * @param hasFocus
+	 *            true wenn die Zelle den Focus hat
+	 * @param row
+	 *            die Zeile der zu rendernden Zelle
+	 * @param coll
+	 *            die Spatle der zu rendernden Zelle
 	 * 
 	 * @return den speziellen TableCellRenderer
-	 */ 
+	 */
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int coll) {
