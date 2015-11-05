@@ -51,22 +51,6 @@ public class DatenbankVerbindung {
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
 
-			/*
-			 * final java.util.List<String> captionLi = new
-			 * LinkedList<String>(); final java.util.List<String> valueLi = new
-			 * LinkedList<String>(); final String captions = ""; // ... final
-			 * String values = ""; // ...
-			 * 
-			 * StringBuilder qb = new StringBuilder();
-			 * qb.append("INSERT INTO "); qb.append(dbTable);
-			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
-			 * qb.append(";");
-			 */
-			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
-			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
-			// final String query =
-			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
-			// // qb.toString();
 			final String query = "SELECT COUNT(DISTINCT id) AS NumberOfCustomers FROM reiseteilnehmer;";
 			querybkp = query;
 
@@ -98,23 +82,8 @@ public class DatenbankVerbindung {
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
 
-			/*
-			 * final java.util.List<String> captionLi = new
-			 * LinkedList<String>(); final java.util.List<String> valueLi = new
-			 * LinkedList<String>(); final String captions = ""; // ... final
-			 * String values = ""; // ...
-			 * 
-			 * StringBuilder qb = new StringBuilder();
-			 * qb.append("INSERT INTO "); qb.append(dbTable);
-			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
-			 * qb.append(";");
-			 */
 			String dbSuche = quoted(kundenDaten.getKdName() + "%");
-			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
-			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
-			// final String query =
-			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
-			// // qb.toString();
+			
 			final String query = "SELECT id, nachname, vorname, geschlecht, geburtstag, volljaehrig, telefonnummer, "
 					+ "adresse, postleitzahl, wohnort FROM public."
 					+ dbTableKunden + " WHERE lower(nachname) similar to " + dbSuche.toLowerCase() + ";";
@@ -126,8 +95,6 @@ public class DatenbankVerbindung {
 			// Select-Befehle!
 
 			resultSet = statement.executeQuery(querybkp);
-			// resultSet = executeQuery(querybkp);
-			// resultAusgabeConsole(resultSet);
 
 			ArrayList<String[]> resultArrays = new ArrayList<String[]>(5);
 			while (resultSet.next()) {
@@ -175,7 +142,6 @@ public class DatenbankVerbindung {
 
 	@SuppressWarnings("unused")
 	private ResultSet executeQuery(String querybkp) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -190,18 +156,7 @@ public class DatenbankVerbindung {
 
 			final Statement stmt = conn.createStatement();
 			ResultSet resSet = null;
-
-			/*
-			 * final java.util.List<String> captionLi = new
-			 * LinkedList<String>(); final java.util.List<String> valueLi = new
-			 * LinkedList<String>(); final String captions = ""; // ... final
-			 * String values = ""; // ...
-			 * 
-			 * StringBuilder qb = new StringBuilder();
-			 * qb.append("INSERT INTO "); qb.append(dbTable);
-			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
-			 * qb.append(";");
-			 */
+			
 			String dbEingabe = quoted(kundenDaten.getNachname()) + ", "
 					+ quoted(kundenDaten.getVorname()) + ", "
 					+ quoted(kundenDaten.getWohnort()) + ", "
@@ -210,11 +165,7 @@ public class DatenbankVerbindung {
 					+ quoted(kundenDaten.getGeschlecht()) + ", "
 					+ quoted(kundenDaten.getAdresse()) + ", "
 					+ quoted(kundenDaten.getPostleitzahl());
-			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
-			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
-			// final String query =
-			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
-			// // qb.toString();
+
 			final String query = "INSERT INTO "
 					+ dbTableKunden
 					+ " (nachname, vorname, wohnort, geburtstag, telefonnummer, geschlecht, adresse, postleitzahl) "
@@ -252,8 +203,6 @@ public class DatenbankVerbindung {
 					+ "/" + dbName;
 			final String msqlUrl = "jdbc:sqlserver://" + dbServer
 					+ ";databaseName=" + dbName;
-			// final String url = "jdbc:sqlserver://" + dbServer +
-			// ";databaseName=" + dbName;
 			url = pgUrl;
 			final Connection conn = DriverManager.getConnection(url, dbUser,
 					dbPassword);
@@ -267,7 +216,6 @@ public class DatenbankVerbindung {
 			throw new Exception("SQLException: " + ex.getMessage() + "\nURL:"
 					+ url);
 		}
-		// return null;
 	}
 
 	/**
@@ -303,23 +251,7 @@ public class DatenbankVerbindung {
 
 			final Statement stmt = conn.createStatement();
 			ResultSet resSet = null;
-
-			/*
-			 * final java.util.List<String> captionLi = new
-			 * LinkedList<String>(); final java.util.List<String> valueLi = new
-			 * LinkedList<String>(); final String captions = ""; // ... final
-			 * String values = ""; // ...
-			 * 
-			 * StringBuilder qb = new StringBuilder();
-			 * qb.append("INSERT INTO "); qb.append(dbTable);
-			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
-			 * qb.append(";");
-			 */
-			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
-			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
-			// final String query =
-			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
-			// // qb.toString();
+			
 			final String query = "UPDATE " + dbTableKunden + " SET nachname="
 					+ quoted(kundenDaten.getNachname()) + ", vorname="
 					+ quoted(kundenDaten.getVorname()) + ", wohnort="
@@ -355,24 +287,9 @@ public class DatenbankVerbindung {
 			final Statement stmt = conn.createStatement();
 			ResultSet resSet = null;
 
-			/*
-			 * final java.util.List<String> captionLi = new
-			 * LinkedList<String>(); final java.util.List<String> valueLi = new
-			 * LinkedList<String>(); final String captions = ""; // ... final
-			 * String values = ""; // ...
-			 * 
-			 * StringBuilder qb = new StringBuilder();
-			 * qb.append("INSERT INTO "); qb.append(dbTable);
-			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
-			 * qb.append(";");
-			 */
 			String dbEingabe = quoted(kundenReise.getKundeID()) + ", "
 					+ quoted(kundenReise.getReiseID()) + ", false";
-			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
-			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
-			// final String query =
-			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
-			// // qb.toString();
+
 			final String query = "INSERT INTO kundenreise (k_id, r_id, storno) "
 					+ "VALUES (" + dbEingabe + ");";
 			querybkp = query;
@@ -401,23 +318,8 @@ public class DatenbankVerbindung {
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
 
-			/*
-			 * final java.util.List<String> captionLi = new
-			 * LinkedList<String>(); final java.util.List<String> valueLi = new
-			 * LinkedList<String>(); final String captions = ""; // ... final
-			 * String values = ""; // ...
-			 * 
-			 * StringBuilder qb = new StringBuilder();
-			 * qb.append("INSERT INTO "); qb.append(dbTable);
-			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
-			 * qb.append(";");
-			 */
 			String dbSuche = quoted(kundenID);
-			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
-			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
-			// final String query =
-			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
-			// // qb.toString();
+
 			final String query = "SELECT id, nachname, vorname, "
 					+ "geschlecht, geburtstag, telefonnummer, "
 					+ "adresse, postleitzahl, wohnort FROM " + dbTableKunden
@@ -430,7 +332,6 @@ public class DatenbankVerbindung {
 			// Select-Befehle!
 
 			resultSet = statement.executeQuery(querybkp);
-			// resultSet = executeQuery(querybkp);
 
 			while (resultSet.next()) {
 				for (int k = 1; k <= resultSet.getMetaData().getColumnCount(); k++) {
@@ -458,17 +359,6 @@ public class DatenbankVerbindung {
 			final Statement stmt = conn.createStatement();
 			ResultSet resSet = null;
 
-			/*
-			 * final java.util.List<String> captionLi = new
-			 * LinkedList<String>(); final java.util.List<String> valueLi = new
-			 * LinkedList<String>(); final String captions = ""; // ... final
-			 * String values = ""; // ...
-			 * 
-			 * StringBuilder qb = new StringBuilder();
-			 * qb.append("INSERT INTO "); qb.append(dbTable);
-			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
-			 * qb.append(";");
-			 */
 			String dbEingabe = quoted(reiseDaten.getReiseName()) + ", "
 					+ quoted(reiseDaten.getReiseZiel()) + ", "
 					+ quoted(reiseDaten.getTeilnehmerZahl()) + ", "
@@ -476,11 +366,7 @@ public class DatenbankVerbindung {
 					+ quoted(reiseDaten.getEnde()) + ", "
 					+ quoted(reiseDaten.getPreisProPerson()) + ", "
 					+ quoted(reiseDaten.getKosten());
-			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
-			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
-			// final String query =
-			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
-			// // qb.toString();
+
 			final String query = "INSERT INTO reise"
 					+ " (name, ziel, teilnehmerzahl, beginn, ende, preisproperson, kosten) "
 					+ "VALUES (" + dbEingabe + ");";
@@ -509,23 +395,8 @@ public class DatenbankVerbindung {
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
 
-			/*
-			 * final java.util.List<String> captionLi = new
-			 * LinkedList<String>(); final java.util.List<String> valueLi = new
-			 * LinkedList<String>(); final String captions = ""; // ... final
-			 * String values = ""; // ...
-			 * 
-			 * StringBuilder qb = new StringBuilder();
-			 * qb.append("INSERT INTO "); qb.append(dbTable);
-			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
-			 * qb.append(";");
-			 */
 			String dbSuche = quoted(reiseID);
-			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
-			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
-			// final String query =
-			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
-			// // qb.toString();
+			
 			final String query = "SELECT * FROM public.reise" + " WHERE id="
 					+ dbSuche + ";";
 			querybkp = query;
@@ -565,22 +436,6 @@ public class DatenbankVerbindung {
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
 
-			/*
-			 * final java.util.List<String> captionLi = new
-			 * LinkedList<String>(); final java.util.List<String> valueLi = new
-			 * LinkedList<String>(); final String captions = ""; // ... final
-			 * String values = ""; // ...
-			 * 
-			 * StringBuilder qb = new StringBuilder();
-			 * qb.append("INSERT INTO "); qb.append(dbTable);
-			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
-			 * qb.append(";");
-			 */
-			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
-			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
-			// final String query =
-			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
-			// // qb.toString();
 			final String query = "SELECT id, nachname, vorname, "
 					+ "geschlecht, geburtstag, volljaehrig, telefonnummer, "
 					+ "adresse, postleitzahl, wohnort FROM public.kunden";
@@ -632,22 +487,6 @@ public class DatenbankVerbindung {
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
 
-			/*
-			 * final java.util.List<String> captionLi = new
-			 * LinkedList<String>(); final java.util.List<String> valueLi = new
-			 * LinkedList<String>(); final String captions = ""; // ... final
-			 * String values = ""; // ...
-			 * 
-			 * StringBuilder qb = new StringBuilder();
-			 * qb.append("INSERT INTO "); qb.append(dbTable);
-			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
-			 * qb.append(";");
-			 */
-			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
-			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
-			// final String query =
-			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
-			// // qb.toString();
 			final String query = "SELECT * FROM public.reise";
 			querybkp = query;
 
@@ -697,22 +536,6 @@ public class DatenbankVerbindung {
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
 
-			/*
-			 * final java.util.List<String> captionLi = new
-			 * LinkedList<String>(); final java.util.List<String> valueLi = new
-			 * LinkedList<String>(); final String captions = ""; // ... final
-			 * String values = ""; // ...
-			 * 
-			 * StringBuilder qb = new StringBuilder();
-			 * qb.append("INSERT INTO "); qb.append(dbTable);
-			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
-			 * qb.append(";");
-			 */
-			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
-			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
-			// final String query =
-			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
-			// // qb.toString();
 			final String query = "SELECT kundenreise.id, reise.id, reise.name, reise.ziel, kunden.id, kunden.nachname, kunden.vorname, kundenreise.storno "
 					+ "FROM kundenreise JOIN kunden ON kunden.id=kundenreise.k_id "
 					+ "JOIN reise ON reise.id=kundenreise.r_id";
@@ -792,23 +615,7 @@ public class DatenbankVerbindung {
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
 
-			/*
-			 * final java.util.List<String> captionLi = new
-			 * LinkedList<String>(); final java.util.List<String> valueLi = new
-			 * LinkedList<String>(); final String captions = ""; // ... final
-			 * String values = ""; // ...
-			 * 
-			 * StringBuilder qb = new StringBuilder();
-			 * qb.append("INSERT INTO "); qb.append(dbTable);
-			 * qb.append(captions); qb.append("\nVALUES "); qb.append(values);
-			 * qb.append(";");
-			 */
 			String dbSuche = quoted(buchungsID);
-			// dbEingabe= getTfKdName() + getTfKdVorname() + getTfWohnort +
-			// getTfGeburtsdatum + getTfTelefon + getTfGeschlecht;
-			// final String query =
-			// "INSERT INTO Kunden (nachname, vorname, wohnort, geburtstag, volljaehrig, telefonnummer, geschlecht) VALUES ('Krenn', 'Helmut');";
-			// // qb.toString();
 			final String query = "SELECT reise.id, reise.name, reise.ziel, kunden.id, kunden.nachname, kunden.vorname, kundenreise.storno "
 					+ "FROM kundenreise JOIN kunden ON kunden.id=kundenreise.k_id "
 					+ "JOIN reise ON reise.id=kundenreise.r_id WHERE kundenreise.id="

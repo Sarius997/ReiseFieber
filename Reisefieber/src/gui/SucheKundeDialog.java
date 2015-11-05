@@ -21,8 +21,6 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 															// IKundenSuchen
 	private JFrame frame; // Es kann nur mit dem Nachnamen gesucht werden
 	private JLabel labEingebeaufforderung;
-	// JLabel labKdNr;
-	// JTextField tfKdNr;
 	private JLabel labKdName;
 	private JTextField tfKdName;
 	private JButton bnSuchen;
@@ -37,8 +35,6 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 		frame.setTitle("Suche");
 		labEingebeaufforderung = new JLabel(
 				"Bitte geben Sie den Kundennamen ein.");
-		// labKdNr=new JLabel("Kundennummer:");
-		// tfKdNr=new JTextField();
 		labKdName = new JLabel("Kundenname:");
 		tfKdName = new JTextField();
 		bnSuchen = new JButton("Suchen");
@@ -51,8 +47,6 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 
 		JPanel suchPanel = new JPanel(new GridLayout(0, 2, 10, 10));
 
-		// suchPanel.add(labKdNr);
-		// suchPanel.add(tfKdNr);
 		suchPanel.add(labKdName);
 		suchPanel.add(tfKdName);
 
@@ -73,7 +67,6 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				SucheKundeDialog.this.suchenKunde();
 				frame.dispose();
 			}
@@ -82,7 +75,6 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				SucheKundeDialog.this.abbrechen();
 			}
 		});
@@ -90,13 +82,11 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -115,27 +105,17 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 
 	protected void suchenKunde() { // baut Verbindung zur Datenbank auf und
 									// führt die Suche aus
-		// TODO Auto-generated method stub
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
 			String[][] searchResult = dbv.doSearch(this);
 			gui.showSearchResultData(searchResult);
 			;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
-	/*
-	 * private void sucheKunde(){ System.out.println("Suchen wurde gedrückt.");
-	 * String eingabe=tfKdName.getText();
-	 * System.out.println("Kundenname ist "+eingabe);
-	 * System.out.println("Es gibt "+ kunden.getAnzahlKunden()+" Kunden");
-	 * 
-	 * }
-	 */
 	private void abbrechen() {
 		frame.dispose();
 	}
