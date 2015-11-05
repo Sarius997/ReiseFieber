@@ -160,6 +160,14 @@ public class DatenbankVerbindung {
 		}
 	}
 
+	/**
+	 * Setzt übergebene Texte in Anführungszeichen, damit sie in den
+	 * SQL-Abfragen auch als Text behandelt werden.
+	 * 
+	 * @param s
+	 *            Text der in Anführungszeichen gesetzt werden soll
+	 * @return der übergebene Text in Anführungszeichen
+	 */
 	public static String quoted(String s) {
 		return "'" + s + "'";
 
@@ -808,7 +816,8 @@ public class DatenbankVerbindung {
 	 * Sucht die aktuelle Zahl der nicht stornierten Buchungen für die Reise mit
 	 * der übergebenen ID aus der Datenbank heraus
 	 * 
-	 * @param reiseID die ID der Buchung
+	 * @param reiseID
+	 *            die ID der Buchung
 	 * @return die Zahl der nicht stornierten Buchungen für die Reise mit der
 	 *         übergebenen ID
 	 * @throws Exception
