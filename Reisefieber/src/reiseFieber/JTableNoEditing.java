@@ -4,7 +4,7 @@ import javax.swing.JTable;
 
 /**
  * Diese Klasse passt die Funktionen von {@link javax.swing.JTable} an, um
- * Bedienungsfehler zu vermeiden
+ * Bedienungsfehler zu vermeiden.
  * 
  * @author Markus Hofmann
  * @version 1.0
@@ -14,7 +14,7 @@ public class JTableNoEditing extends JTable {
 	/**
 	 * Ruft den Konstruktor der Klasse {@link javax.swing.JTable} ohne Parameter
 	 * auf und verhindert um Fehler zu vermeiden das Vertauschen von Spalten in
-	 * der Benutzeroberfläche
+	 * der Benutzeroberfläche.
 	 */
 	public JTableNoEditing() {
 		super();
@@ -23,7 +23,7 @@ public class JTableNoEditing extends JTable {
 
 	/**
 	 * Überschreibt die {@link javax.swing.JTable#isCellEditable(int, int)}
-	 * Methode
+	 * Methode.
 	 * 
 	 * @return false und verhindert dadurch das Bearbeiten von einzelen Zellen
 	 *         in der Benutzeroberfläche

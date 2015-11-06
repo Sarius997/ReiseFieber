@@ -2,7 +2,7 @@ package dbv;
 
 /**
  * Stellt grundlegende Funktionen bereit, die benötigt werden, um nach einem
- * Kunden zu suchen
+ * Kunden zu suchen.
  * 
  * @author Markus Hofmann
  * @version 1.0

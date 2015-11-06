@@ -2,7 +2,7 @@ package dbv;
 
 /**
  * Stellt grundlegende Funktionen bereit, die benötigt werden, um die Daten
- * eines Kunden zu ändern
+ * eines Kunden zu ändern.
  * 
  * @author Markus Hofmann
  * @version 1.0

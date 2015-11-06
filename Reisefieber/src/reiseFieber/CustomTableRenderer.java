@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  * Diese Klasse passt die Funktionen von
  * {@link javax.swing.table.DefaultTableCellRenderer} an, um in der
  * Benutzeroberfläche den Gewinn und Verlust bei einzelnen Reisen und die
- * Buchungen die auf der Warteliste stehen farbig hervorzuheben
+ * Buchungen die auf der Warteliste stehen farbig hervorzuheben.
  * 
  * @author Markus Hofmann
  * @version 1.0
@@ -25,7 +25,7 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 
 	/**
 	 * Erzeugt einen TableRenderer speziell für die Übersicht aller aktiven
-	 * Buchungen der die Buchungen auf der Warteliste farblich hervorhebt
+	 * Buchungen der die Buchungen auf der Warteliste farblich hervorhebt.
 	 * 
 	 * @param teilnehmerzahl
 	 *            Die maximale Teilnehmerzahl für die aktuell angezeigte Reise
@@ -39,7 +39,7 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 
 	/**
 	 * Erzeugt einen TableRenderer speziell für die Übersicht über alle
-	 * eingetragenen Reisen um den Gewinn / Verlust hervorzuheben
+	 * eingetragenen Reisen um den Gewinn / Verlust hervorzuheben.
 	 * 
 	 * @param colls
 	 *            Die Spaltenzahl der Tabelle um festzulegen in welcher Spalte
@@ -58,7 +58,7 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 
 	/**
 	 * Erzeugt den Standard TableRenderer für alle Tabellen ohne spezielle
-	 * farbliche hervorhebungen
+	 * farbliche hervorhebungen.
 	 * 
 	 * @param tabIndex
 	 *            Der Index der Tabelle für die der TableRenderer erzeugt wird

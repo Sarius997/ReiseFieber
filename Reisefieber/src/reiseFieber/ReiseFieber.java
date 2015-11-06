@@ -27,7 +27,7 @@ public class ReiseFieber {
 
 	/**
 	 * Konstruktor der Hauptklasse Reisefieber.<br>
-	 * Erstellt eine Instanz der Benutzeroberfläche {@link gui.ReiseFieberGUI}
+	 * Erstellt eine Instanz der Benutzeroberfläche {@link gui.ReiseFieberGUI}.
 	 */
 	public ReiseFieber() {
 		gui = new ReiseFieberGUI();
@@ -35,7 +35,7 @@ public class ReiseFieber {
 
 	/**
 	 * Gibt die Willkommensnachricht auf der Konsole aus, falls diese genutzt
-	 * wird
+	 * wird.
 	 */
 	private static void willkommensNachricht() {
 		System.out.println("Willkommen bei ReiseFieber!");

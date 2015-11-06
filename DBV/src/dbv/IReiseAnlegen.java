@@ -2,7 +2,7 @@ package dbv;
 
 /**
  * Stellt grundlegende Funktionen bereit, die benötigt werden, um die Daten
- * einer Reise abzurufen die erstellt werden soll
+ * einer Reise abzurufen die erstellt werden soll.
  * 
  * @author Markus Hofmann
  * @version 1.0
