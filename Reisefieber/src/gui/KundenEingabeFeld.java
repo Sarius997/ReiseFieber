@@ -14,6 +14,13 @@ import javax.swing.JTextField;
 import dbv.DatenbankVerbindung;
 import dbv.IKundenDaten;
 
+/**
+ * Diese Klasse zeigt das Fenster zum speichern der Daten eines neuen Kunden
+ * 
+ * @author Markus Hofmann
+ * @version 1.0
+ * 
+ */
 public class KundenEingabeFeld implements IKundenDaten {
 	private JFrame frame;
 
@@ -38,64 +45,12 @@ public class KundenEingabeFeld implements IKundenDaten {
 	private JButton bnHinzufuegen;
 	private JButton bnAbbrechen;
 
-	// public String getTfKdNr() {
-	// return tfKdNr.getText();
-	// }
-	// public void setTfKdNr(JTextField tfKdNr) {
-	// this.tfKdNr = tfKdNr;
-	// }
-	public JTextField getTfKdName() {
-		return tfKdName;
-	}
-
-	public void setTfKdName(JTextField tfKdName) {
-		this.tfKdName = tfKdName;
-	}
-
-	public JTextField getTfKdVorname() {
-		return tfKdVorname;
-	}
-
-	public void setTfKdVorname(JTextField tfKdVorname) {
-		this.tfKdVorname = tfKdVorname;
-	}
-
-	public JTextField getTfGeburtsdatum() {
-		return tfGeburtsdatum;
-	}
-
-	public void setTfGeburtsdatum(JTextField tfGeburtsdatum) {
-		this.tfGeburtsdatum = tfGeburtsdatum;
-	}
-
-	public JTextField getTfTelefon() {
-		return tfTelefon;
-	}
-
-	public void setTfTelefon(JTextField tfTelefon) {
-		this.tfTelefon = tfTelefon;
-	}
-
-	public JTextField getTfGeschlecht() {
-		return tfGeschlecht;
-	}
-
-	public void setTfGeschlecht(JTextField tfGeschlecht) {
-		this.tfGeschlecht = tfGeschlecht;
-	}
-
-	public JTextField getTfWohnort() {
-		return tfWohnort;
-	}
-
-	public void setTfWohnort(JTextField tfWohnort) {
-		this.tfWohnort = tfWohnort;
-	}
-
+	/**
+	 * Initialisiert das Fenster zum speichern der Daten von neuen Kunden.
+	 */
 	public KundenEingabeFeld() {
 		frame = new JFrame("Kunde hinzuf\u00fcgen");
-		// labKdNr=new JLabel("Kundennummer:");
-		// tfKdNr=new JTextField();
+
 		labKdName = new JLabel("Name:");
 		tfKdName = new JTextField();
 		labKdVorname = new JLabel("Vorname:");
@@ -118,8 +73,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 		bnAbbrechen = new JButton("Abbrechen");
 
 		frame.setLayout(new GridLayout(0, 2, 10, 10));
-		// frame.add(labKdNr);
-		// frame.add(tfKdNr);
+
 		frame.add(labKdName);
 		frame.add(tfKdName);
 		frame.add(labKdVorname);
@@ -141,43 +95,46 @@ public class KundenEingabeFeld implements IKundenDaten {
 		frame.add(bnHinzufuegen);
 		frame.add(bnAbbrechen);
 
-		// fillText();
-
-		addActionListeners();
+		addListeners();
 	}
 
-	// private String getKundennummer() {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
+	/**
+	 * Zeigt das Fenster an.
+	 */
 	public void show() {
-		// TODO rework
 		frame.pack();
 		frame.setVisible(true);
 	}
 
-	// private void fillText()
-	// {
-	// if (kunde != null)
-	// {
-	// String strKdNr=String.valueOf(kunde.getKundennummer());
-	// tfKdNr.setText(strKdNr);
-	// }
-	// }
-	private void addActionListeners() {
+	/**
+	 * Registriert die Listener für dieses Fenster.<br>
+	 * Wenn die Eingabetaste gedrückt oder auf den "Hinzufügen"-Button geklickt wird, wird überprüft ob alle Felder
+	 * ausgefüllt sind.<br>
+	 * Wenn ja, werden die Daten in der Datenbank gespeichert.<br>
+	 * Wenn noch Felder leer sind, passiert nichts.
+	 */
+	private void addListeners() {
 		bnAbbrechen.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				KundenEingabeFeld.this.fertig();
 			}
 		});
 		bnHinzufuegen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				KundenEingabeFeld.this.hinzufuegen();
-				frame.dispose();
+				if (!tfKdName.getText().equals("")
+						&& !tfKdVorname.getText().equals("")
+						&& !tfGeschlecht.getText().equals("")
+						&& !tfGeburtsdatum.getText().equals("")
+						&& !tfTelefon.getText().equals("")
+						&& !tfAdresse.getText().equals("")
+						&& !tfPostleitzahl.getText().equals("")
+						&& !tfWohnort.getText().equals("")) {
+					KundenEingabeFeld.this.hinzufuegen();
+					frame.dispose();
+				}
 			}
 		});
 
@@ -185,29 +142,22 @@ public class KundenEingabeFeld implements IKundenDaten {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
+			/**
+			 * Simuliert beim drücken der Eingabetaste einen Klick auf den
+			 * "Hinzufügen"-Button
+			 */
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (!tfKdName.getText().equals("")
-							&& !tfKdVorname.getText().equals("")
-							&& !tfGeschlecht.getText().equals("")
-							&& !tfGeburtsdatum.getText().equals("")
-							&& !tfTelefon.getText().equals("")
-							&& !tfAdresse.getText().equals("")
-							&& !tfPostleitzahl.getText().equals("")
-							&& !tfWohnort.getText().equals("")) {
-						bnHinzufuegen.doClick();
-					}
+					bnHinzufuegen.doClick();
 				}
 			}
 		};
@@ -222,22 +172,29 @@ public class KundenEingabeFeld implements IKundenDaten {
 		tfWohnort.addKeyListener(enterListener);
 	}
 
-	protected void hinzufuegen() { // baut Verbindung zur Datenbank auf und
-									// erstellt neuen Eintrag
-		// TODO Auto-generated method stub
+	/**
+	 * Speichert die Daten des neuen Kunden über
+	 * {@link DatenbankVerbindung#doInsert(IKundenDaten)} in der Datenbank.
+	 */
+	protected void hinzufuegen() {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
 			dbv.doInsert(this);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Schließt das Fenster.
+	 */
 	private void fertig() {
 		frame.dispose();
 	}
 
+	/**
+	 * @return den eingegebenen Vornamen
+	 */
 	@Override
 	public String getVorname() {
 
@@ -247,6 +204,9 @@ public class KundenEingabeFeld implements IKundenDaten {
 		return "";
 	}
 
+	/**
+	 * @return den eingegebenen Nachnamen
+	 */
 	@Override
 	public String getNachname() {
 		if (tfKdName != null) {
@@ -255,6 +215,9 @@ public class KundenEingabeFeld implements IKundenDaten {
 		return "";
 	}
 
+	/**
+	 * @return den eingegebenen Wohnort
+	 */
 	@Override
 	public String getWohnort() {
 		if (tfWohnort != null) {
@@ -263,6 +226,9 @@ public class KundenEingabeFeld implements IKundenDaten {
 		return "";
 	}
 
+	/**
+	 * @return den eingegebenen Geburtstag
+	 */
 	@Override
 	public String getGeburtstag() {
 		if (tfGeburtsdatum != null) {
@@ -271,6 +237,9 @@ public class KundenEingabeFeld implements IKundenDaten {
 		return "";
 	}
 
+	/**
+	 * @return die eingegebene Telefonnummer
+	 */
 	@Override
 	public String getTelefonnummer() {
 		if (tfTelefon != null) {
@@ -279,6 +248,9 @@ public class KundenEingabeFeld implements IKundenDaten {
 		return "";
 	}
 
+	/**
+	 * @return das eingegebene Geschlecht
+	 */
 	@Override
 	public String getGeschlecht() {
 		if (tfGeschlecht != null) {
@@ -287,11 +259,17 @@ public class KundenEingabeFeld implements IKundenDaten {
 		return "";
 	}
 
+	/**
+	 * @return die eingegebene Adresse
+	 */
 	@Override
 	public String getAdresse() {
 		return tfAdresse.getText();
 	}
 
+	/**
+	 * @return die eingegebene Postleitzahl
+	 */
 	@Override
 	public String getPostleitzahl() {
 		return tfPostleitzahl.getText();

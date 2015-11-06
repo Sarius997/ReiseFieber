@@ -79,7 +79,12 @@ public class ReiseTeilnehmer {
 	}
 
 	/**
-	 * Registriert alle Listener für das Fenster.
+	 * Registriert alle Listener für das Fenster.<br>
+	 * Wenn die Eingabetaste gedrückt oder auf den "Anzeigen"-Button geklickt
+	 * wird, wird überprüft ob das Suchfeld leer ist.<br>
+	 * Wenn es nicht leer ist wird die Suche nach Buchungen für die Reise mit
+	 * der eingegebenen ID ausgeführt.<br>
+	 * Wenn es leer ist passiert nichts.
 	 */
 	private void addListeners() {
 		bnAbbrechen.addActionListener(new ActionListener() {
@@ -89,8 +94,10 @@ public class ReiseTeilnehmer {
 		});
 		bnAnzeigen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ReiseTeilnehmer.this.anzeigen();
-				frame.dispose();
+				if (!tfReiseID.getText().equals("")) {
+					ReiseTeilnehmer.this.anzeigen();
+					frame.dispose();
+				}
 			}
 		});
 
@@ -107,18 +114,13 @@ public class ReiseTeilnehmer {
 			}
 
 			/**
-			 * Wenn die Eingabetaste gedrückt wird, wird überprüft ob das
-			 * Suchfeld leer ist.<br>
-			 * Wenn es nicht leer ist wird die Suche nach Buchungen für die
-			 * Reise mit der eingegebenen ID ausgeführt.<br>
-			 * Wenn es leer ist passiert nichts.
+			 * Simuliert beim drücken der Eingabetaste einen Klick auf den
+			 * "Anzeigen"-Button
 			 */
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (!tfReiseID.getText().equals("")) {
-						bnAnzeigen.doClick();
-					}
+					bnAnzeigen.doClick();
 				}
 			}
 		};
@@ -143,7 +145,7 @@ public class ReiseTeilnehmer {
 	}
 
 	/**
-	 * Schliest das Fenster.
+	 * Schließt das Fenster.
 	 */
 	private void fertig() {
 		frame.dispose();

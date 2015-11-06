@@ -220,7 +220,7 @@ public class ReiseStornierenDialog implements IStorno {
 	}
 
 	/**
-	 * Schliest das Fenster.
+	 * Schlieﬂt das Fenster.
 	 */
 	private void cancel() {
 		frame.dispose();

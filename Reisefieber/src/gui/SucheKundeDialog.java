@@ -79,7 +79,13 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 	}
 
 	/**
-	 * Registriert alle Listener für das Suchfenster.
+	 * Registriert alle Listener für das Suchfenster.<br>
+	 * Wenn die Eingabetaste gedrückt oder auf den "Suchen"-Button geklickt
+	 * wird, wird überprüft ob das Suchfeld leer ist.<br>
+	 * Wenn es nicht leer ist wird die Suche nach Kunden mit dem eingegebenen
+	 * Namen ausgeführt.<br>
+	 * Wenn es leer ist, passiert nichts.
+	 * 
 	 */
 	private void addListeners() {
 
@@ -87,8 +93,10 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SucheKundeDialog.this.suchenKunde();
-				frame.dispose();
+				if (!tfKdName.getText().equals("")) {
+					SucheKundeDialog.this.suchenKunde();
+					frame.dispose();
+				}
 			}
 		});
 		bnAbbrechen.addActionListener(new ActionListener() {
@@ -110,18 +118,13 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 			}
 
 			/**
-			 * Wenn die Eingabetaste gedrückt wird, wird überprüft ob das
-			 * Suchfeld leer ist.<br>
-			 * Wenn es nicht leer ist wird die Suche nach Kunden mit dem
-			 * eingegebenen Namen ausgeführt.<br>
-			 * Wenn es leer ist, passiert nichts.
+			 * Simuliert beim drücken der Eingabetaste einen Klick auf den
+			 * "Suchen"-Button
 			 */
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (!tfKdName.getText().equals("")) {
-						bnSuchen.doClick();
-					}
+					bnSuchen.doClick();
 				}
 			}
 		};
@@ -130,7 +133,8 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 	}
 
 	/**
-	 * Führt über {@link DatenbankVerbindung#doSearch(IKundenSuchen)} die Suche in der Datenbank aus und zeigt die Suchergebnisse in der
+	 * Führt über {@link DatenbankVerbindung#doSearch(IKundenSuchen)} die Suche
+	 * in der Datenbank aus und zeigt die Suchergebnisse in der
 	 * Benutzeroberfläche an.
 	 */
 	protected void suchenKunde() {
@@ -145,7 +149,7 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 	}
 
 	/**
-	 * Schliest das Fenster.
+	 * Schließt das Fenster.
 	 */
 	private void abbrechen() {
 		frame.dispose();
