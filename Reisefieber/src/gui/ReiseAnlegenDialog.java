@@ -14,6 +14,13 @@ import javax.swing.JTextField;
 import dbv.DatenbankVerbindung;
 import dbv.IReiseAnlegen;
 
+/**
+ * Zeigt das Fenster zum erstellen und speichern neuer Reisen an.
+ * 
+ * @author Markus Hofmann
+ * @version 1.0
+ * 
+ */
 public class ReiseAnlegenDialog implements IReiseAnlegen {
 	private JFrame frame;
 
@@ -36,6 +43,9 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 	private JButton bnHinzufuegen;
 	private JButton bnAbbrechen;
 
+	/**
+	 * Initialisiert das Fenster zum erstellen neuer Reisen.
+	 */
 	public ReiseAnlegenDialog() {
 		frame = new JFrame("Reise anlegen");
 		labName = new JLabel("Reisename:");
@@ -43,7 +53,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 
 		labZiel = new JLabel("Reiseziel:");
 		tfZiel = new JTextField();
-		labTeilnehmerzahl = new JLabel("Teilnehmerzahl:");
+		labTeilnehmerzahl = new JLabel("max. Teilnehmerzahl:");
 		tfTeilnehmerzahl = new JTextField();
 		labBeginn = new JLabel("Beginn:");
 		tfBeginn = new JTextField();
@@ -76,43 +86,44 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 		frame.add(bnHinzufuegen);
 		frame.add(bnAbbrechen);
 
-		// fillText();
-
-		addActionListeners();
+		addListeners();
 	}
 
-	// private String getKundennummer() {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
+	/**
+	 * Zeigt das Fenster an.
+	 */
 	public void show() {
-		// TODO rework
 		frame.pack();
 		frame.setVisible(true);
 	}
 
-	// private void fillText()
-	// {
-	// if (kunde != null)
-	// {
-	// String strKdNr=String.valueOf(kunde.getKundennummer());
-	// tfKdNr.setText(strKdNr);
-	// }
-	// }
-	private void addActionListeners() {
+	/**
+	 * Registriert die Listener für dieses Fenster.<br>
+	 * Wenn die Eingabetaste gedrückt oder auf den "Hinzufügen"-Button geklickt
+	 * wird, wird überprüft ob alle Felder ausgefüllt sind.<br>
+	 * Wenn ja, wird eine neue Reise mit den eingegeben Daten erstellt.<br>
+	 * Wenn noch Felder leer sind, passiert nichts.
+	 */
+	private void addListeners() {
 		bnAbbrechen.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				ReiseAnlegenDialog.this.fertig();
 			}
 		});
 		bnHinzufuegen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ReiseAnlegenDialog.this.hinzufuegen();
-				frame.dispose();
+				if (!tfZiel.getText().equals("")
+						&& !tfTeilnehmerzahl.getText().equals("")
+						&& !tfBeginn.getText().equals("")
+						&& !tfEnde.getText().equals("")
+						&& !tfPreisProPerson.getText().equals("")
+						&& !tfKosten.getText().equals("")) {
+					ReiseAnlegenDialog.this.hinzufuegen();
+					frame.dispose();
+				}
 			}
 		});
 
@@ -120,27 +131,22 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
+			/**
+			 * Simuliert einen Klick auf den "Hinzufügen"-Button wenn die
+			 * Eingabetaste gedrückt wird.
+			 */
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (!tfZiel.getText().equals("")
-							&& !tfTeilnehmerzahl.getText().equals("")
-							&& !tfBeginn.getText().equals("")
-							&& !tfEnde.getText().equals("")
-							&& !tfPreisProPerson.getText().equals("")
-							&& !tfKosten.getText().equals("")) {
-						bnHinzufuegen.doClick();
-					}
+					bnHinzufuegen.doClick();
 				}
 			}
 		};
@@ -153,6 +159,11 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 		tfKosten.addKeyListener(enterListener);
 	}
 
+	/**
+	 * Speichert über {@link DatenbankVerbindung#doCreateJourney(IReiseAnlegen)}
+	 * eine neue Reise mit den eingegebenen Daten und speichert diese in der
+	 * Datenbank.
+	 */
 	protected void hinzufuegen() {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
@@ -162,40 +173,64 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 		}
 	}
 
+	/**
+	 * Schließt das Fenster.
+	 */
 	private void fertig() {
 		frame.dispose();
 	}
 
+	/**
+	 * @return das eingegebene Reiseziel
+	 */
 	@Override
 	public String getReiseZiel() {
 		return tfZiel.getText();
 	}
 
+	/**
+	 * @return die eingegebene maximale Teilnehmerzahl
+	 */
 	@Override
 	public String getTeilnehmerZahl() {
 		return tfTeilnehmerzahl.getText();
 	}
 
+	/**
+	 * @return den eingegebenen Beginn der Reise
+	 */
 	@Override
 	public String getBeginn() {
 		return tfBeginn.getText();
 	}
 
+	/**
+	 * @return das eingegebene Ende der Reise
+	 */
 	@Override
 	public String getEnde() {
 		return tfEnde.getText();
 	}
 
+	/**
+	 * @return den eingegebenen Preis der pro Person verlangt wird
+	 */
 	@Override
 	public String getPreisProPerson() {
 		return tfPreisProPerson.getText();
 	}
 
+	/**
+	 * @return die eingegebenen Kosten für die Reise
+	 */
 	@Override
 	public String getKosten() {
 		return tfKosten.getText();
 	}
 
+	/**
+	 * @return den eingegebenen Reisenamen
+	 */
 	@Override
 	public String getReiseName() {
 		return tfName.getText();

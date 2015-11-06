@@ -194,7 +194,7 @@ public class KundenDatenAendern implements IKundenAendern {
 
 			/**
 			 * Simuliert einen Klick auf den "Ändern"-Button wenn die
-			 * Eingabetaste gedrückt wird
+			 * Eingabetaste gedrückt wird.
 			 */
 			@Override
 			public void keyPressed(KeyEvent e) {

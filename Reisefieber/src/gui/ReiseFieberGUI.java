@@ -234,7 +234,7 @@ public class ReiseFieberGUI {
 		String[] columnKunden = { "ID", "Nachname", "Vorname", "Geschlecht",
 				"Geburtstag", "Vollj\u00e4hrig", "Telefonnummer", "Adresse",
 				"Postleitzahl", "Wohnort" };
-		String[] columnReisen = { "ID", "Name", "Ziel", "Teilnehmerzahl",
+		String[] columnReisen = { "ID", "Name", "Ziel", "max. Teilnehmerzahl",
 				"Beginn", "Ende", "Preis pro Person", "Kosten" };
 		String[] columnKundenReise = { "Buchungsnummer", "Reisenummer",
 				"Reisename", "Reiseziel", "Kundennummer", "Nachname",
