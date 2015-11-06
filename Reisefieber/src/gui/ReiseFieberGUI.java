@@ -32,11 +32,11 @@ import reiseFieber.JTableNoEditing;
 import dbv.DatenbankVerbindung;
 
 /**
- * Diese Klasse verwaltet die Benutzeroberfl�che.
+ * Diese Klasse verwaltet die Benutzeroberfläche.
  * 
  * @author Markus Hofmann
  * @version 1.0
- *
+ * 
  */
 public class ReiseFieberGUI {
 
@@ -102,6 +102,9 @@ public class ReiseFieberGUI {
 
 	private MouseListener popupListener;
 
+	/**
+	 * Initialisiert die Benutzeroberfläche.
+	 */
 	public ReiseFieberGUI() {
 
 		frame = new JFrame("ReiseFieber");
@@ -174,10 +177,21 @@ public class ReiseFieberGUI {
 
 	}
 
+	/**
+	 * Schließt die Benutzeroberfläche.
+	 */
 	public void stop() {
 		frame.dispose();
 	}
 
+	/**
+	 * Zeigt die übergebenen Suchergebnisse (Kundendaten) sortiert nach
+	 * Kunden-ID in der Benutzeroberfläche unter dem Tab "Suchergebnis" an und
+	 * wechselt den ausgewählten Tab zu diesem.
+	 * 
+	 * @param data
+	 *            das Suchergebnis wenn nach Kunden gesucht wurde
+	 */
 	public void showSearchResultData(String[][] data) {
 		dataSearchResult = data;
 		String[] columnSearchResult = { "ID", "Nachname", "Vorname",
@@ -201,6 +215,15 @@ public class ReiseFieberGUI {
 		tabPane.setSelectedIndex(3);
 	}
 
+	/**
+	 * Zeigt die übergebenen Suchergebnisse (Buchungsdaten) sortiert nach der
+	 * Buchungs-ID in der Benutzeroberfläche unter dem Tab "Reiseteilnehmer" an
+	 * und wechselt den aktiven Tab zu diesem.
+	 * 
+	 * @param data
+	 *            das Suchergebnis wenn nach Teilnehmern einer Reise gesucht
+	 *            wurde
+	 */
 	public void showReiseTeilnehmer(String[][] data) {
 		dataReiseTeilnehmer = data;
 		String teilnehmerzahlString;
@@ -231,6 +254,12 @@ public class ReiseFieberGUI {
 		tabPane.setSelectedIndex(4);
 	}
 
+	/**
+	 * Die einzelnen Tabs und die Tabellen werden erzeugt. Außerdem werden die
+	 * gespeicherten Kundendaten, Reisen und Buchungen sortiert nach Kunden-ID /
+	 * Reise-ID / Buchungs-ID aus der Datenbank geladen und in den Tabs
+	 * "Kunden", "Reisen" und "Buchungen" angezeigt.
+	 */
 	private void loadTableData() {
 
 		String[] columnKunden = { "ID", "Nachname", "Vorname", "Geschlecht",
@@ -334,6 +363,17 @@ public class ReiseFieberGUI {
 		}
 	}
 
+	/**
+	 * Registriert für alle Tabellen MouseListener und erstellt für jede Tabelle
+	 * ein Menü das bei einem Rechtsklick angezeigt wird. Über diese Menüs sind
+	 * einige Funktionen leichter zu erreichen und bei Funktionen die Kunden-,
+	 * Reise- oder Buchungsdaten benötigen werden die Daten des ausgewählten
+	 * Kunden, der ausgewählen Reise oder der ausgewählten Buchung sofort
+	 * übernommen.<br>
+	 * Ausgegraute Optionen sind von den Tabellen aus nur verfügbar wenn ein
+	 * Kunde, eine Reise oder eine Buchung ausgewählt ist, mit welcher die
+	 * Funktion aufgerufen werden soll.
+	 */
 	@SuppressWarnings("serial")
 	private void addMouseListenersTables() {
 		acBearbeiten = new AbstractAction("Kunde bearbeiten") {
@@ -352,13 +392,13 @@ public class ReiseFieberGUI {
 				} else if (selectedTable == 4) {
 					contentSelectedRowID = null;
 				}
-				testAendern();
+				aendern();
 			}
 		};
 		acKundeErstellen = new AbstractAction("Neuen Kunden anlegen") {
 			public void actionPerformed(ActionEvent e) {
 				contentSelectedRowID = null;
-				testKundeAnlegen();
+				kundeAnlegen();
 			}
 		};
 		acZuReiseHinzufuegen = new AbstractAction(
@@ -385,20 +425,20 @@ public class ReiseFieberGUI {
 					contentSelectedRowID = dataReiseTeilnehmer[0][1];
 					addToJourney = "Reise";
 				}
-				testReise();
+				buchen();
 			}
 		};
 
 		acReiseErstellen = new AbstractAction("Neue Reise anlegen") {
 			public void actionPerformed(ActionEvent e) {
 				contentSelectedRowID = null;
-				testReiseAnlegen();
+				reiseAnlegen();
 			}
 		};
 		acKundeSuchen = new AbstractAction("Kunde suchen") {
 			public void actionPerformed(ActionEvent e) {
 				contentSelectedRowID = null;
-				testSuche();
+				suche();
 			}
 		};
 		acReiseStornieren = new AbstractAction("Buchung stornieren") {
@@ -417,7 +457,7 @@ public class ReiseFieberGUI {
 					contentSelectedRowID = dataReiseTeilnehmer[tableReiseTeilnehmer
 							.getSelectedRow()][0];
 				}
-				testReiseStornieren();
+				reiseStornieren();
 			}
 		};
 		acReiseTeilnehmerAnzeigen = new AbstractAction(
@@ -437,7 +477,7 @@ public class ReiseFieberGUI {
 				} else if (selectedTable == 4) {
 					contentSelectedRowID = null;
 				}
-				testReiseTeilnehmerAnzeigen();
+				reiseTeilnehmerAnzeigen();
 			}
 		};
 
@@ -543,18 +583,21 @@ public class ReiseFieberGUI {
 			}
 		};
 		tableKunden.addMouseListener(popupListener);
-		// menuBar.addMouseListener(popupListener);
 
 		tableReisen.addMouseListener(popupListener);
-		// menuBar.addMouseListener(popupListener);
 
 		tableKundenReise.addMouseListener(popupListener);
-		// menuBar.addMouseListener(popupListener);
 
 		tableSearchResult.addMouseListener(popupListener);
 		tableReiseTeilnehmer.addMouseListener(popupListener);
 	}
 
+	/**
+	 * Registriert einen MouseListener für jede Tabelle welcher in der unteren
+	 * Zeile der Benutzeroberfläche immer den den Namen der aktuell ausgewählten
+	 * Spalte und den Inhalt der ausgewählten Zelle anzeigt, um das Lesen langer
+	 * Einträge zu erleichtern.
+	 */
 	private void addMouseListeners() {
 		tableKunden.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
@@ -644,59 +687,66 @@ public class ReiseFieberGUI {
 		});
 	}
 
+	/**
+	 * Zeigt die Benutzeroberfläche an.
+	 */
 	public void show() {
 		frame.pack();
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Registriert die ActionListener für alle Buttons in der
+	 * Benutzeroberfläche.
+	 */
 	private void addActionListeners() {
 		bnNeuenKundenErstellen.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				testKundeAnlegen();
+				kundeAnlegen();
 			}
 		});
 		bnSucheKunde.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				testSuche();
+				suche();
 			}
 		});
 		bnKundenAendern.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				testAendern();
+				aendern();
 			}
 		});
 		bnAddToReise.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				testReise();
+				buchen();
 			}
 		});
 		bnNeueReise.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				testReiseAnlegen();
+				reiseAnlegen();
 			}
 		});
 		bnReiseStornieren.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				testReiseStornieren();
+				reiseStornieren();
 			}
 		});
 		bnReiseTeilnehmerAnzeigen.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				testReiseTeilnehmerAnzeigen();
+				reiseTeilnehmerAnzeigen();
 			}
 		});
 		bnRefresh.addActionListener(new ActionListener() {
@@ -716,40 +766,62 @@ public class ReiseFieberGUI {
 		});
 	}
 
-	private void testSuche() {
+	/**
+	 * Öffnet das Fenster zur Suche von Kunden.
+	 */
+	private void suche() {
 		SucheKundeDialog suchDialog = new SucheKundeDialog(this);
 		suchDialog.show();
 	}
 
-	private void testAendern() {
+	/**
+	 * Öffnet das Fenster zum Ändern von Kundendaten.
+	 */
+	private void aendern() {
 		KundenDatenAendern aendernDialog = new KundenDatenAendern(
 				contentSelectedRowID);
 		aendernDialog.show();
 	}
 
-	private void testKundeAnlegen() {
+	/**
+	 * Öffnet das Fenster zum speichern eines neuen Kunden.
+	 */
+	private void kundeAnlegen() {
 		KundenEingabeFeld eingabeFeld = new KundenEingabeFeld();
 		eingabeFeld.show();
 	}
 
-	private void testReise() {
+	/**
+	 * Öffnet das Fenster zum Buchen einer Reise.
+	 */
+	private void buchen() {
 		ReiseBuchen teilnehmenDialog = new ReiseBuchen(contentSelectedRowID,
 				addToJourney);
 		teilnehmenDialog.show();
 	}
 
-	private void testReiseAnlegen() {
+	/**
+	 * Öffnet das Fenster zum erstellen einer neuen Reise.
+	 */
+	private void reiseAnlegen() {
 		ReiseAnlegenDialog neueReiseDialog = new ReiseAnlegenDialog();
 		neueReiseDialog.show();
 	}
 
-	private void testReiseStornieren() {
+	/**
+	 * Öffnet das Fenster zum stornieren einer Buchung.
+	 */
+	private void reiseStornieren() {
 		ReiseStornierenDialog stornierenDialog = new ReiseStornierenDialog(
 				contentSelectedRowID);
 		stornierenDialog.show();
 	}
 
-	private void testReiseTeilnehmerAnzeigen() {
+	/**
+	 * Öffnet das Fenster zum Suchen von Reiseteilnehmern einer bestimmten
+	 * Reise.
+	 */
+	private void reiseTeilnehmerAnzeigen() {
 		ReiseTeilnehmer reiseTeilnehmerDialog = new ReiseTeilnehmer(
 				contentSelectedRowID, this);
 		if (contentSelectedRowID == null) {
