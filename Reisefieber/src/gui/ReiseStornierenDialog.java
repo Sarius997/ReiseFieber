@@ -124,7 +124,7 @@ public class ReiseStornierenDialog implements IStorno {
 	}
 
 	/**
-	 * Registriert alle Listener f�r dieses Fenster.<br>
+	 * Registriert alle Listener für dieses Fenster.<br>
 	 * Wenn keine Buchungsnummer eingegeben ist, passiert nichts.
 	 */
 	private void addListeners() {
