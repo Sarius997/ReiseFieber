@@ -14,6 +14,13 @@ import javax.swing.JTextField;
 import dbv.DatenbankVerbindung;
 import dbv.IStorno;
 
+/**
+ * Zeigt das Fenster zum stornieren von Buchungen an.
+ * 
+ * @author Markus Hofmann
+ * @version 1.0
+ * 
+ */
 public class ReiseStornierenDialog implements IStorno {
 
 	private JFrame frame;
@@ -37,13 +44,24 @@ public class ReiseStornierenDialog implements IStorno {
 
 	private JLabel labReiseZiel;
 	private JLabel tfReiseZiel;
-	
+
 	private JLabel labStorno;
 	private JLabel tfStorno;
 
 	private JButton bnBestaetigen;
 	private JButton bnAbbrechen;
 
+	/**
+	 * Initialisiert das Fenster zum stornieren von Buchungen. Eine Stornierung
+	 * kann nicht wieder aufgehoben werden.
+	 * 
+	 * @param selectedID
+	 *            ID der zu stornierenden Buchung.<br>
+	 *            Wenn die ID {@code null} ist, wird das Fenster mit leeren
+	 *            Textfeldern angezeigt.<br>
+	 *            Wenn eine ID übergeben wurde, werden die Daten der Buchung mit
+	 *            dieser ID in die Felder übernommen.
+	 */
 	public ReiseStornierenDialog(String selectedID) {
 		labID = new JLabel("Buchungsnummer:");
 		tfID = new JTextField();
@@ -65,18 +83,16 @@ public class ReiseStornierenDialog implements IStorno {
 
 		labReiseZiel = new JLabel("Reiseziel:");
 		tfReiseZiel = new JLabel();
-		
+
 		labStorno = new JLabel("Storniert:");
-		tfStorno = new JLabel();		
+		tfStorno = new JLabel();
 
 		bnBestaetigen = new JButton("Buchung stornieren");
-		bnAbbrechen = new JButton("Abbrechen");		
-		
-		
-		if(selectedID!= null){
+		bnAbbrechen = new JButton("Abbrechen");
+
+		if (selectedID != null) {
 			sucheBuchung(selectedID);
-		}		
-		
+		}
 
 		frame = new JFrame("Buchung stornieren");
 		frame.setLayout(new GridLayout(0, 2, 10, 10));
@@ -96,18 +112,27 @@ public class ReiseStornierenDialog implements IStorno {
 		frame.add(tfReiseName);
 		frame.add(labReiseZiel);
 		frame.add(tfReiseZiel);
-		
+
 		frame.add(labStorno);
 		frame.add(tfStorno);
 
 		frame.add(bnBestaetigen);
 		frame.add(bnAbbrechen);
-		addActionListeners();
+		addListeners();
 	}
 
-	private void addActionListeners() {
+	/**
+	 * Registriert alle Listener für dieses Fenster.
+	 */
+	private void addListeners() {
 		tfID.addFocusListener(new FocusListener() {
 
+			/**
+			 * Wenn aus dem Feld für die Buchungs-ID herausgeklickt wird oder
+			 * mit der Tabulatortaste weitergeschaltet wird, werden aus der
+			 * Datenbank die Daten der Buchung herausgesucht und in die
+			 * Entsprechenden Felder eingetragen.
+			 */
 			@Override
 			public void focusLost(FocusEvent e) {
 				sucheBuchung(getBuchungsID());
@@ -133,12 +158,23 @@ public class ReiseStornierenDialog implements IStorno {
 
 	}
 
+	/**
+	 * Zeigt das Fenster an.
+	 */
 	@SuppressWarnings("deprecation")
 	public void show() {
 		frame.pack();
 		frame.show();
 	}
 
+	/**
+	 * Sucht über {@link DatenbankVerbindung#getBuchungByID(String)} die Buchung
+	 * mit der eingegeben ID und übernimmt die Daten dieser Buchung in die
+	 * entsprechenden Felder.
+	 * 
+	 * @param searchId
+	 *            die ID der gesuchten Buchung
+	 */
 	protected void sucheBuchung(String searchId) {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
@@ -151,14 +187,15 @@ public class ReiseStornierenDialog implements IStorno {
 			tfR_ID.setText(buchungSearch[0]);
 			tfReiseName.setText(buchungSearch[1]);
 			tfReiseZiel.setText(buchungSearch[2]);
-			if(buchungSearch[6] != null && buchungSearch[6].equals("f")){
+			if (buchungSearch[6] != null && buchungSearch[6].equals("f")) {
 				tfStorno.setText("hat nicht storniert");
 				bnBestaetigen.setEnabled(true);
 				bnBestaetigen.setToolTipText(null);
-			} else if(buchungSearch[6] != null && buchungSearch[6].equals("t")){
+			} else if (buchungSearch[6] != null && buchungSearch[6].equals("t")) {
 				tfStorno.setText("hat bereits storniert");
 				bnBestaetigen.setEnabled(false);
-				bnBestaetigen.setToolTipText("Diese Buchung wurde bereits storniert!");
+				bnBestaetigen
+						.setToolTipText("Diese Buchung wurde bereits storniert!");
 			} else {
 				tfStorno.setText("");
 				bnBestaetigen.setEnabled(false);
@@ -169,6 +206,10 @@ public class ReiseStornierenDialog implements IStorno {
 		}
 	}
 
+	/**
+	 * Storniert über {@link DatenbankVerbindung#doStorno(IStorno)} die Buchung
+	 * mit der eingegeben ID.
+	 */
 	protected void storno() {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
@@ -178,10 +219,16 @@ public class ReiseStornierenDialog implements IStorno {
 		}
 	}
 
+	/**
+	 * Schliest das Fenster.
+	 */
 	private void cancel() {
 		frame.dispose();
 	}
 
+	/**
+	 * @return die eingegebene Buchungs-ID
+	 */
 	@Override
 	public String getBuchungsID() {
 		return tfID.getText();

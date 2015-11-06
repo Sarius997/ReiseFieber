@@ -16,6 +16,13 @@ import javax.swing.JTextField;
 import dbv.DatenbankVerbindung;
 import dbv.IKundenSuchen;
 
+/**
+ * Diese Klasse zeigt das Suchfenster an.
+ * 
+ * @author Markus Hofmann
+ * @version 1.0
+ * 
+ */
 public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 															// Interface
 															// IKundenSuchen
@@ -28,6 +35,13 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 
 	private ReiseFieberGUI gui;
 
+	/**
+	 * Initialisiert das Suchfenster.
+	 * 
+	 * @param gui
+	 *            Instanz der Benutzeroberfläche. Wird genutzt um die
+	 *            Suchergebnisse anzuzeigen.
+	 */
 	public SucheKundeDialog(ReiseFieberGUI gui) {
 		this.gui = gui;
 
@@ -53,16 +67,22 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 		frame.add(labEingebeaufforderung, BorderLayout.NORTH);
 		frame.add(suchPanel, BorderLayout.CENTER);
 		frame.add(buttonPanel, BorderLayout.SOUTH);
-		addActionListeners();
+		addListeners();
 	}
 
+	/**
+	 * Zeigt das Suchfenster an.
+	 */
 	public void show() {
-		// TODO rework
 		frame.pack();
 		frame.setVisible(true);
 	}
 
-	private void addActionListeners() {
+	/**
+	 * Registriert alle Listener für das Suchfenster.
+	 */
+	private void addListeners() {
+
 		bnSuchen.addActionListener(new ActionListener() {
 
 			@Override
@@ -79,7 +99,6 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 			}
 		});
 		KeyListener enterListener = new KeyListener() {
-
 			@Override
 			public void keyTyped(KeyEvent e) {
 
@@ -90,6 +109,13 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 
 			}
 
+			/**
+			 * Wenn die Eingabetaste gedrückt wird, wird überprüft ob das
+			 * Suchfeld leer ist.<br>
+			 * Wenn es nicht leer ist wird die Suche nach Kunden mit dem
+			 * eingegebenen Namen ausgeführt.<br>
+			 * Wenn es leer ist, passiert nichts.
+			 */
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -103,23 +129,31 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 		tfKdName.addKeyListener(enterListener);
 	}
 
-	protected void suchenKunde() { // baut Verbindung zur Datenbank auf und
-									// f�hrt die Suche aus
+	/**
+	 * Führt über {@link DatenbankVerbindung#doSearch(IKundenSuchen)} die Suche in der Datenbank aus und zeigt die Suchergebnisse in der
+	 * Benutzeroberfläche an.
+	 */
+	protected void suchenKunde() {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
 			String[][] searchResult = dbv.doSearch(this);
 			gui.showSearchResultData(searchResult);
-			;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
 
+	/**
+	 * Schliest das Fenster.
+	 */
 	private void abbrechen() {
 		frame.dispose();
 	}
 
+	/**
+	 * @return den eingegebenen Namen
+	 */
 	@Override
 	public String getKdName() {
 		if (tfKdName != null) {

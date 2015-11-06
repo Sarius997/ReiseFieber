@@ -13,6 +13,14 @@ import javax.swing.JTextField;
 
 import dbv.DatenbankVerbindung;
 
+/**
+ * Diese Klasse zeigt ein Fenster an um die Teilnehmer einer bestimmten Reise
+ * über die Reisenummer zu suchen.
+ * 
+ * @author Markus Hofmann
+ * @version 1.0
+ * 
+ */
 public class ReiseTeilnehmer {
 
 	private JFrame frame;
@@ -23,6 +31,20 @@ public class ReiseTeilnehmer {
 	private JButton bnAbbrechen;
 	private ReiseFieberGUI gui;
 
+	/**
+	 * Initialisiert das Fenster zum suchen von Buchungen für eine bestimmte
+	 * Reise.
+	 * 
+	 * @param selectedID
+	 *            {@code null} wenn keine Reise ausgewählt ist, dann wird auch
+	 *            das Fenster angezeigt in das dann die ID der Reise eingegeben
+	 *            werden muss.<br>
+	 *            Ansonsten wird die ID der ausgewählten Reise übergeben und es
+	 *            werden sofort die Buchungen für diese Reise angezeigt.
+	 * @param gui
+	 *            Instanz der Benutzeroberfläche. Wird genutzt um die
+	 *            Suchergebnisse anzuzeigen.
+	 */
 	public ReiseTeilnehmer(String selectedID, ReiseFieberGUI gui) {
 		this.gui = gui;
 		if (selectedID == null) {
@@ -40,7 +62,7 @@ public class ReiseTeilnehmer {
 			frame.add(bnAnzeigen);
 			frame.add(bnAbbrechen);
 
-			addActionListeners();
+			addListeners();
 		} else {
 			tfReiseID = new JTextField();
 			tfReiseID.setText(selectedID);
@@ -48,12 +70,18 @@ public class ReiseTeilnehmer {
 		}
 	}
 
+	/**
+	 * Zeigt das Fenster an.
+	 */
 	public void show() {
 		frame.pack();
 		frame.setVisible(true);
 	}
 
-	private void addActionListeners() {
+	/**
+	 * Registriert alle Listener für das Fenster.
+	 */
+	private void addListeners() {
 		bnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ReiseTeilnehmer.this.fertig();
@@ -70,16 +98,21 @@ public class ReiseTeilnehmer {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
+			/**
+			 * Wenn die Eingabetaste gedrückt wird, wird überprüft ob das
+			 * Suchfeld leer ist.<br>
+			 * Wenn es nicht leer ist wird die Suche nach Buchungen für die
+			 * Reise mit der eingegebenen ID ausgeführt.<br>
+			 * Wenn es leer ist passiert nichts.
+			 */
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -93,6 +126,12 @@ public class ReiseTeilnehmer {
 		tfReiseID.addKeyListener(enterListener);
 	}
 
+	/**
+	 * Führt über {@link DatenbankVerbindung#reiseTeilnehmer(String, String)} in
+	 * der Datenbank die Suche nach Buchungen für die Reise mit der eingegebenen
+	 * ID die nicht storniert wurden aus und zeigt die Suchergebnisse in der
+	 * Benutzeroberfläche an.
+	 */
 	protected void anzeigen() {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
@@ -103,10 +142,17 @@ public class ReiseTeilnehmer {
 		}
 	}
 
+	/**
+	 * Schliest das Fenster.
+	 */
 	private void fertig() {
 		frame.dispose();
 	}
 
+	/**
+	 * 
+	 * @return die eingegebene Reise-ID
+	 */
 	private String getReiseID() {
 		return this.tfReiseID.getText();
 	}
