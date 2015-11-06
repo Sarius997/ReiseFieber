@@ -161,7 +161,7 @@ public class DatenbankVerbindung {
 	}
 
 	/**
-	 * Setzt übergebene Texte in Anführungszeichen, damit sie in den
+	 * Setzt übergebene Zeichenketten in Anführungszeichen, damit sie in den
 	 * SQL-Abfragen auch als Text behandelt werden.
 	 * 
 	 * @param s
