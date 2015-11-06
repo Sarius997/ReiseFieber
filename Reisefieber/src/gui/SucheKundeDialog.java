@@ -119,7 +119,7 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 
 			/**
 			 * Simuliert beim drücken der Eingabetaste einen Klick auf den
-			 * "Suchen"-Button
+			 * "Suchen"-Button.
 			 */
 			@Override
 			public void keyPressed(KeyEvent e) {

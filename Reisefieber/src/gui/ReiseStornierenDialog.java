@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -59,8 +61,8 @@ public class ReiseStornierenDialog implements IStorno {
 	 *            ID der zu stornierenden Buchung.<br>
 	 *            Wenn die ID {@code null} ist, wird das Fenster mit leeren
 	 *            Textfeldern angezeigt.<br>
-	 *            Wenn eine ID übergeben wurde, werden die Daten der Buchung mit
-	 *            dieser ID in die Felder übernommen.
+	 *            Wenn eine ID Ã¼bergeben wurde, werden die Daten der Buchung mit
+	 *            dieser ID in die Felder Ã¼bernommen.
 	 */
 	public ReiseStornierenDialog(String selectedID) {
 		labID = new JLabel("Buchungsnummer:");
@@ -122,16 +124,18 @@ public class ReiseStornierenDialog implements IStorno {
 	}
 
 	/**
-	 * Registriert alle Listener für dieses Fenster.
+	 * Registriert alle Listener fï¿½r dieses Fenster.<br>
+	 * Wenn keine Buchungsnummer eingegeben ist, passiert nichts.
 	 */
 	private void addListeners() {
 		tfID.addFocusListener(new FocusListener() {
 
 			/**
-			 * Wenn aus dem Feld für die Buchungs-ID herausgeklickt wird oder
-			 * mit der Tabulatortaste weitergeschaltet wird, werden aus der
-			 * Datenbank die Daten der Buchung herausgesucht und in die
-			 * Entsprechenden Felder eingetragen.
+			 * Wenn aus dem Feld fÃ¼r die Buchungs-ID herausgeklickt wird, mit
+			 * der Tabulatortaste weitergeschaltet wird oder das Feld
+			 * anderweitig den Fokus verliert, werden aus der Datenbank die
+			 * Daten der Buchung mit der eingetragenen ID herausgesucht und in die Entsprechenden Felder
+			 * eingetragen.
 			 */
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -151,10 +155,40 @@ public class ReiseStornierenDialog implements IStorno {
 		});
 		bnBestaetigen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ReiseStornierenDialog.this.storno();
-				frame.dispose();
+				if (!tfID.getText().equals("")) {
+					ReiseStornierenDialog.this.storno();
+					frame.dispose();
+				}
 			}
 		});
+
+		KeyListener enterListener = new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+
+			}
+
+			/**
+			 * Wenn die Eingabetaste gedrÃ¼ckt wird, wird der Fokus von dem
+			 * Textfeld auf den "Buchung stornieren"-Button gesetzt und dann ein
+			 * Klick auf diesen simuliert.
+			 */
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					bnBestaetigen.requestFocus();
+					bnBestaetigen.doClick();
+				}
+			}
+		};
+
+		tfID.addKeyListener(enterListener);
 
 	}
 
@@ -168,8 +202,8 @@ public class ReiseStornierenDialog implements IStorno {
 	}
 
 	/**
-	 * Sucht über {@link DatenbankVerbindung#getBuchungByID(String)} die Buchung
-	 * mit der eingegeben ID und übernimmt die Daten dieser Buchung in die
+	 * Sucht Ã¼ber {@link DatenbankVerbindung#getBuchungByID(String)} die Buchung
+	 * mit der eingegeben ID und Ã¼bernimmt die Daten dieser Buchung in die
 	 * entsprechenden Felder.
 	 * 
 	 * @param searchId
@@ -207,7 +241,7 @@ public class ReiseStornierenDialog implements IStorno {
 	}
 
 	/**
-	 * Storniert über {@link DatenbankVerbindung#doStorno(IStorno)} die Buchung
+	 * Storniert Ã¼ber {@link DatenbankVerbindung#doStorno(IStorno)} die Buchung
 	 * mit der eingegeben ID.
 	 */
 	protected void storno() {
@@ -220,7 +254,7 @@ public class ReiseStornierenDialog implements IStorno {
 	}
 
 	/**
-	 * Schließt das Fenster.
+	 * SchlieÃŸt das Fenster.
 	 */
 	private void cancel() {
 		frame.dispose();

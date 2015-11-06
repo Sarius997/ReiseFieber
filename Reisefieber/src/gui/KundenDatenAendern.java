@@ -16,6 +16,13 @@ import javax.swing.JTextField;
 import dbv.DatenbankVerbindung;
 import dbv.IKundenAendern;
 
+/**
+ * Zeigt das Fenster zum ändern von gespeicherten Kundendaten an.
+ * 
+ * @author Markus Hofmann
+ * @version 1.0
+ * 
+ */
 public class KundenDatenAendern implements IKundenAendern {
 	private JFrame frame;
 	private JLabel labID;
@@ -48,6 +55,16 @@ public class KundenDatenAendern implements IKundenAendern {
 	private JButton bnAendern;
 	private JButton bnAbbrechen;
 
+	/**
+	 * Initialisiert das Fenster zum ändern von Kundendaten.
+	 * 
+	 * @param selectedID
+	 *            ID des zu ändernden Kunden.<br>
+	 *            Wenn die ID {@code null} ist, wird das Fenster mit leeren
+	 *            Textfeldern angezeigt.<br>
+	 *            Wenn eine ID übergeben wurde, werden die gespeicherten Daten
+	 *            des Kunden mit der übergebenen ID in die Felder übernommen.
+	 */
 	public KundenDatenAendern(String selectedID) {
 		frame = new JFrame("Kundendaten \u00e4ndern");
 
@@ -107,15 +124,27 @@ public class KundenDatenAendern implements IKundenAendern {
 		frame.add(tfWohnort);
 		frame.add(bnAendern);
 		frame.add(bnAbbrechen);
-		addActionListeners();
+		addListeners();
 	}
 
-	private void addActionListeners() {
+	/**
+	 * Registriert die Listener für dieses Fenster.<br>
+	 * Wenn die Eingabetaste gedrückt oder auf den "Ändern"-Button geklickt
+	 * wird, wird überprüft ob alle Felder ausgefüllt sind.<br>
+	 * Wenn ja, werden die Daten des Kunden durch die neuen Daten ersetzt.<br>
+	 * Wenn noch Felder leer sind, passiert nichts.
+	 */
+	private void addListeners() {
 		tfID.addFocusListener(new FocusListener() {
 
+			/**
+			 * Wenn das Textfeld mit der ID des zu ändernden Kunden den Fokus
+			 * verliert, werden die Daten des Kunden mit der eingegebenen ID aus
+			 * der Datenbank herausgesucht und in die entsprechenden Felder
+			 * eingetragen.
+			 */
 			@Override
 			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
 				if (tfID != null && !tfID.equals("")) {
 					suchen(getID());
 				}
@@ -123,7 +152,6 @@ public class KundenDatenAendern implements IKundenAendern {
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -132,15 +160,23 @@ public class KundenDatenAendern implements IKundenAendern {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				KundenDatenAendern.this.fertig();
 			}
 		});
 		bnAendern.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				KundenDatenAendern.this.aendern();
-				frame.dispose();
+				if (!tfKdName.getText().equals("")
+						&& !tfKdVorname.getText().equals("")
+						&& !tfGeschlecht.getText().equals("")
+						&& !tfGeburtsdatum.getText().equals("")
+						&& !tfTelefon.getText().equals("")
+						&& !tfAdresse.getText().equals("")
+						&& !tfPostleitzahl.getText().equals("")
+						&& !tfWohnort.getText().equals("")) {
+					KundenDatenAendern.this.aendern();
+					frame.dispose();
+				}
 			}
 		});
 
@@ -148,29 +184,22 @@ public class KundenDatenAendern implements IKundenAendern {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
+			/**
+			 * Simuliert einen Klick auf den "Ändern"-Button wenn die
+			 * Eingabetaste gedrückt wird
+			 */
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (!tfKdName.getText().equals("")
-							&& !tfKdVorname.getText().equals("")
-							&& !tfGeschlecht.getText().equals("")
-							&& !tfGeburtsdatum.getText().equals("")
-							&& !tfTelefon.getText().equals("")
-							&& !tfAdresse.getText().equals("")
-							&& !tfPostleitzahl.getText().equals("")
-							&& !tfWohnort.getText().equals("")) {
-						bnAendern.doClick();
-					}
+					bnAendern.doClick();
 				}
 			}
 		};
@@ -186,13 +215,23 @@ public class KundenDatenAendern implements IKundenAendern {
 
 	}
 
+	/**
+	 * Zeigt das Fenster an.
+	 */
 	public void show() {
 		frame.pack();
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Sucht über {@link DatenbankVerbindung#doSearchByKundenID(String)} die
+	 * Daten des Kunden mit der eingegebenen ID aus der Datenbank heraus und
+	 * übernimmt sie in die entsprechenden Felder.
+	 * 
+	 * @param searchId
+	 *            die ID des gesuchten Kunden
+	 */
 	protected void suchen(String searchId) {
-		// TODO Auto-generated method stub
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
 			String[] idSearch = dbv.doSearchByKundenID(searchId);
@@ -206,26 +245,33 @@ public class KundenDatenAendern implements IKundenAendern {
 			tfPostleitzahl.setText(idSearch[7]);
 			tfWohnort.setText(idSearch[8]);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Ändert über {@link DatenbankVerbindung#doChange(IKundenAendern)} die in
+	 * der Datenbank gespeicherten Daten des Kunden mit der eingegebenen ID.
+	 */
 	protected void aendern() {
-		// TODO Auto-generated method stub
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
 			dbv.doChange(this);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Schließt das Fenster.
+	 */
 	private void fertig() {
 		frame.dispose();
 	}
 
+	/**
+	 * @return den eingegebenen Vornamen
+	 */
 	@Override
 	public String getVorname() {
 		if (tfKdVorname != null) {
@@ -234,6 +280,9 @@ public class KundenDatenAendern implements IKundenAendern {
 		return "";
 	}
 
+	/**
+	 * @return den eingegebenen Wohnort
+	 */
 	@Override
 	public String getWohnort() {
 		if (tfWohnort != null) {
@@ -242,6 +291,9 @@ public class KundenDatenAendern implements IKundenAendern {
 		return "";
 	}
 
+	/**
+	 * @return den eingegebenen Geburtstag
+	 */
 	@Override
 	public String getGeburtstag() {
 		if (tfGeburtsdatum != null) {
@@ -250,6 +302,9 @@ public class KundenDatenAendern implements IKundenAendern {
 		return "";
 	}
 
+	/**
+	 * @return die eingegebene Telefonnummer
+	 */
 	@Override
 	public String getTelefonnummer() {
 		if (tfTelefon != null) {
@@ -258,6 +313,9 @@ public class KundenDatenAendern implements IKundenAendern {
 		return "";
 	}
 
+	/**
+	 * @return das eingegebene Geschlecht
+	 */
 	@Override
 	public String getGeschlecht() {
 		if (tfGeschlecht != null) {
@@ -266,6 +324,9 @@ public class KundenDatenAendern implements IKundenAendern {
 		return "";
 	}
 
+	/**
+	 * @return den eingegebenen Nachnamen
+	 */
 	@Override
 	public String getNachname() {
 		if (tfKdName != null) {
@@ -274,6 +335,9 @@ public class KundenDatenAendern implements IKundenAendern {
 		return "";
 	}
 
+	/**
+	 * @return die eingegebene ID
+	 */
 	@Override
 	public String getID() {
 		if (tfID != null) {
@@ -282,11 +346,17 @@ public class KundenDatenAendern implements IKundenAendern {
 		return "";
 	}
 
+	/**
+	 * @return die eingegebene Adresse
+	 */
 	@Override
 	public String getAdresse() {
 		return tfAdresse.getText();
 	}
 
+	/**
+	 * @return die eingegebene Postleitzahl
+	 */
 	@Override
 	public String getPostleitzahl() {
 		return tfPostleitzahl.getText();

@@ -115,7 +115,7 @@ public class ReiseTeilnehmer {
 
 			/**
 			 * Simuliert beim drücken der Eingabetaste einen Klick auf den
-			 * "Anzeigen"-Button
+			 * "Anzeigen"-Button.
 			 */
 			@Override
 			public void keyPressed(KeyEvent e) {

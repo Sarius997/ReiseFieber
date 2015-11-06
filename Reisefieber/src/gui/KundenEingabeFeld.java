@@ -15,7 +15,7 @@ import dbv.DatenbankVerbindung;
 import dbv.IKundenDaten;
 
 /**
- * Diese Klasse zeigt das Fenster zum speichern der Daten eines neuen Kunden
+ * Diese Klasse zeigt das Fenster zum speichern der Daten eines neuen Kunden an.
  * 
  * @author Markus Hofmann
  * @version 1.0
@@ -107,9 +107,9 @@ public class KundenEingabeFeld implements IKundenDaten {
 	}
 
 	/**
-	 * Registriert die Listener für dieses Fenster.<br>
-	 * Wenn die Eingabetaste gedrückt oder auf den "Hinzufügen"-Button geklickt wird, wird überprüft ob alle Felder
-	 * ausgefüllt sind.<br>
+	 * Registriert die Listener fÃ¼r dieses Fenster.<br>
+	 * Wenn die Eingabetaste gedrÃ¼ckt oder auf den "HinzufÃ¼gen"-Button geklickt
+	 * wird, wird Ã¼berprÃ¼ft ob alle Felder ausgefÃ¼llt sind.<br>
 	 * Wenn ja, werden die Daten in der Datenbank gespeichert.<br>
 	 * Wenn noch Felder leer sind, passiert nichts.
 	 */
@@ -151,8 +151,8 @@ public class KundenEingabeFeld implements IKundenDaten {
 			}
 
 			/**
-			 * Simuliert beim drücken der Eingabetaste einen Klick auf den
-			 * "Hinzufügen"-Button
+			 * Simuliert beim drÃ¼cken der Eingabetaste einen Klick auf den
+			 * "HinzufÃ¼gen"-Button.
 			 */
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -173,7 +173,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	}
 
 	/**
-	 * Speichert die Daten des neuen Kunden über
+	 * Speichert die Daten des neuen Kunden Ã¼ber
 	 * {@link DatenbankVerbindung#doInsert(IKundenDaten)} in der Datenbank.
 	 */
 	protected void hinzufuegen() {
@@ -186,7 +186,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	}
 
 	/**
-	 * Schließt das Fenster.
+	 * SchlieÃŸt das Fenster.
 	 */
 	private void fertig() {
 		frame.dispose();
