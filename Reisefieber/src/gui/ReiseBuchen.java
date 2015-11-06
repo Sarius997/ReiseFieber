@@ -50,13 +50,13 @@ public class ReiseBuchen implements IKundenReise {
 	 * Wenn ein Parameter {@code null} ist oder beide Parameter {@code null}
 	 * sind, sind die Textfelder in dem angezeigten Fenster leer.<br>
 	 * Wenn kein Parameter {@code null} ist, werden die Daten der Reise / des
-	 * Kunden mit der übergebenen ID automatisch in die Textfelder übernommen.
+	 * Kunden mit der Ã¼bergebenen ID automatisch in die Textfelder Ã¼bernommen.
 	 * 
 	 * @param selectedID
-	 *            ID der ausgewählten Reise oder des ausgewählten Kunden
+	 *            ID der ausgewÃ¤hlten Reise oder des ausgewÃ¤hlten Kunden
 	 * @param selectedTable
-	 *            {@code Kunde} wenn ein Kunde ausgewählt ist, {@code Reise}
-	 *            wenn eine Reise ausgewählt ist.
+	 *            {@code Kunde} wenn ein Kunde ausgewÃ¤hlt ist, {@code Reise}
+	 *            wenn eine Reise ausgewÃ¤hlt ist.
 	 * 
 	 */
 	public ReiseBuchen(String selectedID, String selectedTable) {
@@ -118,7 +118,7 @@ public class ReiseBuchen implements IKundenReise {
 	}
 
 	/**
-	 * Registriert die Listener für dieses Fenster
+	 * Registriert die Listener fÃ¼r dieses Fenster
 	 */
 	private void addListeners() {
 
@@ -126,13 +126,11 @@ public class ReiseBuchen implements IKundenReise {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
 				sucheKunde(getKundeID());
 			}
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -146,7 +144,6 @@ public class ReiseBuchen implements IKundenReise {
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -164,9 +161,9 @@ public class ReiseBuchen implements IKundenReise {
 	}
 
 	/**
-	 * Sucht über {@link DatenbankVerbindung#doSearchByKundenID(String)} aus der
-	 * Datenbank Nachname und Vorname des Kunden mit der übergebenen ID heraus
-	 * und übernimmt sie in die entsprechenden Textfelder des Fensters.
+	 * Sucht Ã¼ber {@link DatenbankVerbindung#doSearchByKundenID(String)} aus der
+	 * Datenbank Nachname und Vorname des Kunden mit der Ã¼bergebenen ID heraus
+	 * und Ã¼bernimmt sie in die entsprechenden Textfelder des Fensters.
 	 * 
 	 * @param searchId
 	 *            die ID des gesuchten Kunden
@@ -184,9 +181,9 @@ public class ReiseBuchen implements IKundenReise {
 	}
 
 	/**
-	 * Sucht über {@link DatenbankVerbindung#doSearchByReiseID(String)} aus der
-	 * Datenbank Name und Ziel der Reise mit der übergebenen ID heraus und
-	 * übernimmt sie in die entsprechenden Textfelder des Fensters.
+	 * Sucht Ã¼ber {@link DatenbankVerbindung#doSearchByReiseID(String)} aus der
+	 * Datenbank Name und Ziel der Reise mit der Ã¼bergebenen ID heraus und
+	 * Ã¼bernimmt sie in die entsprechenden Textfelder des Fensters.
 	 * 
 	 * @param searchId
 	 *            die ID der gesuchten Reise
@@ -204,7 +201,7 @@ public class ReiseBuchen implements IKundenReise {
 	}
 
 	/**
-	 * Speichert über
+	 * Speichert Ã¼ber
 	 * {@link DatenbankVerbindung#doInsertInJourney(IKundenReise)} eine neue
 	 * Buchung mit der Kunden-ID und Reise-ID in der Datenbank.
 	 */
@@ -218,7 +215,7 @@ public class ReiseBuchen implements IKundenReise {
 	}
 
 	/**
-	 * Schliest das Fenster
+	 * SchlieÃŸt das Fenster
 	 */
 	private void fertig() {
 		frame.dispose();
@@ -229,7 +226,6 @@ public class ReiseBuchen implements IKundenReise {
 	 */
 	@Override
 	public String getKundeID() {
-		// TODO Auto-generated method stub
 		return tfKdNr.getText();
 	}
 
@@ -238,7 +234,6 @@ public class ReiseBuchen implements IKundenReise {
 	 */
 	@Override
 	public String getReiseID() {
-		// TODO Auto-generated method stub
 		return tfReiseID.getText();
 	}
 }
