@@ -277,7 +277,7 @@ public class DatenbankVerbindung {
 	 *            Kunden-ID und Reise-ID für die vorzunehmende Buchung
 	 * @throws Exception
 	 */
-	public void doInsertInNewJourney(IKundenReise kundenReise) throws Exception {
+	public void doInsertInJourney(IKundenReise kundenReise) throws Exception {
 
 		String querybkp = "(empty)";
 		try {

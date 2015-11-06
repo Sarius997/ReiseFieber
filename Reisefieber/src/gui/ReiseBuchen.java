@@ -14,6 +14,13 @@ import javax.swing.JTextField;
 import dbv.DatenbankVerbindung;
 import dbv.IKundenReise;
 
+/**
+ * Diese Klasse zeigt das Fenster zum buchen von Reisen an.
+ * 
+ * @author Markus Hofmann
+ * @version 1.0
+ * 
+ */
 public class ReiseBuchen implements IKundenReise {
 
 	private JFrame frame;
@@ -38,6 +45,20 @@ public class ReiseBuchen implements IKundenReise {
 	private JButton bnHinzufuegen;
 	private JButton bnAbbrechen;
 
+	/**
+	 * Initialisiert das Fenster.<br>
+	 * Wenn ein Parameter {@code null} ist oder beide Parameter {@code null}
+	 * sind, sind die Textfelder in dem angezeigten Fenster leer.<br>
+	 * Wenn kein Parameter {@code null} ist, werden die Daten der Reise / des
+	 * Kunden mit der übergebenen ID automatisch in die Textfelder übernommen.
+	 * 
+	 * @param selectedID
+	 *            ID der ausgewählten Reise oder des ausgewählten Kunden
+	 * @param selectedTable
+	 *            {@code Kunde} wenn ein Kunde ausgewählt ist, {@code Reise}
+	 *            wenn eine Reise ausgewählt ist.
+	 * 
+	 */
 	public ReiseBuchen(String selectedID, String selectedTable) {
 		frame = new JFrame("Kunde zu Reise hinzuf\u00fcgen");
 		labKdNr = new JLabel("Kundennummer:");
@@ -85,15 +106,21 @@ public class ReiseBuchen implements IKundenReise {
 		frame.add(bnHinzufuegen);
 		frame.add(bnAbbrechen);
 
-		addActionListeners();
+		addListeners();
 	}
 
+	/**
+	 * Zeigt das Fenster an.
+	 */
 	public void show() {
 		frame.pack();
 		frame.setVisible(true);
 	}
 
-	private void addActionListeners() {
+	/**
+	 * Registriert die Listener für dieses Fenster
+	 */
+	private void addListeners() {
 
 		tfKdNr.addFocusListener(new FocusListener() {
 
@@ -136,6 +163,14 @@ public class ReiseBuchen implements IKundenReise {
 		});
 	}
 
+	/**
+	 * Sucht über {@link DatenbankVerbindung#doSearchByKundenID(String)} aus der
+	 * Datenbank Nachname und Vorname des Kunden mit der übergebenen ID heraus
+	 * und übernimmt sie in die entsprechenden Textfelder des Fensters.
+	 * 
+	 * @param searchId
+	 *            die ID des gesuchten Kunden
+	 */
 	protected void sucheKunde(String searchId) {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
@@ -148,6 +183,14 @@ public class ReiseBuchen implements IKundenReise {
 		}
 	}
 
+	/**
+	 * Sucht über {@link DatenbankVerbindung#doSearchByReiseID(String)} aus der
+	 * Datenbank Name und Ziel der Reise mit der übergebenen ID heraus und
+	 * übernimmt sie in die entsprechenden Textfelder des Fensters.
+	 * 
+	 * @param searchId
+	 *            die ID der gesuchten Reise
+	 */
 	protected void sucheReise(String searchId) {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
@@ -160,25 +203,39 @@ public class ReiseBuchen implements IKundenReise {
 		}
 	}
 
+	/**
+	 * Speichert über
+	 * {@link DatenbankVerbindung#doInsertInJourney(IKundenReise)} eine neue
+	 * Buchung mit der Kunden-ID und Reise-ID in der Datenbank.
+	 */
 	protected void hinzufuegen() {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
 		try {
-			dbv.doInsertInNewJourney(this);
+			dbv.doInsertInJourney(this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Schliest das Fenster
+	 */
 	private void fertig() {
 		frame.dispose();
 	}
 
+	/**
+	 * @return die eingegebene Kunden-ID
+	 */
 	@Override
 	public String getKundeID() {
 		// TODO Auto-generated method stub
 		return tfKdNr.getText();
 	}
 
+	/**
+	 * @return die eingegebene Reise-ID
+	 */
 	@Override
 	public String getReiseID() {
 		// TODO Auto-generated method stub
