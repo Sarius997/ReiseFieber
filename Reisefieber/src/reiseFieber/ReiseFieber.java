@@ -30,7 +30,7 @@ public class ReiseFieber {
 	 * Erstellt eine Instanz der Benutzeroberfläche {@link gui.ReiseFieberGUI}
 	 */
 	public ReiseFieber() {
-		gui = new ReiseFieberGUI(this);
+		gui = new ReiseFieberGUI();
 	}
 
 	/**

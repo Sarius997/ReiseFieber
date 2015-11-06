@@ -15,7 +15,7 @@ import dbv.DatenbankVerbindung;
 import dbv.IReiseAnlegen;
 
 /**
- * Zeigt das Fenster zum erstellen und speichern neuer Reisen an.
+ * Diese Klasse verwaltet das Fenster zum erstellen und speichern neuer Reisen.
  * 
  * @author Markus Hofmann
  * @version 1.0

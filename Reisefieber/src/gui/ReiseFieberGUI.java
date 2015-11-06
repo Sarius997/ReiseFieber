@@ -29,9 +29,15 @@ import javax.swing.table.TableColumnModel;
 
 import reiseFieber.CustomTableRenderer;
 import reiseFieber.JTableNoEditing;
-import reiseFieber.ReiseFieber;
 import dbv.DatenbankVerbindung;
 
+/**
+ * Diese Klasse verwaltet die Benutzeroberfl�che.
+ * 
+ * @author Markus Hofmann
+ * @version 1.0
+ *
+ */
 public class ReiseFieberGUI {
 
 	private JFrame frame;
@@ -96,11 +102,7 @@ public class ReiseFieberGUI {
 
 	private MouseListener popupListener;
 
-	@SuppressWarnings("unused")
-	private ReiseFieber reiseFieber;
-
-	public ReiseFieberGUI(ReiseFieber reiseFieber) {
-		this.reiseFieber = reiseFieber;
+	public ReiseFieberGUI() {
 
 		frame = new JFrame("ReiseFieber");
 		bnNeuenKundenErstellen = new JButton("Kunde erstellen");

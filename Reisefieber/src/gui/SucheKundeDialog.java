@@ -17,7 +17,7 @@ import dbv.DatenbankVerbindung;
 import dbv.IKundenSuchen;
 
 /**
- * Diese Klasse zeigt das Suchfenster an.
+ * Diese Klasse verwaltet das Suchfenster.
  * 
  * @author Markus Hofmann
  * @version 1.0

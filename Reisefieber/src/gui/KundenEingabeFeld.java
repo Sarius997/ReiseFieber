@@ -15,7 +15,7 @@ import dbv.DatenbankVerbindung;
 import dbv.IKundenDaten;
 
 /**
- * Diese Klasse zeigt das Fenster zum speichern der Daten eines neuen Kunden an.
+ * Diese Klasse verwaltet das Fenster zum speichern der Daten eines neuen Kunden.
  * 
  * @author Markus Hofmann
  * @version 1.0

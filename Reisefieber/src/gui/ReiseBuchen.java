@@ -15,7 +15,7 @@ import dbv.DatenbankVerbindung;
 import dbv.IKundenReise;
 
 /**
- * Diese Klasse zeigt das Fenster zum buchen von Reisen an.
+ * Diese Klasse verwaltet das Fenster zum buchen von Reisen.
  * 
  * @author Markus Hofmann
  * @version 1.0

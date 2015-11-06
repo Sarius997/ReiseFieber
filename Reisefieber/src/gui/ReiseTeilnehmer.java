@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import dbv.DatenbankVerbindung;
 
 /**
- * Diese Klasse zeigt ein Fenster an um die Teilnehmer einer bestimmten Reise
+ * Diese Klasse verwaltet das Fenster um die Teilnehmer einer bestimmten Reise
  * über die Reisenummer zu suchen.
  * 
  * @author Markus Hofmann

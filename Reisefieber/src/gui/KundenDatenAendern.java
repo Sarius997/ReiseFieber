@@ -17,7 +17,7 @@ import dbv.DatenbankVerbindung;
 import dbv.IKundenAendern;
 
 /**
- * Zeigt das Fenster zum ändern von gespeicherten Kundendaten an.
+ * Diese Klasse verwaltet das Fenster zum ändern von gespeicherten Kundendaten.
  * 
  * @author Markus Hofmann
  * @version 1.0

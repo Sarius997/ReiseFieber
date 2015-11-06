@@ -17,7 +17,7 @@ import dbv.DatenbankVerbindung;
 import dbv.IStorno;
 
 /**
- * Diese Klasse zeigt das Fenster zum stornieren von Buchungen an.
+ * Diese Klasse verwaltet das Fenster zum stornieren von Buchungen.
  * 
  * @author Markus Hofmann
  * @version 1.0
