@@ -19,9 +19,6 @@ import dbv.IKundenAendern;
 /**
  * Diese Klasse verwaltet das Fenster zum ändern von gespeicherten Kundendaten.
  * 
- * @author Markus Hofmann
- * @version 1.0
- * 
  */
 public class KundenDatenAendern implements IKundenAendern {
 	private JFrame frame;

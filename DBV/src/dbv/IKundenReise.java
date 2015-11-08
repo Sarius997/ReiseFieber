@@ -4,9 +4,6 @@ package dbv;
  * Stellt grundlegende Funktionen bereit, die benötigt werden, um eine Buchung
  * vorzunehmen.
  * 
- * @author Markus Hofmann
- * @version 1.0
- * 
  */
 public interface IKundenReise {
 	/**

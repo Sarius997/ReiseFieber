@@ -17,9 +17,6 @@ import dbv.DatenbankVerbindung;
  * Diese Klasse verwaltet das Fenster um die Teilnehmer einer bestimmten Reise
  * über die Reisenummer zu suchen.
  * 
- * @author Markus Hofmann
- * @version 1.0
- * 
  */
 public class ReiseTeilnehmer {
 

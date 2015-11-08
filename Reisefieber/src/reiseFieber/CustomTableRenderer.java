@@ -12,9 +12,6 @@ import javax.swing.table.DefaultTableCellRenderer;
  * Benutzeroberfläche den Gewinn und Verlust bei einzelnen Reisen und die
  * Buchungen die auf der Warteliste stehen farbig hervorzuheben.
  * 
- * @author Markus Hofmann
- * @version 1.0
- * 
  */
 @SuppressWarnings("serial")
 public class CustomTableRenderer extends DefaultTableCellRenderer {

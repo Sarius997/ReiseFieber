@@ -19,9 +19,6 @@ import dbv.IStorno;
 /**
  * Diese Klasse verwaltet das Fenster zum stornieren von Buchungen.
  * 
- * @author Markus Hofmann
- * @version 1.0
- * 
  */
 public class ReiseStornierenDialog implements IStorno {
 

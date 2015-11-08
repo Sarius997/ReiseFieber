@@ -34,9 +34,6 @@ import dbv.DatenbankVerbindung;
 /**
  * Diese Klasse verwaltet die Benutzeroberfläche.
  * 
- * @author Markus Hofmann
- * @version 1.0
- * 
  */
 public class ReiseFieberGUI {
 

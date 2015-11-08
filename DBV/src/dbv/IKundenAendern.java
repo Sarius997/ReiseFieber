@@ -4,8 +4,6 @@ package dbv;
  * Stellt grundlegende Funktionen bereit, die benötigt werden, um die Daten
  * eines Kunden zu ändern.
  * 
- * @author Markus Hofmann
- * @version 1.0
  * 
  */
 public interface IKundenAendern {

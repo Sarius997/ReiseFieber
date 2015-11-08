@@ -5,9 +5,6 @@ import javax.swing.JTable;
 /**
  * Diese Klasse passt die Funktionen von {@link javax.swing.JTable} an, um
  * Bedienungsfehler zu vermeiden.
- * 
- * @author Markus Hofmann
- * @version 1.0
  */
 @SuppressWarnings("serial")
 public class JTableNoEditing extends JTable {

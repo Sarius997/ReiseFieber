@@ -13,9 +13,6 @@ import java.util.Iterator;
  * Daten auf und stellt alle Funktionen bereit die benötigt werden um die Daten
  * aus der Datenbank auszulesen oder Daten in der Datenbank zu speichern.
  * 
- * @author Markus Hofmann
- * @version 1.0
- * 
  */
 public class DatenbankVerbindung {
 

@@ -17,9 +17,6 @@ import dbv.IKundenReise;
 /**
  * Diese Klasse verwaltet das Fenster zum buchen von Reisen.
  * 
- * @author Markus Hofmann
- * @version 1.0
- * 
  */
 public class ReiseBuchen implements IKundenReise {
 

@@ -17,9 +17,6 @@ import dbv.IKundenDaten;
 /**
  * Diese Klasse verwaltet das Fenster zum speichern der Daten eines neuen Kunden.
  * 
- * @author Markus Hofmann
- * @version 1.0
- * 
  */
 public class KundenEingabeFeld implements IKundenDaten {
 	private JFrame frame;

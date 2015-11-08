@@ -6,9 +6,6 @@ import gui.ReiseFieberGUI;
  * Hauptklasse des Programms. Gibt eine Willkommensnachricht
  * {@link #willkommensNachricht()} auf der Konsole aus, falls diese genutzt wird
  * um das Programm auszuführen.<br>Ruft die Benutzeroberfläche auf.
- * 
- * @author Markus Hofmann
- * @version 1.0
  */
 public class ReiseFieber {
 	private static ReiseFieberGUI gui;

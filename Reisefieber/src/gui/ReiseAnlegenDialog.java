@@ -17,9 +17,6 @@ import dbv.IReiseAnlegen;
 /**
  * Diese Klasse verwaltet das Fenster zum erstellen und speichern neuer Reisen.
  * 
- * @author Markus Hofmann
- * @version 1.0
- * 
  */
 public class ReiseAnlegenDialog implements IReiseAnlegen {
 	private JFrame frame;
