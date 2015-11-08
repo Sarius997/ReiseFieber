@@ -195,7 +195,7 @@ public class ReiseFieberGUI {
 	public void showSearchResultData(String[][] data) {
 		dataSearchResult = data;
 		String[] columnSearchResult = { "ID", "Nachname", "Vorname",
-				"Geschlecht", "Geburtstag", "Vollj\u00e4hrig", "Telefonnummer",
+				"Geschlecht", "Geburtstag", "Telefonnummer",
 				"Adresse", "Postleitzahl", "Wohnort" };
 
 		Arrays.sort(dataSearchResult, new Comparator<String[]>() {
@@ -263,7 +263,7 @@ public class ReiseFieberGUI {
 	private void loadTableData() {
 
 		String[] columnKunden = { "ID", "Nachname", "Vorname", "Geschlecht",
-				"Geburtstag", "Vollj\u00e4hrig", "Telefonnummer", "Adresse",
+				"Geburtstag", "Telefonnummer", "Adresse",
 				"Postleitzahl", "Wohnort" };
 		String[] columnReisen = { "ID", "Name", "Ziel", "max. Teilnehmerzahl",
 				"Beginn", "Ende", "Preis pro Person", "Kosten" };
@@ -271,7 +271,7 @@ public class ReiseFieberGUI {
 				"Reisename", "Reiseziel", "Kundennummer", "Nachname",
 				"Vorname", "Storno" };
 		String[] columnSearchResult = { "ID", "Nachname", "Vorname",
-				"Geschlecht", "Geburtstag", "Vollj\u00e4hrig", "Telefonnummer",
+				"Geschlecht", "Geburtstag", "Telefonnummer",
 				"Adresse", "Postleitzahl", "Wohnort" };
 		String[] columnReiseTeilnehmer = { "Buchungsnummer", "Reisenummer",
 				"Reisename", "Reiseziel", "Kundennummer", "Nachname", "Vorname" };

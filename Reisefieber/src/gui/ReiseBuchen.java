@@ -118,7 +118,9 @@ public class ReiseBuchen implements IKundenReise {
 	}
 
 	/**
-	 * Registriert die Listener für dieses Fenster
+	 * Registriert die Listener für dieses Fenster.<br>
+	 * Die Buchung wird nur gespeichert, wenn eine Kunden-ID und eine Reise-ID
+	 * eingetragen sind.
 	 */
 	private void addListeners() {
 
@@ -154,8 +156,11 @@ public class ReiseBuchen implements IKundenReise {
 		});
 		bnHinzufuegen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ReiseBuchen.this.hinzufuegen();
-				frame.dispose();
+				if (!tfKdNr.getText().equals("")
+						&& !tfReiseID.getText().equals("")) {
+					ReiseBuchen.this.hinzufuegen();
+					frame.dispose();
+				}
 			}
 		});
 	}
