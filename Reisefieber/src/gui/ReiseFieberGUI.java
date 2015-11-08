@@ -107,7 +107,7 @@ public class ReiseFieberGUI {
 	 */
 	public ReiseFieberGUI() {
 
-		frame = new JFrame("ReiseFieber");
+		frame = new JFrame("ReiseFieber            WSeminararbeit von Markus Hofmann Q12, Maristengymnasium F\u00fcrstenzell, 10. November 2015");
 		bnNeuenKundenErstellen = new JButton("Kunde erstellen");
 		bnSucheKunde = new JButton("Kunden suchen");
 		bnKundenAendern = new JButton("Kundendaten \u00e4ndern");
