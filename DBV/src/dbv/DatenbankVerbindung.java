@@ -58,8 +58,8 @@ public class DatenbankVerbindung {
 	 *            {@link IKundenSuchen#getKdName()} übergeben wird
 	 * @return {@code String[][]} mit den Suchergebnissen.<br>
 	 *         Die Spalten sind sortiert nach:<br>
-	 *         ID, Nachname, Vorname, Geschlecht, Geburtstag, Volljährig,
-	 *         Telefonnummer, Adresse, Postleitzahl, Wohnort
+	 *         ID, Nachname, Vorname, Geschlecht, Geburtstag, Telefonnummer,
+	 *         Adresse, Postleitzahl, Wohnort
 	 * @throws Exception
 	 */
 	public String[][] doSearch(IKundenSuchen kundenDaten) throws Exception {
@@ -75,7 +75,7 @@ public class DatenbankVerbindung {
 
 			String dbSuche = quoted(kundenDaten.getKdName() + "%");
 
-			final String query = "SELECT id, nachname, vorname, geschlecht, geburtstag, volljaehrig, telefonnummer, "
+			final String query = "SELECT id, nachname, vorname, geschlecht, geburtstag, telefonnummer, "
 					+ "adresse, postleitzahl, wohnort FROM public."
 					+ dbTableKunden
 					+ " WHERE lower(nachname) similar to "
@@ -454,8 +454,8 @@ public class DatenbankVerbindung {
 	 * 
 	 * @return die Daten aller gespeicherter Kunden.<br>
 	 *         Die Spalten sind sortiert nach:<br>
-	 *         ID, Nachname, Vorname, Geschlecht, Geburtstag, Volljährig,
-	 *         Telefonnummer, Adresse, Postleitzahl, Wohnort
+	 *         ID, Nachname, Vorname, Geschlecht, Geburtstag, Telefonnummer,
+	 *         Adresse, Postleitzahl, Wohnort
 	 * @throws Exception
 	 */
 	public String[][] kundenUebersicht() throws Exception {
@@ -470,7 +470,7 @@ public class DatenbankVerbindung {
 			ResultSet resultSet = null;
 
 			final String query = "SELECT id, nachname, vorname, "
-					+ "geschlecht, geburtstag, volljaehrig, telefonnummer, "
+					+ "geschlecht, geburtstag, telefonnummer, "
 					+ "adresse, postleitzahl, wohnort FROM " + dbTableKunden;
 			querybkp = query;
 
