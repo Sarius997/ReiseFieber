@@ -10,8 +10,8 @@ import java.util.Iterator;
 
 /**
  * Diese Klasse baut eine Verbindung zu einer PostgreSQL Datenbank mit festen
- * Daten auf und stellt alle Funktionen bereit die benötigt werden um die Daten
- * aus der Datenbank auszulesen oder Daten in der Datenbank zu speichern.
+ * Daten auf und stellt alle Funktionen bereit, die benötigt werden, um die
+ * Daten aus der Datenbank auszulesen oder Daten in der Datenbank zu speichern.
  * 
  */
 public class DatenbankVerbindung {
@@ -46,11 +46,11 @@ public class DatenbankVerbindung {
 	}
 
 	/**
-	 * Sucht alle Daten von Kunden deren Nachname mit der als Nachname
-	 * übergebenen Zeichenkette anfangen aus der Datenbank heraus.
+	 * Sucht alle Daten von Kunden, deren Nachname mit der als {@link IKundenSuchen#getKdName()}
+	 * übergebenen Zeichenkette anfangen, aus der Datenbank heraus.
 	 * 
 	 * @param kundenDaten
-	 *            für die Suche wird der Nachname (oder ein Teil des Nachnamen)
+	 *            Für die Suche wird der Nachname (oder ein Teil des Nachnamen)
 	 *            des gesuchten Kunden verwendet, der durch
 	 *            {@link IKundenSuchen#getKdName()} übergeben wird
 	 * @return {@code String[][]} mit den Suchergebnissen.<br>
@@ -73,10 +73,8 @@ public class DatenbankVerbindung {
 			String dbSuche = quoted(kundenDaten.getKdName() + "%");
 
 			final String query = "SELECT id, nachname, vorname, geschlecht, geburtstag, telefonnummer, "
-					+ "adresse, postleitzahl, wohnort FROM public."
-					+ dbTableKunden
-					+ " WHERE lower(nachname) similar to "
-					+ dbSuche.toLowerCase() + ";";
+					+ "adresse, postleitzahl, wohnort FROM public." + dbTableKunden
+					+ " WHERE lower(nachname) similar to " + dbSuche.toLowerCase() + ";";
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -95,28 +93,26 @@ public class DatenbankVerbindung {
 			result = new String[resultArrays.size()][8];
 
 			int i = 0;
-			for (Iterator<String[]> iterator = resultArrays.iterator(); iterator
-					.hasNext(); i++) {
+			for (Iterator<String[]> iterator = resultArrays.iterator(); iterator.hasNext(); i++) {
 				String[] strings = iterator.next();
 				result[i] = strings;
 			}
 
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
-			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed Select Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableKunden
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 		return result;
 	}
 
 	/**
-	 * Speichert die Daten eines Kunden die als {@link IKundenDaten} übergeben
-	 * werden in der Datenbank.
+	 * Speichert die Daten eines Kunden, die als {@link IKundenDaten} übergeben
+	 * werden, in der Datenbank.
 	 * 
 	 * @param kundenDaten
-	 *            die Daten des zu speichernden Kunden
+	 *            Die Daten des zu speichernden Kunden
 	 * @throws Exception
 	 */
 	public void doInsert(IKundenDaten kundenDaten) throws Exception {
@@ -130,17 +126,12 @@ public class DatenbankVerbindung {
 			final Statement stmt = conn.createStatement();
 			ResultSet resSet = null;
 
-			String dbEingabe = quoted(kundenDaten.getNachname()) + ", "
-					+ quoted(kundenDaten.getVorname()) + ", "
-					+ quoted(kundenDaten.getWohnort()) + ", "
-					+ quoted(kundenDaten.getGeburtstag()) + ", "
-					+ quoted(kundenDaten.getTelefonnummer()) + ", "
-					+ quoted(kundenDaten.getGeschlecht()) + ", "
-					+ quoted(kundenDaten.getAdresse()) + ", "
-					+ quoted(kundenDaten.getPostleitzahl());
+			String dbEingabe = quoted(kundenDaten.getNachname()) + ", " + quoted(kundenDaten.getVorname()) + ", "
+					+ quoted(kundenDaten.getWohnort()) + ", " + quoted(kundenDaten.getGeburtstag()) + ", "
+					+ quoted(kundenDaten.getTelefonnummer()) + ", " + quoted(kundenDaten.getGeschlecht()) + ", "
+					+ quoted(kundenDaten.getAdresse()) + ", " + quoted(kundenDaten.getPostleitzahl());
 
-			final String query = "INSERT INTO "
-					+ dbTableKunden
+			final String query = "INSERT INTO " + dbTableKunden
 					+ " (nachname, vorname, wohnort, geburtstag, telefonnummer, geschlecht, adresse, postleitzahl) "
 					+ "VALUES (" + dbEingabe + ");";
 			querybkp = query;
@@ -150,20 +141,19 @@ public class DatenbankVerbindung {
 			stmt.executeUpdate(query);
 			deallocateResources(resSet, stmt);
 		} catch (SQLException ex) {
-			final String s = "executed Insert Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed Insert Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableKunden
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 	}
 
 	/**
-	 * Setzt übergebene Zeichenketten in Anführungszeichen, damit sie in den
+	 * Setzt die übergebene Zeichenkette in Anführungszeichen, damit sie in den
 	 * SQL-Abfragen auch als Text behandelt werden.
 	 * 
 	 * @param s
-	 *            Text der in Anführungszeichen gesetzt werden soll
-	 * @return der übergebene Text in Anführungszeichen
+	 *            Text, der in Anführungszeichen gesetzt werden soll
+	 * @return Der übergebene Text in Anführungszeichen
 	 */
 	public static String quoted(String s) {
 		return "'" + s + "'";
@@ -181,43 +171,37 @@ public class DatenbankVerbindung {
 		String url = "(none)";
 		try {
 			Class.forName(JDBC_DRIVER);
-			final String pgUrl = "jdbc:postgresql://" + dbServer + ":" + dbPort
-					+ "/" + dbName;
+			final String pgUrl = "jdbc:postgresql://" + dbServer + ":" + dbPort + "/" + dbName;
 			url = pgUrl;
-			final Connection conn = DriverManager.getConnection(url, dbUser,
-					dbPassword);
+			final Connection conn = DriverManager.getConnection(url, dbUser, dbPassword);
 			return conn;
 		} catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
-			throw new Exception("ClassNotFound: " + ex.getMessage() + "\nURL: "
-					+ url);
+			throw new Exception("ClassNotFound: " + ex.getMessage() + "\nURL: " + url);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-			throw new Exception("SQLException: " + ex.getMessage() + "\nURL:"
-					+ url);
+			throw new Exception("SQLException: " + ex.getMessage() + "\nURL:" + url);
 		}
 	}
 
 	/**
-	 * Gibt die Ressourcen wieder frei um die Verbindung zur Datenbank sicher zu
-	 * beenden und Fehler bei erneuten Abfragen zu verhindern.
+	 * Gibt die Ressourcen wieder frei, um die Verbindung zur Datenbank sicher
+	 * zu beenden und Fehler bei erneuten Abfragen zu verhindern.
 	 * 
 	 * @param resSet
-	 *            freizugebendes ResultSet
+	 *            Freizugebendes ResultSet
 	 * 
 	 * @param stmt
-	 *            freizugebendes Statement
+	 *            Freizugebendes Statement
 	 */
-	private void deallocateResources(final ResultSet resSet,
-			final Statement stmt) {
+	private void deallocateResources(final ResultSet resSet, final Statement stmt) {
 		try {
 			if (resSet != null)
 				resSet.close();
 			if (stmt != null)
 				stmt.close();
 		} catch (SQLException ex) {
-			System.err
-					.println("Aieh. Some exception occured when tidying resources...");
+			System.err.println("Aieh. Some exception occured when tidying resources...");
 		}
 	}
 
@@ -227,7 +211,7 @@ public class DatenbankVerbindung {
 	 * {@link IKundenAendern} übergeben werden.
 	 * 
 	 * @param kundenDaten
-	 *            Kundendaten die geändert werden sollen
+	 *            Kundendaten, die geändert werden sollen
 	 * @throws Exception
 	 */
 	public void doChange(IKundenAendern kundenDaten) throws Exception {
@@ -241,16 +225,12 @@ public class DatenbankVerbindung {
 			final Statement stmt = conn.createStatement();
 			ResultSet resSet = null;
 
-			final String query = "UPDATE " + dbTableKunden + " SET nachname="
-					+ quoted(kundenDaten.getNachname()) + ", vorname="
-					+ quoted(kundenDaten.getVorname()) + ", wohnort="
-					+ quoted(kundenDaten.getWohnort()) + ", geburtstag="
-					+ quoted(kundenDaten.getGeburtstag()) + ", telefonnummer="
-					+ quoted(kundenDaten.getTelefonnummer()) + ", geschlecht="
-					+ quoted(kundenDaten.getGeschlecht()) + ", adresse="
-					+ quoted(kundenDaten.getAdresse()) + ", postleitzahl="
-					+ quoted(kundenDaten.getPostleitzahl()) + " WHERE id="
-					+ quoted(kundenDaten.getID()) + ";";
+			final String query = "UPDATE " + dbTableKunden + " SET nachname=" + quoted(kundenDaten.getNachname())
+					+ ", vorname=" + quoted(kundenDaten.getVorname()) + ", wohnort=" + quoted(kundenDaten.getWohnort())
+					+ ", geburtstag=" + quoted(kundenDaten.getGeburtstag()) + ", telefonnummer="
+					+ quoted(kundenDaten.getTelefonnummer()) + ", geschlecht=" + quoted(kundenDaten.getGeschlecht())
+					+ ", adresse=" + quoted(kundenDaten.getAdresse()) + ", postleitzahl="
+					+ quoted(kundenDaten.getPostleitzahl()) + " WHERE id=" + quoted(kundenDaten.getID()) + ";";
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -258,16 +238,15 @@ public class DatenbankVerbindung {
 			stmt.executeUpdate(query);
 			deallocateResources(resSet, stmt);
 		} catch (SQLException ex) {
-			final String s = "executed Update Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed Update Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableKunden
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 	}
 
 	/**
-	 * Legt in der Datenbank eine durch {@link IKundenReise#getReiseID()}
-	 * spezifizierte Reise für einen Kunden mit der ID
+	 * Legt in der Datenbank eine Buchung für die Reise mit der ID
+	 * {@link IKundenReise#getReiseID()} und den Kunden mit der ID
 	 * {@link IKundenReise#getKundeID()} an.
 	 * 
 	 * @param kundenReise
@@ -285,11 +264,10 @@ public class DatenbankVerbindung {
 			final Statement stmt = conn.createStatement();
 			ResultSet resSet = null;
 
-			String dbEingabe = quoted(kundenReise.getKundeID()) + ", "
-					+ quoted(kundenReise.getReiseID()) + ", false";
+			String dbEingabe = quoted(kundenReise.getKundeID()) + ", " + quoted(kundenReise.getReiseID()) + ", false";
 
-			final String query = "INSERT INTO " + dbTableKundenreise
-					+ " (k_id, r_id, storno) " + "VALUES (" + dbEingabe + ");";
+			final String query = "INSERT INTO " + dbTableKundenreise + " (k_id, r_id, storno) " + "VALUES (" + dbEingabe
+					+ ");";
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -297,9 +275,8 @@ public class DatenbankVerbindung {
 			stmt.executeUpdate(query);
 			deallocateResources(resSet, stmt);
 		} catch (SQLException ex) {
-			final String s = "executed Insert Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKundenreise + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed Insert Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableKundenreise
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 	}
@@ -309,8 +286,8 @@ public class DatenbankVerbindung {
 	 * heraus.
 	 * 
 	 * @param kundenID
-	 *            die ID des gesuchten Kunden
-	 * @return die Daten des Kunden mit der übergebenen ID.<br>
+	 *            Die ID des gesuchten Kunden
+	 * @return Die Daten des Kunden mit der übergebenen ID.<br>
 	 *         Die Spalten sind sortiert nach:<br>
 	 *         ID, Nachname, Vorname, Geschlecht, Geburtstag, Telefonnummer,
 	 *         Adresse, Postleitzahl, Wohnort
@@ -330,10 +307,8 @@ public class DatenbankVerbindung {
 
 			String dbSuche = quoted(kundenID);
 
-			final String query = "SELECT id, nachname, vorname, "
-					+ "geschlecht, geburtstag, telefonnummer, "
-					+ "adresse, postleitzahl, wohnort FROM " + dbTableKunden
-					+ " WHERE id=" + dbSuche + ";";
+			final String query = "SELECT id, nachname, vorname, " + "geschlecht, geburtstag, telefonnummer, "
+					+ "adresse, postleitzahl, wohnort FROM " + dbTableKunden + " WHERE id=" + dbSuche + ";";
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -348,20 +323,19 @@ public class DatenbankVerbindung {
 
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
-			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed Select Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableKunden
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 		return result;
 	}
 
 	/**
-	 * Erstellt einen neuen Datenbankeintrag für die Reise mit den durch
+	 * Erstellt einen neuen Datenbankeintrag für die Reise, mit den durch
 	 * {@link IReiseAnlegen} übergebenen Daten.
 	 * 
 	 * @param reiseDaten
-	 *            die Daten der Reise die erstellt wird
+	 *            Die Daten der Reise, die erstellt wird
 	 * @throws Exception
 	 */
 	public void doCreateJourney(IReiseAnlegen reiseDaten) throws Exception {
@@ -374,18 +348,14 @@ public class DatenbankVerbindung {
 			final Statement stmt = conn.createStatement();
 			ResultSet resSet = null;
 
-			String dbEingabe = quoted(reiseDaten.getReiseName()) + ", "
-					+ quoted(reiseDaten.getReiseZiel()) + ", "
-					+ quoted(reiseDaten.getTeilnehmerZahl()) + ", "
-					+ quoted(reiseDaten.getBeginn()) + ", "
-					+ quoted(reiseDaten.getEnde()) + ", "
-					+ quoted(reiseDaten.getPreisProPerson()) + ", "
+			String dbEingabe = quoted(reiseDaten.getReiseName()) + ", " + quoted(reiseDaten.getReiseZiel()) + ", "
+					+ quoted(reiseDaten.getTeilnehmerZahl()) + ", " + quoted(reiseDaten.getBeginn()) + ", "
+					+ quoted(reiseDaten.getEnde()) + ", " + quoted(reiseDaten.getPreisProPerson()) + ", "
 					+ quoted(reiseDaten.getKosten());
 
-			final String query = "INSERT INTO "
-					+ dbTableReise
-					+ " (name, ziel, teilnehmerzahl, beginn, ende, preisproperson, kosten) "
-					+ "VALUES (" + dbEingabe + ");";
+			final String query = "INSERT INTO " + dbTableReise
+					+ " (name, ziel, teilnehmerzahl, beginn, ende, preisproperson, kosten) " + "VALUES (" + dbEingabe
+					+ ");";
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -393,9 +363,8 @@ public class DatenbankVerbindung {
 			stmt.executeUpdate(query);
 			deallocateResources(resSet, stmt);
 		} catch (SQLException ex) {
-			final String s = "executed Insert Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableReise + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed Insert Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableReise
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 	}
@@ -406,7 +375,7 @@ public class DatenbankVerbindung {
 	 * 
 	 * @param reiseID
 	 *            ID der zu suchenden Reise
-	 * @return die Daten der gesuchten Reise
+	 * @return Die Daten der gesuchten Reise
 	 * @throws Exception
 	 */
 	public String[] doSearchByReiseID(String reiseID) throws Exception {
@@ -422,8 +391,7 @@ public class DatenbankVerbindung {
 
 			String dbSuche = quoted(reiseID);
 
-			final String query = "SELECT * FROM " + dbTableReise + " WHERE id="
-					+ dbSuche + ";";
+			final String query = "SELECT * FROM " + dbTableReise + " WHERE id=" + dbSuche + ";";
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -438,9 +406,8 @@ public class DatenbankVerbindung {
 
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
-			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableReise + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed Select Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableReise
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 		return result;
@@ -449,7 +416,7 @@ public class DatenbankVerbindung {
 	/**
 	 * Sucht die Daten aller gespeicherten Kunden aus der Datenbank heraus.
 	 * 
-	 * @return die Daten aller gespeicherter Kunden.<br>
+	 * @return Die Daten aller gespeicherter Kunden.<br>
 	 *         Die Spalten sind sortiert nach:<br>
 	 *         ID, Nachname, Vorname, Geschlecht, Geburtstag, Telefonnummer,
 	 *         Adresse, Postleitzahl, Wohnort
@@ -466,8 +433,7 @@ public class DatenbankVerbindung {
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
 
-			final String query = "SELECT id, nachname, vorname, "
-					+ "geschlecht, geburtstag, telefonnummer, "
+			final String query = "SELECT id, nachname, vorname, " + "geschlecht, geburtstag, telefonnummer, "
 					+ "adresse, postleitzahl, wohnort FROM " + dbTableKunden;
 			querybkp = query;
 
@@ -486,17 +452,15 @@ public class DatenbankVerbindung {
 
 			result = new String[resultArrays.size()][8];
 			int i = 0;
-			for (Iterator<String[]> iterator = resultArrays.iterator(); iterator
-					.hasNext(); i++) {
+			for (Iterator<String[]> iterator = resultArrays.iterator(); iterator.hasNext(); i++) {
 				String[] strings = iterator.next();
 				result[i] = strings;
 			}
 
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
-			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKunden + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed Select Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableKunden
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 		return result;
@@ -505,7 +469,7 @@ public class DatenbankVerbindung {
 	/**
 	 * Sucht die Daten aller gespeicherten Reisen aus der Datenbank heraus.
 	 * 
-	 * @return die Daten aller gespeicherten Reisen
+	 * @return Die Daten aller gespeicherten Reisen
 	 * @throws Exception
 	 */
 	public String[][] reiseUebersicht() throws Exception {
@@ -537,17 +501,15 @@ public class DatenbankVerbindung {
 
 			result = new String[resultArrays.size()][8];
 			int i = 0;
-			for (Iterator<String[]> iterator = resultArrays.iterator(); iterator
-					.hasNext(); i++) {
+			for (Iterator<String[]> iterator = resultArrays.iterator(); iterator.hasNext(); i++) {
 				String[] strings = iterator.next();
 				result[i] = strings;
 			}
 
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
-			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableReise + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed Select Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableReise
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 		return result;
@@ -556,7 +518,7 @@ public class DatenbankVerbindung {
 	/**
 	 * Sucht die Daten aller gespeicherten Buchungen aus der Datenbank heraus.
 	 * 
-	 * @return die Daten aller gespeicherter Buchungen
+	 * @return Die Daten aller gespeicherter Buchungen
 	 * @throws Exception
 	 */
 	public String[][] buchungsUebersicht() throws Exception {
@@ -570,15 +532,11 @@ public class DatenbankVerbindung {
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
 
-			final String query = "SELECT " + dbTableKundenreise + ".id, "
-					+ dbTableReise + ".id, " + dbTableReise + ".name, "
-					+ dbTableReise + ".ziel, " + dbTableKunden + ".id, "
-					+ dbTableKunden + ".nachname, " + dbTableKunden
-					+ ".vorname, " + dbTableKundenreise + ".storno " + "FROM "
-					+ dbTableKundenreise + " JOIN " + dbTableKunden + " ON "
-					+ dbTableKunden + ".id=" + dbTableKundenreise + ".k_id "
-					+ "JOIN " + dbTableReise + " ON " + dbTableReise + ".id="
-					+ dbTableKundenreise + ".r_id";
+			final String query = "SELECT " + dbTableKundenreise + ".id, " + dbTableReise + ".id, " + dbTableReise
+					+ ".name, " + dbTableReise + ".ziel, " + dbTableKunden + ".id, " + dbTableKunden + ".nachname, "
+					+ dbTableKunden + ".vorname, " + dbTableKundenreise + ".storno " + "FROM " + dbTableKundenreise
+					+ " JOIN " + dbTableKunden + " ON " + dbTableKunden + ".id=" + dbTableKundenreise + ".k_id "
+					+ "JOIN " + dbTableReise + " ON " + dbTableReise + ".id=" + dbTableKundenreise + ".r_id";
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -596,17 +554,15 @@ public class DatenbankVerbindung {
 
 			result = new String[resultArrays.size()][8];
 			int i = 0;
-			for (Iterator<String[]> iterator = resultArrays.iterator(); iterator
-					.hasNext(); i++) {
+			for (Iterator<String[]> iterator = resultArrays.iterator(); iterator.hasNext(); i++) {
 				String[] strings = iterator.next();
 				result[i] = strings;
 			}
 
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
-			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKundenreise + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed Select Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableKundenreise
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 		return result;
@@ -614,10 +570,10 @@ public class DatenbankVerbindung {
 
 	/**
 	 * Storniert die Buchung mit der ID {@link IStorno#getBuchungsID()} und
-	 * speichert die Buchung als Storniert.
+	 * speichert die Buchung als storniert.
 	 * 
 	 * @param buchung
-	 *            die Daten der zu stornierenden Buchung
+	 *            Die Daten der zu stornierenden Buchung
 	 * @throws Exception
 	 */
 	public void doStorno(IStorno buchung) throws Exception {
@@ -627,8 +583,8 @@ public class DatenbankVerbindung {
 
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
-			final String query = "UPDATE " + dbTableKundenreise + " "
-					+ "SET storno=true WHERE id=" + buchung.getBuchungsID();
+			final String query = "UPDATE " + dbTableKundenreise + " " + "SET storno=true WHERE id="
+					+ buchung.getBuchungsID();
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -637,9 +593,8 @@ public class DatenbankVerbindung {
 
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
-			final String s = "executed UPDATE Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKundenreise + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed UPDATE Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableKundenreise
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 	}
@@ -649,7 +604,7 @@ public class DatenbankVerbindung {
 	 * 
 	 * @param buchungsID
 	 *            ID der gesuchten Buchung
-	 * @return die Daten der gesuchten Buchung.<br>
+	 * @return Die Daten der gesuchten Buchung.<br>
 	 *         Die Spalten sind sortiert nach:<br>
 	 *         Reise-ID, Reisename, Reiseziel, Kunden-ID, Nachname des Kunden,
 	 *         Vorname des Kunden, Storno der Buchung
@@ -666,15 +621,12 @@ public class DatenbankVerbindung {
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
 
-			final String query = "SELECT " + dbTableReise + ".id, "
-					+ dbTableReise + ".name, " + dbTableReise + ".ziel, "
-					+ dbTableKunden + ".id, " + dbTableKunden + ".nachname, "
-					+ dbTableKunden + ".vorname, " + dbTableKundenreise
-					+ ".storno " + "FROM " + dbTableKundenreise + " JOIN "
-					+ dbTableKunden + " ON " + dbTableKunden + ".id="
-					+ dbTableKundenreise + ".k_id " + "JOIN " + dbTableReise
-					+ " ON " + dbTableReise + ".id=" + dbTableKundenreise
-					+ ".r_id WHERE " + dbTableKundenreise + ".id=" + buchungsID;
+			final String query = "SELECT " + dbTableReise + ".id, " + dbTableReise + ".name, " + dbTableReise
+					+ ".ziel, " + dbTableKunden + ".id, " + dbTableKunden + ".nachname, " + dbTableKunden + ".vorname, "
+					+ dbTableKundenreise + ".storno " + "FROM " + dbTableKundenreise + " JOIN " + dbTableKunden + " ON "
+					+ dbTableKunden + ".id=" + dbTableKundenreise + ".k_id " + "JOIN " + dbTableReise + " ON "
+					+ dbTableReise + ".id=" + dbTableKundenreise + ".r_id WHERE " + dbTableKundenreise + ".id="
+					+ buchungsID;
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -689,9 +641,8 @@ public class DatenbankVerbindung {
 
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
-			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKundenreise + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed Select Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableKundenreise
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 		return result;
@@ -699,19 +650,18 @@ public class DatenbankVerbindung {
 
 	/**
 	 * Sucht die Daten aller Buchungen der Reise mit der übergebenen ID aus der
-	 * Datenbank heraus bei denen Storno den als storno übergebenen Wert hat.
+	 * Datenbank heraus, bei denen Storno den als {@code storno} übergebenen Wert hat.
 	 * 
 	 * @param reiseID
-	 *            id der gesuchten Reise
+	 *            ID der gesuchten Reise
 	 * @param storno
-	 *            f wenn nicht stornierte Buchungen gesucht werden, t wenn
+	 *            {@code f} wenn nicht stornierte Buchungen gesucht werden, {@code t} wenn
 	 *            stornierte Buchungen gesucht werden
-	 * @return die Daten aller Buchungen der gesuchten Reise die storniert /
+	 * @return Die Daten aller Buchungen der gegebenen Reise, die storniert /
 	 *         nicht storniert wurden
 	 * @throws Exception
 	 */
-	public String[][] reiseTeilnehmer(String reiseID, String storno)
-			throws Exception {
+	public String[][] reiseTeilnehmer(String reiseID, String storno) throws Exception {
 		String[][] result = null;
 		String querybkp = "(empty)";
 		try {
@@ -721,15 +671,11 @@ public class DatenbankVerbindung {
 
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
-			final String query = "SELECT " + dbTableKundenreise + ".id, "
-					+ dbTableReise + ".id, " + dbTableReise + ".name, "
-					+ dbTableReise + ".ziel, " + dbTableKunden + ".id, "
-					+ dbTableKunden + ".nachname, " + dbTableKunden
-					+ ".vorname " + "FROM " + dbTableKundenreise + " JOIN "
-					+ dbTableKunden + " ON " + dbTableKunden + ".id="
-					+ dbTableKundenreise + ".k_id " + "JOIN " + dbTableReise
-					+ " ON " + dbTableReise + ".id=" + dbTableKundenreise
-					+ ".r_id WHERE " + dbTableReise + ".id=" + reiseID
+			final String query = "SELECT " + dbTableKundenreise + ".id, " + dbTableReise + ".id, " + dbTableReise
+					+ ".name, " + dbTableReise + ".ziel, " + dbTableKunden + ".id, " + dbTableKunden + ".nachname, "
+					+ dbTableKunden + ".vorname " + "FROM " + dbTableKundenreise + " JOIN " + dbTableKunden + " ON "
+					+ dbTableKunden + ".id=" + dbTableKundenreise + ".k_id " + "JOIN " + dbTableReise + " ON "
+					+ dbTableReise + ".id=" + dbTableKundenreise + ".r_id WHERE " + dbTableReise + ".id=" + reiseID
 					+ " AND " + dbTableKundenreise + ".storno=" + storno;
 			querybkp = query;
 
@@ -748,17 +694,15 @@ public class DatenbankVerbindung {
 
 			result = new String[resultArrays.size()][8];
 			int i = 0;
-			for (Iterator<String[]> iterator = resultArrays.iterator(); iterator
-					.hasNext(); i++) {
+			for (Iterator<String[]> iterator = resultArrays.iterator(); iterator.hasNext(); i++) {
 				String[] strings = iterator.next();
 				result[i] = strings;
 			}
 
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
-			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKundenreise + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed Select Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableKundenreise
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 		return result;
@@ -769,9 +713,9 @@ public class DatenbankVerbindung {
 	 * der Datenbank heraus.
 	 * 
 	 * @param reiseID
-	 *            die ID der Reise für die die maximale Teilnehmerzahl gesucht
+	 *            Die ID der Reise für die die maximale Teilnehmerzahl gesucht
 	 *            wird
-	 * @return die maximale Teilnehmerzahl der gesuchten Reise
+	 * @return Die maximale Teilnehmerzahl der gesuchten Reise
 	 * @throws Exception
 	 */
 	public String getMaximaleTeilnehmerZahl(String reiseID) throws Exception {
@@ -784,9 +728,8 @@ public class DatenbankVerbindung {
 
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
-			final String query = "SELECT " + dbTableReise + ".teilnehmerzahl "
-					+ "FROM " + dbTableReise + " WHERE " + dbTableReise
-					+ ".id=" + reiseID;
+			final String query = "SELECT " + dbTableReise + ".teilnehmerzahl " + "FROM " + dbTableReise + " WHERE "
+					+ dbTableReise + ".id=" + reiseID;
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -801,9 +744,8 @@ public class DatenbankVerbindung {
 
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
-			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableReise + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed Select Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableReise
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 		return result;
@@ -811,11 +753,11 @@ public class DatenbankVerbindung {
 
 	/**
 	 * Sucht die aktuelle Zahl der nicht stornierten Buchungen für die Reise mit
-	 * der übergebenen ID aus der Datenbank heraus
+	 * der übergebenen ID aus der Datenbank heraus.
 	 * 
 	 * @param reiseID
-	 *            die ID der Buchung
-	 * @return die Zahl der nicht stornierten Buchungen für die Reise mit der
+	 *            Die ID der Buchung
+	 * @return Die Zahl der nicht stornierten Buchungen für die Reise mit der
 	 *         übergebenen ID
 	 * @throws Exception
 	 */
@@ -829,8 +771,8 @@ public class DatenbankVerbindung {
 
 			final Statement statement = conn.createStatement();
 			ResultSet resultSet = null;
-			final String query = "SELECT COUNT(*) FROM " + dbTableKundenreise
-					+ " WHERE r_id=" + reiseID + " AND storno=false";
+			final String query = "SELECT COUNT(*) FROM " + dbTableKundenreise + " WHERE r_id=" + reiseID
+					+ " AND storno=false";
 			querybkp = query;
 
 			System.out.println("SQL Statement is:\n" + query);
@@ -845,9 +787,8 @@ public class DatenbankVerbindung {
 
 			deallocateResources(resultSet, statement);
 		} catch (SQLException ex) {
-			final String s = "executed Select Query\n" + querybkp + "\non S:"
-					+ dbServer + ", T:" + dbTableKundenreise + ", N:" + dbName
-					+ ", U:" + dbUser + ", P:" + dbPassword;
+			final String s = "executed Select Query\n" + querybkp + "\non S:" + dbServer + ", T:" + dbTableKundenreise
+					+ ", N:" + dbName + ", U:" + dbUser + ", P:" + dbPassword;
 			System.err.println(s);
 		}
 		return result;

@@ -15,7 +15,7 @@ import dbv.DatenbankVerbindung;
 import dbv.IKundenReise;
 
 /**
- * Diese Klasse verwaltet das Fenster zum buchen von Reisen.
+ * Diese Klasse verwaltet das Fenster zum Speichern von Buchungen.
  * 
  */
 public class ReiseBuchen implements IKundenReise {
@@ -43,7 +43,7 @@ public class ReiseBuchen implements IKundenReise {
 	private JButton bnAbbrechen;
 
 	/**
-	 * Initialisiert das Fenster.<br>
+	 * Initialisiert das Fenster zum Speichern von Buchungen.<br>
 	 * Wenn ein Parameter {@code null} ist oder beide Parameter {@code null}
 	 * sind, sind die Textfelder in dem angezeigten Fenster leer.<br>
 	 * Wenn kein Parameter {@code null} ist, werden die Daten der Reise / des
@@ -52,7 +52,7 @@ public class ReiseBuchen implements IKundenReise {
 	 * @param selectedID
 	 *            ID der ausgewählten Reise oder des ausgewählten Kunden
 	 * @param selectedTable
-	 *            {@code Kunde} wenn ein Kunde ausgewählt ist, {@code Reise}
+	 *            {@code "Kunde"} wenn ein Kunde ausgewählt ist, {@code "Reise"}
 	 *            wenn eine Reise ausgewählt ist.
 	 * 
 	 */
@@ -116,8 +116,8 @@ public class ReiseBuchen implements IKundenReise {
 
 	/**
 	 * Registriert die Listener für dieses Fenster.<br>
-	 * Die Buchung wird nur gespeichert, wenn eine Kunden-ID und eine Reise-ID
-	 * eingetragen sind.
+	 * Die Buchung wird nur gespeichert, wenn alle Felder ausgefüllt sind. Wenn
+	 * noch Felder leer sind, kann nicht gespeichert werden.
 	 */
 	private void addListeners() {
 
@@ -153,8 +153,7 @@ public class ReiseBuchen implements IKundenReise {
 		});
 		bnHinzufuegen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!tfKdNr.getText().equals("")
-						&& !tfReiseID.getText().equals("")) {
+				if (!tfKdNr.getText().equals("") && !tfReiseID.getText().equals("")) {
 					ReiseBuchen.this.hinzufuegen();
 					frame.dispose();
 				}
@@ -168,7 +167,7 @@ public class ReiseBuchen implements IKundenReise {
 	 * und übernimmt sie in die entsprechenden Textfelder des Fensters.
 	 * 
 	 * @param searchId
-	 *            die ID des gesuchten Kunden
+	 *            Die ID des gesuchten Kunden
 	 */
 	protected void sucheKunde(String searchId) {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
@@ -188,7 +187,7 @@ public class ReiseBuchen implements IKundenReise {
 	 * übernimmt sie in die entsprechenden Textfelder des Fensters.
 	 * 
 	 * @param searchId
-	 *            die ID der gesuchten Reise
+	 *            Die ID der gesuchten Reise
 	 */
 	protected void sucheReise(String searchId) {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
@@ -224,7 +223,7 @@ public class ReiseBuchen implements IKundenReise {
 	}
 
 	/**
-	 * @return die eingegebene Kunden-ID
+	 * @return Die eingegebene Kunden-ID
 	 */
 	@Override
 	public String getKundeID() {
@@ -232,7 +231,7 @@ public class ReiseBuchen implements IKundenReise {
 	}
 
 	/**
-	 * @return die eingegebene Reise-ID
+	 * @return Die eingegebene Reise-ID
 	 */
 	@Override
 	public String getReiseID() {

@@ -17,7 +17,7 @@ import dbv.DatenbankVerbindung;
 import dbv.IKundenAendern;
 
 /**
- * Diese Klasse verwaltet das Fenster zum ändern von gespeicherten Kundendaten.
+ * Diese Klasse verwaltet das Fenster zum Ändern von gespeicherten Kundendaten.
  * 
  */
 public class KundenDatenAendern implements IKundenAendern {
@@ -53,7 +53,7 @@ public class KundenDatenAendern implements IKundenAendern {
 	private JButton bnAbbrechen;
 
 	/**
-	 * Initialisiert das Fenster zum ändern von Kundendaten.
+	 * Initialisiert das Fenster zum Ändern von Kundendaten.
 	 * 
 	 * @param selectedID
 	 *            ID des zu ändernden Kunden.<br>
@@ -127,9 +127,9 @@ public class KundenDatenAendern implements IKundenAendern {
 	/**
 	 * Registriert die Listener für dieses Fenster.<br>
 	 * Wenn die Eingabetaste gedrückt oder auf den "Ändern"-Button geklickt
-	 * wird, wird überprüft ob alle Felder ausgefüllt sind.<br>
+	 * wird, wird überprüft, ob alle Felder ausgefüllt sind.<br>
 	 * Wenn ja, werden die Daten des Kunden durch die neuen Daten ersetzt.<br>
-	 * Wenn noch Felder leer sind, passiert nichts.
+	 * Wenn noch Felder leer sind, kann nicht gespeichert werden.
 	 */
 	private void addListeners() {
 		tfID.addFocusListener(new FocusListener() {
@@ -190,7 +190,7 @@ public class KundenDatenAendern implements IKundenAendern {
 			}
 
 			/**
-			 * Simuliert einen Klick auf den "Ändern"-Button wenn die
+			 * Simuliert einen Klick auf den "Ändern"-Button, wenn die
 			 * Eingabetaste gedrückt wird.
 			 */
 			@Override
@@ -226,7 +226,7 @@ public class KundenDatenAendern implements IKundenAendern {
 	 * übernimmt sie in die entsprechenden Felder.
 	 * 
 	 * @param searchId
-	 *            die ID des gesuchten Kunden
+	 *            Die ID des gesuchten Kunden
 	 */
 	protected void suchen(String searchId) {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
@@ -267,7 +267,7 @@ public class KundenDatenAendern implements IKundenAendern {
 	}
 
 	/**
-	 * @return den eingegebenen Vornamen
+	 * @return Den eingegebenen Vornamen
 	 */
 	@Override
 	public String getVorname() {
@@ -278,7 +278,7 @@ public class KundenDatenAendern implements IKundenAendern {
 	}
 
 	/**
-	 * @return den eingegebenen Wohnort
+	 * @return Den eingegebenen Wohnort
 	 */
 	@Override
 	public String getWohnort() {
@@ -289,7 +289,7 @@ public class KundenDatenAendern implements IKundenAendern {
 	}
 
 	/**
-	 * @return den eingegebenen Geburtstag
+	 * @return Den eingegebenen Geburtstag
 	 */
 	@Override
 	public String getGeburtstag() {
@@ -300,7 +300,7 @@ public class KundenDatenAendern implements IKundenAendern {
 	}
 
 	/**
-	 * @return die eingegebene Telefonnummer
+	 * @return Die eingegebene Telefonnummer
 	 */
 	@Override
 	public String getTelefonnummer() {
@@ -311,7 +311,7 @@ public class KundenDatenAendern implements IKundenAendern {
 	}
 
 	/**
-	 * @return das eingegebene Geschlecht
+	 * @return Das eingegebene Geschlecht
 	 */
 	@Override
 	public String getGeschlecht() {
@@ -322,7 +322,7 @@ public class KundenDatenAendern implements IKundenAendern {
 	}
 
 	/**
-	 * @return den eingegebenen Nachnamen
+	 * @return Den eingegebenen Nachnamen
 	 */
 	@Override
 	public String getNachname() {
@@ -333,7 +333,7 @@ public class KundenDatenAendern implements IKundenAendern {
 	}
 
 	/**
-	 * @return die eingegebene ID
+	 * @return Die eingegebene ID
 	 */
 	@Override
 	public String getID() {
@@ -344,7 +344,7 @@ public class KundenDatenAendern implements IKundenAendern {
 	}
 
 	/**
-	 * @return die eingegebene Adresse
+	 * @return Die eingegebene Adresse
 	 */
 	@Override
 	public String getAdresse() {
@@ -352,7 +352,7 @@ public class KundenDatenAendern implements IKundenAendern {
 	}
 
 	/**
-	 * @return die eingegebene Postleitzahl
+	 * @return Die eingegebene Postleitzahl
 	 */
 	@Override
 	public String getPostleitzahl() {

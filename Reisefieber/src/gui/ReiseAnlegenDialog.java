@@ -15,7 +15,7 @@ import dbv.DatenbankVerbindung;
 import dbv.IReiseAnlegen;
 
 /**
- * Diese Klasse verwaltet das Fenster zum erstellen und speichern neuer Reisen.
+ * Diese Klasse verwaltet das Fenster zum Erstellen und Speichern neuer Reisen.
  * 
  */
 public class ReiseAnlegenDialog implements IReiseAnlegen {
@@ -41,7 +41,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 	private JButton bnAbbrechen;
 
 	/**
-	 * Initialisiert das Fenster zum erstellen neuer Reisen.
+	 * Initialisiert das Fenster zum Erstellen und Speichern neuer Reisen.
 	 */
 	public ReiseAnlegenDialog() {
 		frame = new JFrame("Reise anlegen");
@@ -97,9 +97,9 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 	/**
 	 * Registriert die Listener für dieses Fenster.<br>
 	 * Wenn die Eingabetaste gedrückt oder auf den "Hinzufügen"-Button geklickt
-	 * wird, wird überprüft ob alle Felder ausgefüllt sind.<br>
+	 * wird, wird überprüft, ob alle Felder ausgefüllt sind.<br>
 	 * Wenn ja, wird eine neue Reise mit den eingegeben Daten erstellt.<br>
-	 * Wenn noch Felder leer sind, passiert nichts.
+	 * Wenn noch Felder leer sind, kann nicht gespeichert werden.
 	 */
 	private void addListeners() {
 		bnAbbrechen.addActionListener(new ActionListener() {
@@ -137,7 +137,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 			}
 
 			/**
-			 * Simuliert einen Klick auf den "Hinzufügen"-Button wenn die
+			 * Simuliert einen Klick auf den "Hinzufügen"-Button, wenn die
 			 * Eingabetaste gedrückt wird.
 			 */
 			@Override
@@ -178,7 +178,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 	}
 
 	/**
-	 * @return das eingegebene Reiseziel
+	 * @return Das eingegebene Reiseziel
 	 */
 	@Override
 	public String getReiseZiel() {
@@ -186,7 +186,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 	}
 
 	/**
-	 * @return die eingegebene maximale Teilnehmerzahl
+	 * @return Die eingegebene maximale Teilnehmerzahl
 	 */
 	@Override
 	public String getTeilnehmerZahl() {
@@ -194,7 +194,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 	}
 
 	/**
-	 * @return den eingegebenen Beginn der Reise
+	 * @return Den eingegebenen Beginn der Reise
 	 */
 	@Override
 	public String getBeginn() {
@@ -202,7 +202,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 	}
 
 	/**
-	 * @return das eingegebene Ende der Reise
+	 * @return Das eingegebene Ende der Reise
 	 */
 	@Override
 	public String getEnde() {
@@ -210,7 +210,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 	}
 
 	/**
-	 * @return den eingegebenen Preis der pro Person verlangt wird
+	 * @return Den eingegebenen Preis, der pro Person verlangt wird
 	 */
 	@Override
 	public String getPreisProPerson() {
@@ -218,7 +218,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 	}
 
 	/**
-	 * @return die eingegebenen Kosten für die Reise
+	 * @return Die eingegebenen Kosten für die Reise
 	 */
 	@Override
 	public String getKosten() {
@@ -226,7 +226,7 @@ public class ReiseAnlegenDialog implements IReiseAnlegen {
 	}
 
 	/**
-	 * @return den eingegebenen Reisenamen
+	 * @return Den eingegebenen Reisenamen
 	 */
 	@Override
 	public String getReiseName() {

@@ -17,7 +17,7 @@ import dbv.DatenbankVerbindung;
 import dbv.IStorno;
 
 /**
- * Diese Klasse verwaltet das Fenster zum stornieren von Buchungen.
+ * Diese Klasse verwaltet das Fenster zum Stornieren von Buchungen.
  * 
  */
 public class ReiseStornierenDialog implements IStorno {
@@ -51,7 +51,7 @@ public class ReiseStornierenDialog implements IStorno {
 	private JButton bnAbbrechen;
 
 	/**
-	 * Initialisiert das Fenster zum stornieren von Buchungen. Eine Stornierung
+	 * Initialisiert das Fenster zum Stornieren von Buchungen. Eine Stornierung
 	 * kann nicht wieder aufgehoben werden.
 	 * 
 	 * @param selectedID
@@ -122,7 +122,7 @@ public class ReiseStornierenDialog implements IStorno {
 
 	/**
 	 * Registriert alle Listener für dieses Fenster.<br>
-	 * Wenn keine Buchungsnummer eingegeben ist, passiert nichts.
+	 * Wenn keine Buchungsnummer eingegeben ist, kann nicht gespeichert werden.
 	 */
 	private void addListeners() {
 		tfID.addFocusListener(new FocusListener() {
@@ -131,7 +131,7 @@ public class ReiseStornierenDialog implements IStorno {
 			 * Wenn aus dem Feld für die Buchungs-ID herausgeklickt wird, mit
 			 * der Tabulatortaste weitergeschaltet wird oder das Feld
 			 * anderweitig den Fokus verliert, werden aus der Datenbank die
-			 * Daten der Buchung mit der eingetragenen ID herausgesucht und in die Entsprechenden Felder
+			 * Daten der Buchung mit der eingetragenen ID herausgesucht und in die entsprechenden Felder
 			 * eingetragen.
 			 */
 			@Override
@@ -204,7 +204,7 @@ public class ReiseStornierenDialog implements IStorno {
 	 * entsprechenden Felder.
 	 * 
 	 * @param searchId
-	 *            die ID der gesuchten Buchung
+	 *            Die ID der gesuchten Buchung
 	 */
 	protected void sucheBuchung(String searchId) {
 		DatenbankVerbindung dbv = new DatenbankVerbindung();
@@ -258,7 +258,7 @@ public class ReiseStornierenDialog implements IStorno {
 	}
 
 	/**
-	 * @return die eingegebene Buchungs-ID
+	 * @return Die eingegebene Buchungs-ID
 	 */
 	@Override
 	public String getBuchungsID() {

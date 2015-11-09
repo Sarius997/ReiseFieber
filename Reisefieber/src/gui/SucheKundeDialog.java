@@ -36,7 +36,7 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 	 * Initialisiert das Suchfenster.
 	 * 
 	 * @param gui
-	 *            Instanz der Benutzeroberfläche. Wird genutzt um die
+	 *            Instanz der Benutzeroberfläche. Wird genutzt, um die
 	 *            Suchergebnisse anzuzeigen.
 	 */
 	public SucheKundeDialog(ReiseFieberGUI gui) {
@@ -78,10 +78,10 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 	/**
 	 * Registriert alle Listener für das Suchfenster.<br>
 	 * Wenn die Eingabetaste gedrückt oder auf den "Suchen"-Button geklickt
-	 * wird, wird überprüft ob das Suchfeld leer ist.<br>
-	 * Wenn es nicht leer ist wird die Suche nach Kunden mit dem eingegebenen
+	 * wird, wird überprüft, ob das Suchfeld leer ist.<br>
+	 * Wenn es nicht leer ist, wird die Suche nach Kunden mit dem eingegebenen
 	 * Namen ausgeführt.<br>
-	 * Wenn es leer ist, passiert nichts.
+	 * Wenn es leer ist, kann nicht gesucht werden.
 	 * 
 	 */
 	private void addListeners() {
@@ -115,7 +115,7 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 			}
 
 			/**
-			 * Simuliert beim drücken der Eingabetaste einen Klick auf den
+			 * Simuliert beim Drücken der Eingabetaste einen Klick auf den
 			 * "Suchen"-Button.
 			 */
 			@Override
@@ -153,7 +153,7 @@ public class SucheKundeDialog implements IKundenSuchen { // implementiert das
 	}
 
 	/**
-	 * @return den eingegebenen Namen
+	 * @return Den eingegebenen Namen
 	 */
 	@Override
 	public String getKdName() {

@@ -36,7 +36,7 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 
 	/**
 	 * Erzeugt einen TableRenderer speziell für die Übersicht über alle
-	 * eingetragenen Reisen um den Gewinn / Verlust hervorzuheben.
+	 * eingetragenen Reisen um den Gewinn / Verlust farblich hervorzuheben.
 	 * 
 	 * @param colls
 	 *            Die Spaltenzahl der Tabelle um festzulegen in welcher Spalte
@@ -45,7 +45,7 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 	 *            Der Index der Tabelle für die der TableRenderer erzeugt wird
 	 * @param gewinn
 	 *            Ein Array mit dem Gewinn der durch die einzelnen Reisen
-	 *            erzeugt wird
+	 *            erzielt wird
 	 */
 	public CustomTableRenderer(int colls, int tabIndex, String[] gewinn) {
 		this.colls = colls;
@@ -55,34 +55,34 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 
 	/**
 	 * Erzeugt den Standard TableRenderer für alle Tabellen ohne spezielle
-	 * farbliche hervorhebungen.
+	 * farbliche Hervorhebungen.
 	 * 
 	 * @param tabIndex
-	 *            Der Index der Tabelle für die der TableRenderer erzeugt wird
+	 *            Der Index der Tabelle, für die der TableRenderer erzeugt wird
 	 */
 	public CustomTableRenderer(int tabIndex) {
 		this.tabIndex = tabIndex;
 	}
 
 	/**
-	 * Ändert jeh nach Tabelle für die der TableRenderer erstellt wurde die
+	 * Ändert je nach Tabelle, für die der TableRenderer erstellt wurde, die
 	 * Text- und die Hintergrundfarbe der Zellen und sorgt für
-	 * Tabellenspezifische Farbhervorhebungen.
+	 * tabellenspezifische Farbhervorhebungen.
 	 * 
 	 * @param table
-	 *            Die Tabelle
+	 *            Die Tabelle, deren Zelle gerendert wird
 	 * @param value
 	 *            Der Inhalt der Zelle an der Stelle [row, column]
 	 * @param isSelected
-	 *            true wenn die Zelle ausgewählt ist
+	 *            {@code true} wenn die Zelle ausgewählt ist
 	 * @param hasFocus
-	 *            true wenn die Zelle den Focus hat
+	 *            {@code true} wenn die Zelle den Focus hat
 	 * @param row
-	 *            die Zeile der zu rendernden Zelle
+	 *            Die Zeile der zu rendernden Zelle
 	 * @param coll
-	 *            die Spatle der zu rendernden Zelle
+	 *            Die Spalte der zu rendernden Zelle
 	 * 
-	 * @return den speziellen TableCellRenderer
+	 * @return Den speziellen TableCellRenderer
 	 */
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,

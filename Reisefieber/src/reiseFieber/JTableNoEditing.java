@@ -10,7 +10,7 @@ import javax.swing.JTable;
 public class JTableNoEditing extends JTable {
 	/**
 	 * Ruft den Konstruktor der Klasse {@link javax.swing.JTable} ohne Parameter
-	 * auf und verhindert um Fehler zu vermeiden das Vertauschen von Spalten in
+	 * auf und verhindert, um Fehler zu vermeiden, das Vertauschen von Spalten in
 	 * der Benutzeroberfläche.
 	 */
 	public JTableNoEditing() {
@@ -22,7 +22,7 @@ public class JTableNoEditing extends JTable {
 	 * Überschreibt die {@link javax.swing.JTable#isCellEditable(int, int)}
 	 * Methode.
 	 * 
-	 * @return false und verhindert dadurch das Bearbeiten von einzelen Zellen
+	 * @return {@code false} und verhindert dadurch das Bearbeiten von einzelen Zellen
 	 *         in der Benutzeroberfläche
 	 */
 	@Override

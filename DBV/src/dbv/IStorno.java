@@ -8,7 +8,7 @@ package dbv;
 public interface IStorno {
 	/**
 	 * 
-	 * @return Buchungs-ID der Buchung die Storniert werden soll
+	 * @return ID der Buchung, die storniert werden soll
 	 */
 	public String getBuchungsID();
 }

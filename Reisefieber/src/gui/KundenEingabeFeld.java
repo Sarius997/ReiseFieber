@@ -15,7 +15,7 @@ import dbv.DatenbankVerbindung;
 import dbv.IKundenDaten;
 
 /**
- * Diese Klasse verwaltet das Fenster zum speichern der Daten eines neuen Kunden.
+ * Diese Klasse verwaltet das Fenster zum Speichern der Daten eines neuen Kunden.
  * 
  */
 public class KundenEingabeFeld implements IKundenDaten {
@@ -43,7 +43,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	private JButton bnAbbrechen;
 
 	/**
-	 * Initialisiert das Fenster zum speichern der Daten von neuen Kunden.
+	 * Initialisiert das Fenster zum Speichern der Daten von neuen Kunden.
 	 */
 	public KundenEingabeFeld() {
 		frame = new JFrame("Kunde hinzuf\u00fcgen");
@@ -106,9 +106,9 @@ public class KundenEingabeFeld implements IKundenDaten {
 	/**
 	 * Registriert die Listener für dieses Fenster.<br>
 	 * Wenn die Eingabetaste gedrückt oder auf den "Hinzufügen"-Button geklickt
-	 * wird, wird überprüft ob alle Felder ausgefüllt sind.<br>
+	 * wird, wird überprüft, ob alle Felder ausgefüllt sind.<br>
 	 * Wenn ja, werden die Daten in der Datenbank gespeichert.<br>
-	 * Wenn noch Felder leer sind, passiert nichts.
+	 * Wenn noch Felder leer sind, kann nicht gespeichert werden.
 	 */
 	private void addListeners() {
 		bnAbbrechen.addActionListener(new ActionListener() {
@@ -148,7 +148,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 			}
 
 			/**
-			 * Simuliert beim drücken der Eingabetaste einen Klick auf den
+			 * Simuliert beim Drücken der Eingabetaste einen Klick auf den
 			 * "Hinzufügen"-Button.
 			 */
 			@Override
@@ -190,7 +190,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	}
 
 	/**
-	 * @return den eingegebenen Vornamen
+	 * @return Den eingegebenen Vornamen
 	 */
 	@Override
 	public String getVorname() {
@@ -202,7 +202,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	}
 
 	/**
-	 * @return den eingegebenen Nachnamen
+	 * @return Den eingegebenen Nachnamen
 	 */
 	@Override
 	public String getNachname() {
@@ -213,7 +213,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	}
 
 	/**
-	 * @return den eingegebenen Wohnort
+	 * @return Den eingegebenen Wohnort
 	 */
 	@Override
 	public String getWohnort() {
@@ -224,7 +224,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	}
 
 	/**
-	 * @return den eingegebenen Geburtstag
+	 * @return Den eingegebenen Geburtstag
 	 */
 	@Override
 	public String getGeburtstag() {
@@ -235,7 +235,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	}
 
 	/**
-	 * @return die eingegebene Telefonnummer
+	 * @return Die eingegebene Telefonnummer
 	 */
 	@Override
 	public String getTelefonnummer() {
@@ -246,7 +246,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	}
 
 	/**
-	 * @return das eingegebene Geschlecht
+	 * @return Das eingegebene Geschlecht
 	 */
 	@Override
 	public String getGeschlecht() {
@@ -257,7 +257,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	}
 
 	/**
-	 * @return die eingegebene Adresse
+	 * @return Die eingegebene Adresse
 	 */
 	@Override
 	public String getAdresse() {
@@ -265,7 +265,7 @@ public class KundenEingabeFeld implements IKundenDaten {
 	}
 
 	/**
-	 * @return die eingegebene Postleitzahl
+	 * @return Die eingegebene Postleitzahl
 	 */
 	@Override
 	public String getPostleitzahl() {

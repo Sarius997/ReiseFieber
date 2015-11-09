@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import dbv.DatenbankVerbindung;
 
 /**
- * Diese Klasse verwaltet das Fenster um die Teilnehmer einer bestimmten Reise
+ * Diese Klasse verwaltet das Fenster, um die Teilnehmer einer bestimmten Reise
  * über die Reisenummer zu suchen.
  * 
  */
@@ -29,17 +29,17 @@ public class ReiseTeilnehmer {
 	private ReiseFieberGUI gui;
 
 	/**
-	 * Initialisiert das Fenster zum suchen von Buchungen für eine bestimmte
+	 * Initialisiert das Fenster zum Suchen von Buchungen für eine bestimmte
 	 * Reise.
 	 * 
 	 * @param selectedID
 	 *            {@code null} wenn keine Reise ausgewählt ist, dann wird auch
-	 *            das Fenster angezeigt in das dann die ID der Reise eingegeben
+	 *            das Fenster angezeigt, in das dann die ID der Reise eingegeben
 	 *            werden muss.<br>
 	 *            Ansonsten wird die ID der ausgewählten Reise übergeben und es
 	 *            werden sofort die Buchungen für diese Reise angezeigt.
 	 * @param gui
-	 *            Instanz der Benutzeroberfläche. Wird genutzt um die
+	 *            Instanz der Benutzeroberfläche. Wird genutzt, um die
 	 *            Suchergebnisse anzuzeigen.
 	 */
 	public ReiseTeilnehmer(String selectedID, ReiseFieberGUI gui) {
@@ -78,10 +78,10 @@ public class ReiseTeilnehmer {
 	/**
 	 * Registriert alle Listener für das Fenster.<br>
 	 * Wenn die Eingabetaste gedrückt oder auf den "Anzeigen"-Button geklickt
-	 * wird, wird überprüft ob das Suchfeld leer ist.<br>
-	 * Wenn es nicht leer ist wird die Suche nach Buchungen für die Reise mit
+	 * wird, wird überprüft, ob das Suchfeld leer ist.<br>
+	 * Wenn es nicht leer ist, wird die Suche nach Buchungen für die Reise mit
 	 * der eingegebenen ID ausgeführt.<br>
-	 * Wenn es leer ist passiert nichts.
+	 * Wenn es leer ist, kann nicht gesucht werden.
 	 */
 	private void addListeners() {
 		bnAbbrechen.addActionListener(new ActionListener() {
@@ -111,7 +111,7 @@ public class ReiseTeilnehmer {
 			}
 
 			/**
-			 * Simuliert beim drücken der Eingabetaste einen Klick auf den
+			 * Simuliert beim Drücken der Eingabetaste einen Klick auf den
 			 * "Anzeigen"-Button.
 			 */
 			@Override
@@ -128,7 +128,7 @@ public class ReiseTeilnehmer {
 	/**
 	 * Führt über {@link DatenbankVerbindung#reiseTeilnehmer(String, String)} in
 	 * der Datenbank die Suche nach Buchungen für die Reise mit der eingegebenen
-	 * ID die nicht storniert wurden aus und zeigt die Suchergebnisse in der
+	 * ID, die nicht storniert wurden, aus und zeigt die Suchergebnisse in der
 	 * Benutzeroberfläche an.
 	 */
 	protected void anzeigen() {
@@ -150,7 +150,7 @@ public class ReiseTeilnehmer {
 
 	/**
 	 * 
-	 * @return die eingegebene Reise-ID
+	 * @return Die eingegebene Reise-ID
 	 */
 	private String getReiseID() {
 		return this.tfReiseID.getText();

@@ -4,7 +4,7 @@ import gui.ReiseFieberGUI;
 
 /**
  * Hauptklasse des Programms. Gibt eine Willkommensnachricht
- * {@link #willkommensNachricht()} auf der Konsole aus, falls diese genutzt wird
+ * {@link #willkommensNachricht()} auf der Konsole aus, falls diese genutzt wird,
  * um das Programm auszuführen.<br>Ruft die Benutzeroberfläche auf.
  */
 public class ReiseFieber {
@@ -23,7 +23,7 @@ public class ReiseFieber {
 	}
 
 	/**
-	 * Konstruktor der Hauptklasse Reisefieber.<br>
+	 * Konstruktor der Hauptklasse ReiseFieber.<br>
 	 * Erstellt eine Instanz der Benutzeroberfläche {@link gui.ReiseFieberGUI}.
 	 */
 	public ReiseFieber() {

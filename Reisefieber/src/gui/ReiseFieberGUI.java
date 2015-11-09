@@ -184,10 +184,10 @@ public class ReiseFieberGUI {
 	/**
 	 * Zeigt die übergebenen Suchergebnisse (Kundendaten) sortiert nach
 	 * Kunden-ID in der Benutzeroberfläche unter dem Tab "Suchergebnis" an und
-	 * wechselt den ausgewählten Tab zu diesem.
+	 * wechselt vom bisher aktiven Tab zu diesem.
 	 * 
 	 * @param data
-	 *            das Suchergebnis wenn nach Kunden gesucht wurde
+	 *            Das Suchergebnis, wenn nach Kunden gesucht wurde
 	 */
 	public void showSearchResultData(String[][] data) {
 		dataSearchResult = data;
@@ -215,10 +215,10 @@ public class ReiseFieberGUI {
 	/**
 	 * Zeigt die übergebenen Suchergebnisse (Buchungsdaten) sortiert nach der
 	 * Buchungs-ID in der Benutzeroberfläche unter dem Tab "Reiseteilnehmer" an
-	 * und wechselt den aktiven Tab zu diesem.
+	 * und wechselt vom bisher aktiven Tab zu diesem.
 	 * 
 	 * @param data
-	 *            das Suchergebnis wenn nach Teilnehmern einer Reise gesucht
+	 *            Das Suchergebnis, wenn nach Teilnehmern einer Reise gesucht
 	 *            wurde
 	 */
 	public void showReiseTeilnehmer(String[][] data) {
@@ -252,7 +252,7 @@ public class ReiseFieberGUI {
 	}
 
 	/**
-	 * Die einzelnen Tabs und die Tabellen werden erzeugt. Außerdem werden die
+	 * Die einzelnen Tabs und die Tabellen werden geladen. Außerdem werden die
 	 * gespeicherten Kundendaten, Reisen und Buchungen sortiert nach Kunden-ID /
 	 * Reise-ID / Buchungs-ID aus der Datenbank geladen und in den Tabs
 	 * "Kunden", "Reisen" und "Buchungen" angezeigt.
@@ -362,12 +362,12 @@ public class ReiseFieberGUI {
 
 	/**
 	 * Registriert für alle Tabellen MouseListener und erstellt für jede Tabelle
-	 * ein Menü das bei einem Rechtsklick angezeigt wird. Über diese Menüs sind
-	 * einige Funktionen leichter zu erreichen und bei Funktionen die Kunden-,
-	 * Reise- oder Buchungsdaten benötigen werden die Daten des ausgewählten
+	 * ein Menü, das bei einem Rechtsklick angezeigt wird. Über diese Menüs sind
+	 * einige Funktionen leichter zu erreichen und bei Funktionen, die Kunden-,
+	 * Reise- oder Buchungsdaten benötigen, werden die Daten des ausgewählten
 	 * Kunden, der ausgewählen Reise oder der ausgewählten Buchung sofort
 	 * übernommen.<br>
-	 * Ausgegraute Optionen sind von den Tabellen aus nur verfügbar wenn ein
+	 * Ausgegraute Optionen sind von den Tabellen aus nur verfügbar, wenn ein
 	 * Kunde, eine Reise oder eine Buchung ausgewählt ist, mit welcher die
 	 * Funktion aufgerufen werden soll.
 	 */
@@ -590,7 +590,7 @@ public class ReiseFieberGUI {
 	}
 
 	/**
-	 * Registriert einen MouseListener für jede Tabelle welcher in der unteren
+	 * Registriert einen MouseListener für jede Tabelle, welcher in der unteren
 	 * Zeile der Benutzeroberfläche immer den den Namen der aktuell ausgewählten
 	 * Spalte und den Inhalt der ausgewählten Zelle anzeigt, um das Lesen langer
 	 * Einträge zu erleichtern.
@@ -781,7 +781,7 @@ public class ReiseFieberGUI {
 	}
 
 	/**
-	 * Öffnet das Fenster zum speichern eines neuen Kunden.
+	 * Öffnet das Fenster zum Speichern eines neuen Kunden.
 	 */
 	private void kundeAnlegen() {
 		KundenEingabeFeld eingabeFeld = new KundenEingabeFeld();
@@ -798,7 +798,7 @@ public class ReiseFieberGUI {
 	}
 
 	/**
-	 * Öffnet das Fenster zum erstellen einer neuen Reise.
+	 * Öffnet das Fenster zum Erstellen einer neuen Reise.
 	 */
 	private void reiseAnlegen() {
 		ReiseAnlegenDialog neueReiseDialog = new ReiseAnlegenDialog();
@@ -806,7 +806,7 @@ public class ReiseFieberGUI {
 	}
 
 	/**
-	 * Öffnet das Fenster zum stornieren einer Buchung.
+	 * Öffnet das Fenster zum Stornieren einer Buchung.
 	 */
 	private void reiseStornieren() {
 		ReiseStornierenDialog stornierenDialog = new ReiseStornierenDialog(

@@ -2,7 +2,7 @@ package dbv;
 
 /**
  * Stellt grundlegende Funktionen bereit, die benötigt werden, um die Daten
- * einer Reise abzurufen die erstellt werden soll.
+ * einer Reise abzurufen, die erstellt werden soll.
  * 
  */
 public interface IReiseAnlegen {
@@ -20,7 +20,7 @@ public interface IReiseAnlegen {
 
 	/**
 	 * 
-	 * @return maximale Teilnehmerzahl
+	 * @return Maximale Teilnehmerzahl
 	 */
 	public String getTeilnehmerZahl();
 
@@ -38,13 +38,13 @@ public interface IReiseAnlegen {
 
 	/**
 	 * 
-	 * @return Preis der pro Person für die Reise verlangt wird
+	 * @return Preis, der pro Person für die Reise verlangt wird
 	 */
 	public String getPreisProPerson();
 
 	/**
 	 * 
-	 * @return Kosten die für die Reise entstehen
+	 * @return Kosten, die für die Reise entstehen
 	 */
 	public String getKosten();
 }
