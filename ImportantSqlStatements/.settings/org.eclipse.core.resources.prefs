@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+encoding/create_sequence_kdid.sql=UTF-8
+encoding/create_sequence_kundenreiseid.sql=UTF-8
+encoding/create_sequence_reiseid.sql=UTF-8
+encoding/create_table_kunden.sql=UTF-8
+encoding/create_table_kundenreise.sql=UTF-8
+encoding/create_table_reise.sql=UTF-8
