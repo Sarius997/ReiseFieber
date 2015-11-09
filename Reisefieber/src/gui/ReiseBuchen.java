@@ -44,15 +44,15 @@ public class ReiseBuchen implements IKundenReise {
 
 	/**
 	 * Initialisiert das Fenster zum Speichern von Buchungen.<br>
-	 * Wenn ein Parameter {@code null} ist oder beide Parameter {@code null}
+	 * Wenn ein Parameter <code>null</code> ist oder beide Parameter <code>null</code>
 	 * sind, sind die Textfelder in dem angezeigten Fenster leer.<br>
-	 * Wenn kein Parameter {@code null} ist, werden die Daten der Reise / des
+	 * Wenn kein Parameter <code>null</code> ist, werden die Daten der Reise / des
 	 * Kunden mit der übergebenen ID automatisch in die Textfelder übernommen.
 	 * 
 	 * @param selectedID
 	 *            ID der ausgewählten Reise oder des ausgewählten Kunden
 	 * @param selectedTable
-	 *            {@code "Kunde"} wenn ein Kunde ausgewählt ist, {@code "Reise"}
+	 *            <code>"Kunde"</code> wenn ein Kunde ausgewählt ist, <code>"Reise"</code>
 	 *            wenn eine Reise ausgewählt ist.
 	 * 
 	 */

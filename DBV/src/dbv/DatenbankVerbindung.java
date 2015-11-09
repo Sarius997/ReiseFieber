@@ -53,7 +53,7 @@ public class DatenbankVerbindung {
 	 *            Für die Suche wird der Nachname (oder ein Teil des Nachnamen)
 	 *            des gesuchten Kunden verwendet, der durch
 	 *            {@link IKundenSuchen#getKdName()} übergeben wird
-	 * @return {@code String[][]} mit den Suchergebnissen.<br>
+	 * @return <code>String[][]</code> mit den Suchergebnissen.<br>
 	 *         Die Spalten sind sortiert nach:<br>
 	 *         ID, Nachname, Vorname, Geschlecht, Geburtstag, Telefonnummer,
 	 *         Adresse, Postleitzahl, Wohnort
@@ -163,7 +163,7 @@ public class DatenbankVerbindung {
 	/**
 	 * Stellt die Verbindung zur Datenbank her.
 	 * 
-	 * @return Zugang zu einer Datenbankverbindung oder {@code null} wenn ein
+	 * @return Zugang zu einer Datenbankverbindung oder <code>null</code>> wenn ein
 	 *         Fehler aufgetreten ist
 	 * @throws AfpsException
 	 */
@@ -650,12 +650,12 @@ public class DatenbankVerbindung {
 
 	/**
 	 * Sucht die Daten aller Buchungen der Reise mit der übergebenen ID aus der
-	 * Datenbank heraus, bei denen Storno den als {@code storno} übergebenen Wert hat.
+	 * Datenbank heraus, bei denen Storno den als <code>storno</code> übergebenen Wert hat.
 	 * 
 	 * @param reiseID
 	 *            ID der gesuchten Reise
 	 * @param storno
-	 *            {@code f} wenn nicht stornierte Buchungen gesucht werden, {@code t} wenn
+	 *            <code>f</code> wenn nicht stornierte Buchungen gesucht werden, <code>t</code> wenn
 	 *            stornierte Buchungen gesucht werden
 	 * @return Die Daten aller Buchungen der gegebenen Reise, die storniert /
 	 *         nicht storniert wurden

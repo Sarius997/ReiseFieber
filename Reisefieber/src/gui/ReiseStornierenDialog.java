@@ -56,7 +56,7 @@ public class ReiseStornierenDialog implements IStorno {
 	 * 
 	 * @param selectedID
 	 *            ID der zu stornierenden Buchung.<br>
-	 *            Wenn die ID {@code null} ist, wird das Fenster mit leeren
+	 *            Wenn die ID <code>null</code> ist, wird das Fenster mit leeren
 	 *            Textfeldern angezeigt.<br>
 	 *            Wenn eine ID übergeben wurde, werden die Daten der Buchung mit
 	 *            dieser ID in die Felder übernommen.

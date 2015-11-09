@@ -33,7 +33,7 @@ public class ReiseTeilnehmer {
 	 * Reise.
 	 * 
 	 * @param selectedID
-	 *            {@code null} wenn keine Reise ausgewählt ist, dann wird auch
+	 *            <code>null</code> wenn keine Reise ausgewählt ist, dann wird auch
 	 *            das Fenster angezeigt, in das dann die ID der Reise eingegeben
 	 *            werden muss.<br>
 	 *            Ansonsten wird die ID der ausgewählten Reise übergeben und es

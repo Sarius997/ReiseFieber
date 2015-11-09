@@ -74,9 +74,9 @@ public class CustomTableRenderer extends DefaultTableCellRenderer {
 	 * @param value
 	 *            Der Inhalt der Zelle an der Stelle [row, column]
 	 * @param isSelected
-	 *            {@code true} wenn die Zelle ausgewählt ist
+	 *            <code>true</code> wenn die Zelle ausgewählt ist
 	 * @param hasFocus
-	 *            {@code true} wenn die Zelle den Focus hat
+	 *            <code>true</code> wenn die Zelle den Focus hat
 	 * @param row
 	 *            Die Zeile der zu rendernden Zelle
 	 * @param coll
