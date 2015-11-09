@@ -57,7 +57,7 @@ public class KundenDatenAendern implements IKundenAendern {
 	 * 
 	 * @param selectedID
 	 *            ID des zu ändernden Kunden.<br>
-	 *            Wenn die ID <code>null<code> ist, wird das Fenster mit leeren
+	 *            Wenn die ID <code>null</code> ist, wird das Fenster mit leeren
 	 *            Textfeldern angezeigt.<br>
 	 *            Wenn eine ID übergeben wurde, werden die gespeicherten Daten
 	 *            des Kunden mit der übergebenen ID in die Felder übernommen.

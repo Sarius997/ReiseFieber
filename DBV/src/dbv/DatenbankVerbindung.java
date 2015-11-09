@@ -163,7 +163,7 @@ public class DatenbankVerbindung {
 	/**
 	 * Stellt die Verbindung zur Datenbank her.
 	 * 
-	 * @return Zugang zu einer Datenbankverbindung oder <code>null</code>> wenn ein
+	 * @return Zugang zu einer Datenbankverbindung oder <code>null</code> wenn ein
 	 *         Fehler aufgetreten ist
 	 * @throws AfpsException
 	 */
